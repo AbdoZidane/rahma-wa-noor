@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { approvedPrayersQuery, DECEASED_NAME } from "@/lib/queries";
 import { submitPrayer } from "@/lib/site.functions";
+import { formatArabicDate } from "@/lib/utils";
 
 export const Route = createFileRoute("/prayers")({
   head: () => ({
@@ -35,7 +36,7 @@ function PrayersPage() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState(""); // Honeypot
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -52,7 +53,7 @@ function PrayersPage() {
 
     setIsSubmitting(true);
     try {
-      const elapsedMs = Date.now() - startTime;
+      const elapsedMs = startTime > 0 ? Date.now() - startTime : 5000;
       const res = await submitPrayer({
         data: {
           name: name.trim(),
@@ -195,12 +196,8 @@ function PrayersPage() {
                         {p.author_name || "فاعل خير"}
                       </span>
                       {p.created_at && (
-                        <time dateTime={p.created_at}>
-                          {new Date(p.created_at).toLocaleDateString("ar-EG", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })}
+                        <time dateTime={p.created_at} suppressHydrationWarning>
+                          {formatArabicDate(p.created_at)}
                         </time>
                       )}
                     </footer>

@@ -10,7 +10,18 @@ describe("App routing", () => {
   it("matches all defined pages instead of falling back to not found", () => {
     const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
 
-    const routes = ["/", "/duas", "/azkar", "/tasbeeh", "/quran", "/prayers", "/about"];
+    const routes = [
+      "/",
+      "/duas",
+      "/azkar",
+      "/tasbeeh",
+      "/quran",
+      "/quran/read",
+      "/quran/listen",
+      "/prayers",
+      "/about",
+      "/auth",
+    ];
     for (const path of routes) {
       const matches = router.matchRoutes(path);
       expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);

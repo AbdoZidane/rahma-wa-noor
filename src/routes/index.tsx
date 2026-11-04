@@ -1,26 +1,41 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { BookOpen, HandHeart, Heart, Moon, Sparkles, Sun, UserRound } from "lucide-react";
+import { useState } from "react";
+import {
+  BookOpen,
+  Headphones,
+  HandHeart,
+  Heart,
+  Moon,
+  Sparkles,
+  Sun,
+  UserRound,
+  RotateCcw,
+  ArrowLeft,
+  Volume2,
+  ScrollText,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Portrait } from "@/components/site/Portrait";
-import { Divider } from "@/components/site/Ornament";
+import { Divider, StarMark } from "@/components/site/Ornament";
+import { CopyButton } from "@/components/site/CopyButton";
 import { approvedPrayersQuery, DECEASED_NAME, portraitSrc, siteContentQuery } from "@/lib/queries";
-import { DUA_BENEFIT_HADITH } from "@/lib/content/duas";
+import { DUAS, DUA_BENEFIT_HADITH } from "@/lib/content/duas";
+import { toArabicDigits } from "@/lib/content/quran";
+import { cn, formatArabicDate } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "رحمة ونور | ذكرى عبدالرازق محمود زيدان" },
+      { title: `رحمة ونور | ذكرى ${DECEASED_NAME}` },
       {
         name: "description",
-        content:
-          "رحمك الله يا جدي — موقع تذكاري لعبدالرازق محمود زيدان للدعاء له وقراءة الأذكار والقرآن الكريم.",
+        content: `رحمك الله يا جدي — موقع تذكاري لعبدالرازق محمود زيدان: القرآن الكريم، الأدعية، الأذكار، المسبحة الإلكترونية، وسيرته العطرة.`,
       },
-      { property: "og:title", content: "رحمة ونور | ذكرى عبدالرازق محمود زيدان" },
+      { property: "og:title", content: `رحمة ونور | ذكرى ${DECEASED_NAME}` },
       {
         property: "og:description",
-        content:
-          "مكان هادئ للدعاء لعبدالرازق محمود زيدان، مع الأذكار والآيات والمسبحة الإلكترونية.",
+        content: `موقع تذكاري وصدقة جارية: القرآن الكريم تلاوة وقراءة، الأدعية، الأذكار، المسبحة وسيرة الجد.`,
       },
     ],
   }),
@@ -29,51 +44,51 @@ export const Route = createFileRoute("/")({
       context.queryClient.ensureQueryData(siteContentQuery),
       context.queryClient.ensureQueryData(approvedPrayersQuery),
     ]),
-  component: Index,
+  component: IndexPage,
 });
 
-const SECTIONS = [
-  {
-    to: "/duas",
-    title: "الدعاء للمتوفى",
-    desc: "أدعية صحيحة من الكتاب والسنة مع إمكانية النسخ",
-    icon: HandHeart,
-  },
-  {
-    to: "/azkar",
-    title: "الأذكار اليومية",
-    desc: "أذكار الصباح والمساء بمصادرها الموثوقة",
-    icon: Sun,
-  },
-  {
-    to: "/tasbeeh",
-    title: "المسبحة الإلكترونية",
-    desc: "عدّاد تسبيح بسيط وأنيق بأذكار متعددة",
-    icon: Sparkles,
-  },
-  {
-    to: "/quran",
-    title: "آيات من القرآن الكريم",
-    desc: "آيات مختارة بالرسم العثماني مع أرقامها",
-    icon: BookOpen,
-  },
-  { to: "/prayers", title: "اترك دعاءً", desc: "شاركنا دعاءً أو ذكرى طيبة له", icon: Heart },
-  {
-    to: "/about",
-    title: "عن عبدالرازق",
-    desc: "صفحة تذكارية بسيرته وذكريات العائلة",
-    icon: UserRound,
-  },
+const QUICK_SECTIONS = [
+  { id: "quran-section", number: "١", label: "القرآن الكريم", icon: BookOpen },
+  { id: "duas-section", number: "٢", label: "الأدعية", icon: HandHeart },
+  { id: "azkar-section", number: "٣", label: "الأذكار", icon: Sun },
+  { id: "tasbeeh-section", number: "٤", label: "المسبحة الإلكترونية", icon: Sparkles },
+  { id: "grandfather-section", number: "٥", label: "ذكرى جدي وسيرته", icon: UserRound },
 ] as const;
 
-function Index() {
+const MINI_TASBEEH_PRESETS = [
+  "سبحان الله وبحمده",
+  "الحمد لله رب العالمين",
+  "لا إله إلا الله",
+  "الله أكبر",
+  "أستغفر الله وأتوب إليه",
+  "اللهم صلِّ على محمد",
+];
+
+function IndexPage() {
   const { data: content } = useSuspenseQuery(siteContentQuery);
   const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
   const latest = prayers.slice(0, 3);
 
+  // Embedded Mini Tasbeeh state for Section 4
+  const [selectedDhikr, setSelectedDhikr] = useState(MINI_TASBEEH_PRESETS[0]);
+  const [count, setCount] = useState(0);
+  const [target, setTarget] = useState(33);
+  const [pulse, setPulse] = useState(0);
+
+  const increment = () => {
+    setCount((c) => c + 1);
+    setPulse((p) => p + 1);
+  };
+
+  const resetCount = () => {
+    setCount(0);
+  };
+
   return (
     <>
-      {/* Hero */}
+      {/* ────────────────────────────────────────────────────────── */}
+      {/* HERO SECTION — الترحم على الجد والدعاء له                */}
+      {/* ────────────────────────────────────────────────────────── */}
       <section className="bg-forest-gradient pattern-islamic-strong relative overflow-hidden text-forest-foreground">
         <div
           className="pointer-events-none absolute left-1/2 top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl animate-glow"
@@ -92,14 +107,16 @@ function Index() {
             </p>
             <Divider className="my-8 lg:justify-start" />
             <p className="mx-auto max-w-xl font-serif text-xl leading-loose text-forest-foreground/85 lg:mx-0 animate-fade-up [animation-delay:300ms]">
-              ستظل ذكراك الطيبة في قلوبنا، نسأل الله أن يغفر لك ويرحمك
+              ستظل ذكراك الطيبة حية في قلوبنا، ونسأل الله العلي القدير أن يغفر لك ويرحمك ويجعل قبرك
+              روضة من رياض الجنة.
             </p>
+
             <div className="mt-10 flex flex-wrap justify-center gap-3 lg:justify-start animate-fade-up [animation-delay:450ms]">
               <Button asChild variant="gold" size="xl">
-                <a href="#sections">استكشف الموقع</a>
+                <a href="#main-sections">استكشف أقسام الموقع</a>
               </Button>
               <Button asChild variant="heroOutline" size="xl">
-                <Link to="/prayers">اترك دعاءً</Link>
+                <Link to="/prayers">اترك دعاءً له</Link>
               </Button>
             </div>
           </div>
@@ -111,70 +128,490 @@ function Index() {
             />
           </div>
         </div>
-      </section>
 
-      {/* Hadith */}
-      <section className="bg-parchment-gradient">
-        <div className="mx-auto max-w-3xl px-5 py-16 text-center">
-          <p className="dua-text text-2xl text-primary sm:text-3xl">«{DUA_BENEFIT_HADITH.text}»</p>
-          <p className="mt-4 text-sm text-muted-foreground">{DUA_BENEFIT_HADITH.source}</p>
+        {/* Quick Nav Bar across the 5 Main Sections */}
+        <div className="border-t border-gold/15 bg-forest-deep/60 backdrop-blur-xs">
+          <div className="mx-auto max-w-6xl px-4 py-4">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
+              <span className="hidden text-xs font-semibold text-gold-soft sm:inline">
+                أقسام الموقع الرئيسية:
+              </span>
+              {QUICK_SECTIONS.map((sec) => {
+                const Icon = sec.icon;
+                return (
+                  <a
+                    key={sec.id}
+                    href={`#${sec.id}`}
+                    className="flex items-center gap-1.5 rounded-full border border-gold/20 bg-forest/40 px-3 py-1.5 text-xs text-forest-foreground/90 transition-all hover:border-gold hover:bg-gold/15 hover:text-gold"
+                  >
+                    <span className="font-serif text-gold">{toArabicDigits(sec.number)}.</span>
+                    <Icon className="size-3.5 text-gold" />
+                    <span>{sec.label}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Sections */}
-      <section id="sections" className="pattern-islamic scroll-mt-16">
-        <div className="mx-auto max-w-6xl px-5 py-20">
+      {/* Hadith Banner */}
+      <section className="bg-parchment-gradient">
+        <div className="mx-auto max-w-3xl px-5 py-12 text-center">
+          <p className="dua-text text-2xl text-primary sm:text-3xl">«{DUA_BENEFIT_HADITH.text}»</p>
+          <p className="mt-3 text-sm text-muted-foreground">{DUA_BENEFIT_HADITH.source}</p>
+        </div>
+      </section>
+
+      {/* Main Anchor Target */}
+      <div id="main-sections" className="scroll-mt-16" />
+
+      {/* ────────────────────────────────────────────────────────── */}
+      {/* 1. القرآن الكريم (القسم الأول)                             */}
+      {/* ────────────────────────────────────────────────────────── */}
+      <section
+        id="quran-section"
+        className="pattern-islamic scroll-mt-20 py-20 border-b border-border"
+      >
+        <div className="mx-auto max-w-6xl px-5">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-primary sm:text-4xl">أقسام الموقع</h2>
-            <Divider className="mt-5" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-forest/10 px-4 py-1 text-xs font-semibold text-primary">
+              <StarMark className="size-3.5 text-gold" />
+              القسم الأول
+            </span>
+            <h2 className="mt-3 font-serif text-3xl font-bold text-primary sm:text-4xl">
+              القرآن الكريم
+            </h2>
+            <Divider className="mt-4" />
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+              كتاب الله العزيز، نور للصدور وشفاء للقلوب، وخير ما يُهدى ثواب قراءته والاستماع إليه
+              صدقة جارية لفقيدنا الغالي رحمه الله.
+            </p>
           </div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {SECTIONS.map(({ to, title, desc, icon: Icon }) => (
-              <Link
-                key={to}
-                to={to}
-                className="group rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold/60 hover:shadow-gold"
-              >
-                <span className="inline-flex size-12 items-center justify-center rounded-xl bg-forest text-gold transition-transform duration-300 group-hover:scale-110">
-                  <Icon className="size-6" />
+
+          {/* The Two Clear Choices for Quran */}
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            {/* Choice 1: المصحف الكريم للقراءة */}
+            <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-border bg-card p-8 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold">
+              <div>
+                <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-forest text-gold transition-transform duration-300 group-hover:scale-110 shadow-soft">
+                  <BookOpen className="size-7" />
                 </span>
-                <h3 className="mt-5 text-2xl font-bold text-primary">{title}</h3>
-                <p className="mt-2 leading-relaxed text-muted-foreground">{desc}</p>
+                <span className="mt-6 block text-xs font-semibold text-gold">الخيار الأول</span>
+                <h3 className="mt-2 font-serif text-2xl font-bold text-primary sm:text-3xl">
+                  المصحف الكريم للقراءة
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                  تصفح وقراءة آيات وسور القرآن الكريم كاملة بالرسم العثماني المعتمد، مع فهارس ميسرة
+                  للسور والأجزاء وعلامات حفظ الورد اليومي.
+                </p>
+              </div>
+
+              <div className="mt-8 border-t border-border pt-6">
+                <Button asChild variant="gold" size="lg" className="w-full justify-between gap-2">
+                  <Link to="/quran/read">
+                    <span>قراءة المصحف الكريم</span>
+                    <ArrowLeft className="size-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Choice 2: الاستماع إلى القرآن الكريم بأصوات القراء */}
+            <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-border bg-card p-8 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold">
+              <div>
+                <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-forest text-gold transition-transform duration-300 group-hover:scale-110 shadow-soft">
+                  <Headphones className="size-7" />
+                </span>
+                <span className="mt-6 block text-xs font-semibold text-gold">الخيار الثاني</span>
+                <h3 className="mt-2 font-serif text-2xl font-bold text-primary sm:text-3xl">
+                  الاستماع إلى القرآن الكريم بأصوات القراء
+                </h3>
+                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                  استمع إلى تلاوات عطرة وخاشعة بأصوات كبار أئمة وقراء العالم الإسلامي بروايات
+                  متعددة، بصوت نقي يبعث السكينة والاطمئنان في النفس.
+                </p>
+              </div>
+
+              <div className="mt-8 border-t border-border pt-6">
+                <Button
+                  asChild
+                  variant="heroOutline"
+                  size="lg"
+                  className="w-full justify-between gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                >
+                  <Link to="/quran/listen">
+                    <span>الاستماع إلى التلاوات</span>
+                    <Volume2 className="size-4" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button asChild variant="soft" size="lg" className="rounded-full gap-2">
+              <Link to="/quran">
+                <span>تصفح بوابة القرآن والآيات المختارة</span>
+                <ArrowLeft className="size-4" />
               </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────── */}
+      {/* 2. الأدعية (القسم الثاني)                                 */}
+      {/* ────────────────────────────────────────────────────────── */}
+      <section
+        id="duas-section"
+        className="bg-secondary/40 scroll-mt-20 py-20 border-b border-border"
+      >
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-forest/10 px-4 py-1 text-xs font-semibold text-primary">
+              <StarMark className="size-3.5 text-gold" />
+              القسم الثاني
+            </span>
+            <h2 className="mt-3 font-serif text-3xl font-bold text-primary sm:text-4xl">
+              الأدعية للمتوفى
+            </h2>
+            <Divider className="mt-4" />
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+              أدعية صحيحة ومأثورة من القرآن الكريم والسنة النبوية المطهرة، نسأل الله أن يتقبلها
+              ويجعلها نوراً وضياءً له في قبره.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {DUAS.slice(0, 2).map((dua) => (
+              <article
+                key={dua.id}
+                className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-3 border-b border-border pb-3">
+                    <h3 className="flex items-center gap-2 text-lg font-bold text-primary">
+                      <ScrollText className="size-4 text-gold" />
+                      {dua.title}
+                    </h3>
+                    <CopyButton text={`${dua.text}\n\n${dua.source}`} />
+                  </div>
+                  <p className="dua-text mt-5 text-xl leading-relaxed text-foreground">
+                    {dua.text}
+                  </p>
+                </div>
+                <p className="mt-5 border-t border-border pt-3 text-xs text-muted-foreground">
+                  {dua.source}
+                </p>
+              </article>
             ))}
           </div>
+
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Button asChild variant="gold" size="lg" className="rounded-full">
+              <Link to="/duas">عرض جميع الأدعية للمتوفى</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="rounded-full">
+              <Link to="/prayers">اترك دعاءً خاصاً</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Latest prayers */}
-      {latest.length > 0 && (
-        <section className="bg-secondary/50">
-          <div className="mx-auto max-w-6xl px-5 py-20">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-primary sm:text-4xl">من دعوات الزوار</h2>
-              <Divider className="mt-5" />
-            </div>
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {latest.map((p) => (
-                <figure
-                  key={p.id}
-                  className="rounded-2xl border border-border bg-card p-6 shadow-soft"
+      {/* ────────────────────────────────────────────────────────── */}
+      {/* 3. الأذكار (القسم الثالث)                                 */}
+      {/* ────────────────────────────────────────────────────────── */}
+      <section
+        id="azkar-section"
+        className="pattern-islamic scroll-mt-20 py-20 border-b border-border"
+      >
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="text-center">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-forest/10 px-4 py-1 text-xs font-semibold text-primary">
+              <StarMark className="size-3.5 text-gold" />
+              القسم الثالث
+            </span>
+            <h2 className="mt-3 font-serif text-3xl font-bold text-primary sm:text-4xl">
+              الأذكار اليومية
+            </h2>
+            <Divider className="mt-4" />
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+              «أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ» — حصن المسلم اليومي من أذكار الصباح
+              والمساء والنوم وما بعد الصلاة، بأدلتها الشرعية ومصادرها الموثوقة.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <Link
+              to="/azkar"
+              className="group rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold"
+            >
+              <span className="inline-flex size-12 items-center justify-center rounded-xl bg-forest text-gold transition-transform group-hover:scale-110">
+                <Sun className="size-6" />
+              </span>
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">أذكار الصباح</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                تبدأ بها يومك بحفظ الله ورعايته وتوفيقه.
+              </p>
+            </Link>
+
+            <Link
+              to="/azkar"
+              className="group rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold"
+            >
+              <span className="inline-flex size-12 items-center justify-center rounded-xl bg-forest text-gold transition-transform group-hover:scale-110">
+                <Moon className="size-6" />
+              </span>
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">أذكار المساء</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                سكينة المساء وتحصين النفس والبيت بذكر الله.
+              </p>
+            </Link>
+
+            <Link
+              to="/azkar"
+              className="group rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold"
+            >
+              <span className="inline-flex size-12 items-center justify-center rounded-xl bg-forest text-gold transition-transform group-hover:scale-110">
+                <Sparkles className="size-6" />
+              </span>
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">أذكار بعد الصلاة</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                التهليل والتسبيح والاستغفار دبر كل صلاة مكتوبة.
+              </p>
+            </Link>
+
+            <Link
+              to="/azkar"
+              className="group rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold"
+            >
+              <span className="inline-flex size-12 items-center justify-center rounded-xl bg-forest text-gold transition-transform group-hover:scale-110">
+                <HandHeart className="size-6" />
+              </span>
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">أذكار النوم</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                آيات وسور وأدعية النوم والاستيقاظ النبوية.
+              </p>
+            </Link>
+          </div>
+
+          <div className="mt-10 text-center">
+            <Button asChild variant="gold" size="lg" className="rounded-full">
+              <Link to="/azkar">فتح الأذكار اليومية ومتابعة العد</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────── */}
+      {/* 4. المسبحة الإلكترونية (القسم الرابع)                       */}
+      {/* ────────────────────────────────────────────────────────── */}
+      <section
+        id="tasbeeh-section"
+        className="bg-secondary/40 scroll-mt-20 py-20 border-b border-border"
+      >
+        <div className="mx-auto max-w-4xl px-5 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-forest/10 px-4 py-1 text-xs font-semibold text-primary">
+            <StarMark className="size-3.5 text-gold" />
+            القسم الرابع
+          </span>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-primary sm:text-4xl">
+            المسبحة الإلكترونية
+          </h2>
+          <Divider className="mt-4" />
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+            سبّح واذكر الله في أي وقت، واجعل ثواب هذا التسبيح والذكر صدقة جارية ونوراً في ميزان
+            حسنات جدنا العزيز {DECEASED_NAME}.
+          </p>
+
+          {/* Interactive Embedded Mini Tasbeeh */}
+          <div className="mt-10 rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-10">
+            {/* Dhikr Selector */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {MINI_TASBEEH_PRESETS.map((d) => (
+                <button
+                  key={d}
+                  onClick={() => {
+                    setSelectedDhikr(d);
+                    setCount(0);
+                  }}
+                  className={cn(
+                    "rounded-full px-4 py-2 text-sm transition-all",
+                    selectedDhikr === d
+                      ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                      : "bg-secondary text-foreground/80 hover:bg-gold/15 hover:text-gold-foreground",
+                  )}
                 >
-                  <blockquote className="dua-text text-lg text-foreground">{p.message}</blockquote>
-                  <figcaption className="mt-4 text-sm text-muted-foreground">
-                    — {p.author_name || "زائر"}
-                  </figcaption>
-                </figure>
+                  {d}
+                </button>
               ))}
             </div>
-            <div className="mt-10 text-center">
-              <Button asChild variant="default" size="lg" className="rounded-full">
-                <Link to="/prayers">عرض كل الدعوات</Link>
+
+            {/* Selected Dhikr Display */}
+            <div className="mt-8">
+              <p className="font-serif text-2xl font-bold text-primary sm:text-3xl">
+                {selectedDhikr}
+              </p>
+            </div>
+
+            {/* Circular Counter Button */}
+            <div className="mt-8 flex justify-center">
+              <button
+                onClick={increment}
+                className="group relative flex size-44 items-center justify-center rounded-full bg-forest text-gold shadow-gold transition-all duration-150 active:scale-95 sm:size-52"
+                aria-label="اضغط للتسبيح"
+              >
+                <div className="text-center">
+                  <span
+                    key={pulse}
+                    className="block text-5xl font-bold tabular-nums text-gold-gradient animate-pop sm:text-6xl"
+                  >
+                    {toArabicDigits(count)}
+                  </span>
+                  <span className="mt-1 block text-xs text-forest-foreground/70">اضغط للعد</span>
+                </div>
+              </button>
+            </div>
+
+            {/* Target and Controls */}
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <div className="flex rounded-full bg-secondary p-1">
+                {[33, 100].map((t) => (
+                  <button
+                    key={t}
+                    onClick={() => setTarget(t)}
+                    className={cn(
+                      "rounded-full px-4 py-1 text-xs font-semibold transition-all",
+                      target === t
+                        ? "bg-primary text-primary-foreground shadow-xs"
+                        : "text-muted-foreground hover:text-foreground",
+                    )}
+                  >
+                    هدف {toArabicDigits(t)}
+                  </button>
+                ))}
+              </div>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={resetCount}
+                disabled={count === 0}
+                className="gap-1.5 text-xs text-muted-foreground"
+              >
+                <RotateCcw className="size-3.5" />
+                إعادة ضبط
+              </Button>
+            </div>
+
+            {count >= target && (
+              <p className="mt-4 font-serif text-sm font-semibold text-primary animate-fade-up">
+                تقبل الله منك! أتممت هدف {toArabicDigits(target)} تسبيحة مباركة.
+              </p>
+            )}
+
+            <div className="mt-8 border-t border-border pt-6">
+              <Button asChild variant="gold" size="lg" className="rounded-full">
+                <Link to="/tasbeeh">فتح المسبحة الكاملة الموسّعة</Link>
               </Button>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────── */}
+      {/* 5. ذكرى جدي وسيرته وصورته (القسم الخامس)                   */}
+      {/* ────────────────────────────────────────────────────────── */}
+      <section id="grandfather-section" className="pattern-islamic scroll-mt-20 py-20">
+        <div className="mx-auto max-w-6xl px-5">
+          <div className="text-center">
+            <h2 className="font-serif text-3xl font-bold text-primary sm:text-4xl">
+              ذكرى جدي وسيرته وصورته
+            </h2>
+            <Divider className="mt-4" />
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+              وفاءً لرجل عظيم ترك في نفوسنا أثراً طيباً لا يمحوه الزمن، نسأل الله أن يجمعنا به في
+              جنات النعيم.
+            </p>
+          </div>
+
+          {/* Grandfather Memorial Card */}
+          <div className="mt-12 overflow-hidden rounded-3xl border-2 border-border bg-card p-6 shadow-soft sm:p-10">
+            <div className="grid items-center gap-8 md:grid-cols-[auto_1fr]">
+              <div className="flex justify-center">
+                <Portrait
+                  src={portraitSrc(content.portraitPath)}
+                  name={DECEASED_NAME}
+                  className="w-48 sm:w-60"
+                />
+              </div>
+              <div className="space-y-4 text-center md:text-start">
+                <div className="inline-flex items-center gap-2 rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-primary">
+                  <Sparkles className="size-3.5 text-gold" />
+                  رحمه الله رحمة واسعة وأسكنه الفردوس الأعلى
+                </div>
+                <h3 className="font-serif text-3xl font-bold text-primary sm:text-4xl">
+                  {DECEASED_NAME}
+                </h3>
+                <p className="font-serif text-lg leading-relaxed text-foreground/85">
+                  {content.biography ||
+                    "عاش طيب الذكر، نقي السرير، محباً للخير وأهله، باراً بالجميع وكريم الخلق. ستبقى كلماته ودعواته الطيبة منارة لنا في كل خطوة، وهذا الموقع صدقة جارية مستمرة عنه بإذن الله."}
+                </p>
+                <div className="flex flex-wrap justify-center gap-3 pt-2 md:justify-start">
+                  <Button asChild variant="gold" size="lg">
+                    <Link to="/about">قراءة السيرة والذكريات العائلية</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="lg">
+                    <Link to="/prayers">اترك دعاءً للمتوفى</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Latest Prayers from Visitors */}
+          {latest.length > 0 && (
+            <div className="mt-16">
+              <div className="text-center">
+                <h3 className="font-serif text-2xl font-bold text-primary sm:text-3xl">
+                  من دعوات الزوار والأحباب
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  دعوات طيبة من قلوب محبة في ذكرى الجد رحمه الله
+                </p>
+              </div>
+              <div className="mt-8 grid gap-5 md:grid-cols-3">
+                {latest.map((p) => (
+                  <figure
+                    key={p.id}
+                    className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6 shadow-soft"
+                  >
+                    <blockquote className="dua-text text-lg text-foreground">
+                      {p.message}
+                    </blockquote>
+                    <figcaption className="mt-4 border-t border-border pt-3 text-xs text-muted-foreground flex items-center justify-between">
+                      <span className="font-medium text-primary">
+                        — {p.author_name || "فاعل خير"}
+                      </span>
+                      {p.created_at && (
+                        <time dateTime={p.created_at} suppressHydrationWarning>
+                          {formatArabicDate(p.created_at)}
+                        </time>
+                      )}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+              <div className="mt-8 text-center">
+                <Button asChild variant="default" size="lg" className="rounded-full">
+                  <Link to="/prayers">عرض كل الدعوات ({toArabicDigits(prayers.length)})</Link>
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
     </>
   );
 }

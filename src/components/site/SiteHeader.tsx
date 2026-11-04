@@ -6,12 +6,12 @@ import { StarMark } from "./Ornament";
 
 export const NAV = [
   { to: "/", label: "الرئيسية" },
-  { to: "/duas", label: "الدعاء للمتوفى" },
+  { to: "/quran", label: "القرآن الكريم" },
+  { to: "/duas", label: "الأدعية" },
   { to: "/azkar", label: "الأذكار" },
   { to: "/tasbeeh", label: "المسبحة" },
-  { to: "/quran", label: "آيات قرآنية" },
+  { to: "/about", label: "سيرة جدي" },
   { to: "/prayers", label: "اترك دعاءً" },
-  { to: "/about", label: "عن عبدالرازق" },
 ] as const;
 
 const linkCls =
