@@ -1,0 +1,159 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
+import { Moon, RotateCcw, Sun } from "lucide-react";
+import { PageHeader } from "@/components/site/PageHeader";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { EVENING_AZKAR, MORNING_AZKAR, type Zikr } from "@/lib/content/azkar";
+import { toArabicDigits } from "@/lib/content/quran";
+import { cn } from "@/lib/utils";
+
+export const Route = createFileRoute("/azkar")({
+  head: () => ({
+    meta: [
+      { title: "أذكار الصباح والمساء | رحمة ونور" },
+      {
+        name: "description",
+        content: "أذكار الصباح والمساء بنصوص واضحة ومصادر موثوقة، مع إمكانية تحديد ما أتممته.",
+      },
+      { property: "og:title", content: "أذكار الصباح والمساء | رحمة ونور" },
+      {
+        property: "og:description",
+        content: "أذكار الصباح والمساء من القرآن والسنة الصحيحة مع مصادرها.",
+      },
+    ],
+  }),
+  component: AzkarPage,
+});
+
+type Period = "morning" | "evening";
+const today = () => new Date().toISOString().slice(0, 10);
+const storageKey = (p: Period) => `azkar:${p}:${today()}`;
+
+function AzkarPage() {
+  const [tab, setTab] = useState<Period>("morning");
+
+  useEffect(() => {
+    if (new Date().getHours() >= 15) setTab("evening");
+  }, []);
+
+  return (
+    <>
+      <PageHeader eyebrow="حصن المسلم" title="الأذكار اليومية">
+        قال الله تعالى: ﴿فَٱذْكُرُونِىٓ أَذْكُرْكُمْ﴾ [البقرة: 152]
+      </PageHeader>
+      <section className="pattern-islamic">
+        <div className="mx-auto max-w-4xl px-5 py-12">
+          <Tabs value={tab} onValueChange={(v) => setTab(v as Period)} dir="rtl">
+            <TabsList className="mx-auto grid h-12 w-full max-w-md grid-cols-2 rounded-full bg-secondary p-1">
+              <TabsTrigger
+                value="morning"
+                className="rounded-full text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Sun className="size-4" /> أذكار الصباح
+              </TabsTrigger>
+              <TabsTrigger
+                value="evening"
+                className="rounded-full text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                <Moon className="size-4" /> أذكار المساء
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="morning">
+              <AzkarList period="morning" items={MORNING_AZKAR} />
+            </TabsContent>
+            <TabsContent value="evening">
+              <AzkarList period="evening" items={EVENING_AZKAR} />
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
+    </>
+  );
+}
+
+function AzkarList({ period, items }: { period: Period; items: Zikr[] }) {
+  const [done, setDone] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    try {
+      setDone(JSON.parse(localStorage.getItem(storageKey(period)) || "{}"));
+    } catch {
+      setDone({});
+    }
+  }, [period]);
+
+  const update = (next: Record<string, boolean>) => {
+    setDone(next);
+    localStorage.setItem(storageKey(period), JSON.stringify(next));
+  };
+
+  const completed = useMemo(() => items.filter((z) => done[z.id]).length, [items, done]);
+  const pct = Math.round((completed / items.length) * 100);
+
+  return (
+    <div className="mt-8">
+      <div className="sticky top-16 z-10 -mx-5 mb-6 border-b border-border bg-background/90 px-5 py-4 backdrop-blur">
+        <div className="flex items-center justify-between gap-4 text-sm">
+          <span className="text-muted-foreground">
+            أتممت {toArabicDigits(completed)} من {toArabicDigits(items.length)}
+          </span>
+          <Button variant="ghost" size="sm" onClick={() => update({})} disabled={completed === 0}>
+            <RotateCcw /> إعادة البدء
+          </Button>
+        </div>
+        <Progress value={pct} className="mt-2 h-2 bg-secondary" />
+        {completed === items.length && (
+          <p className="mt-3 text-center font-serif text-lg text-primary">
+            تقبّل الله منك، ولا تنسَ الدعاء لعبدالرازق بالرحمة والمغفرة
+          </p>
+        )}
+      </div>
+
+      <div className="grid gap-5">
+        {items.map((z) => {
+          const checked = !!done[z.id];
+          return (
+            <label
+              key={z.id}
+              htmlFor={`${period}-${z.id}`}
+              className={cn(
+                "block cursor-pointer rounded-2xl border bg-card p-6 shadow-soft transition-all duration-300 sm:p-8",
+                checked ? "border-gold/70 bg-secondary/60" : "border-border hover:border-gold/40",
+              )}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <span className="rounded-full bg-forest px-3 py-1 text-xs text-forest-foreground">
+                  {z.count === 1 ? "مرة واحدة" : `${toArabicDigits(z.count)} مرات`}
+                </span>
+                <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                  {checked ? "تمّ" : "تحديد كمكتمل"}
+                  <Checkbox
+                    id={`${period}-${z.id}`}
+                    checked={checked}
+                    onCheckedChange={(v) => update({ ...done, [z.id]: v === true })}
+                    className="size-6 rounded-md border-gold data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                  />
+                </span>
+              </div>
+              <p
+                className={cn(
+                  "mt-5 whitespace-pre-line text-2xl text-foreground transition-opacity",
+                  z.isQuran ? "quran-text" : "dua-text",
+                  checked && "opacity-60",
+                )}
+              >
+                {z.text}
+              </p>
+              <p className="mt-4 border-t border-border pt-3 text-sm text-muted-foreground">
+                {z.source}
+              </p>
+            </label>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
