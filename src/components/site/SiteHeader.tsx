@@ -3,6 +3,7 @@ import { BookOpen, Home, Menu, Sparkles, Sun, Volume2, VolumeX } from "lucide-re
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { StarMark } from "./Ornament";
+import { VisitorCounter } from "./VisitorCounter";
 
 export const NAV = [
   { to: "/", label: "الرئيسية" },
@@ -26,6 +27,7 @@ export function SiteHeader({ rainMuted, onToggleRain }: { rainMuted: boolean; on
             <StarMark className="size-7 text-gold" />
             <span className="font-serif text-xl font-bold">رحمة ونور</span>
           </Link>
+          <VisitorCounter />
           <button
             type="button"
             onClick={onToggleRain}
