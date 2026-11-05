@@ -54,7 +54,9 @@ export const Route = createFileRoute("/quran/listen")({
 
 function notifyQuranPlayback(playing: boolean) {
   if (typeof window !== "undefined") {
-    window.dispatchEvent(new CustomEvent("quran-playback-change", { detail: { playing } }));
+    window.dispatchEvent(
+      new CustomEvent("quran-playback-change", { detail: { playing } }),
+    );
   }
 }
 
