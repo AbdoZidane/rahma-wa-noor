@@ -90,7 +90,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "رحمة ونور" },
       { property: "og:locale", content: "ar_AR" },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://rahma-wa-noor.abaozidan.workers.dev/" },
+      {
+        property: "og:image",
+        content: "https://rahma-wa-noor.abaozidan.workers.dev/grandfather.jpeg",
+      },
+      { property: "og:image:alt", content: "صورة الجد عبدالرازق محمود زيدان" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "رحمة ونور | ذكرى عبدالرازق محمود زيدان" },
+      {
+        name: "twitter:description",
+        content: "موقع تذكاري وصدقة جارية: القرآن الكريم والأذكار والأدعية والمسبحة الإلكترونية.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://rahma-wa-noor.abaozidan.workers.dev/grandfather.jpeg",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
