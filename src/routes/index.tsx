@@ -13,6 +13,7 @@ import {
   ArrowLeft,
   Volume2,
   ScrollText,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Portrait } from "@/components/site/Portrait";
@@ -71,6 +72,20 @@ function IndexPage() {
   const { data: content } = useSuspenseQuery(siteContentQuery);
   const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
   const latest = prayers.slice(0, 3);
+  const [welcomeOpen, setWelcomeOpen] = useState(false);
+
+  // Show the welcome message once per browser tab, not on every route return.
+  useEffect(() => {
+    try {
+      const alreadyWelcomed = sessionStorage.getItem("rahma-noor-welcomed");
+      if (!alreadyWelcomed) {
+        setWelcomeOpen(true);
+        sessionStorage.setItem("rahma-noor-welcomed", "1");
+      }
+    } catch {
+      // If session storage is unavailable, keep the site usable without the modal.
+    }
+  }, []);
 
   // Embedded Mini Tasbeeh state for Section 4
   const [selectedDhikr, setSelectedDhikr] = useState(MINI_TASBEEH_PRESETS[0]);
@@ -113,6 +128,50 @@ function IndexPage() {
 
   return (
     <>
+      {welcomeOpen && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-forest-deep/75 px-4 py-6 backdrop-blur-sm"
+          role="presentation"
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="welcome-title"
+            className="relative w-full max-w-lg rounded-3xl border border-gold/30 bg-card p-7 text-center shadow-2xl sm:p-10"
+          >
+            <button
+              type="button"
+              onClick={() => setWelcomeOpen(false)}
+              aria-label="إغلاق رسالة الترحيب"
+              className="absolute left-4 top-4 inline-flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            >
+              <X className="size-5" />
+            </button>
+            <span className="mx-auto inline-flex size-14 items-center justify-center rounded-2xl bg-forest text-gold">
+              <Moon className="size-7" />
+            </span>
+            <p className="mt-5 text-sm font-semibold text-gold">أهلًا وسهلًا بكم</p>
+            <h2 id="welcome-title" className="mt-2 font-serif text-2xl font-bold text-primary sm:text-3xl">
+              مرحبًا بكم في رحمة ونور
+            </h2>
+            <p className="mt-4 font-serif text-base leading-loose text-muted-foreground">
+              مساحة للقرآن الكريم والذكر والدعاء، نهدي ثوابها إلى روح جدنا الغالي
+              <span className="mt-1 block font-bold text-primary">{DECEASED_NAME}</span>
+              نسأل الله أن يتغمده بواسع رحمته.
+            </p>
+            <Button
+              type="button"
+              variant="gold"
+              size="lg"
+              className="mt-7 min-w-40 rounded-full"
+              onClick={() => setWelcomeOpen(false)}
+            >
+              دخول الموقع
+            </Button>
+          </section>
+        </div>
+      )}
+
       {/* HERO SECTION */}
       <section className="bg-forest-gradient pattern-islamic-strong relative overflow-hidden text-forest-foreground">
         <div
