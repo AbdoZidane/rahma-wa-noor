@@ -22,7 +22,6 @@ import { DailyWird } from "@/components/site/DailyWird";
 import {
   approvedPrayersQuery,
   DECEASED_NAME,
-  portraitSrc,
   siteContentQuery,
 } from "@/lib/queries";
 import { DUAS, DUA_BENEFIT_HADITH } from "@/lib/content/duas";
@@ -189,7 +188,7 @@ function IndexPage() {
           </div>
           <div className="animate-fade-up [animation-delay:200ms]">
             <Portrait
-              src={portraitSrc(content.portraitPath)}
+              src="/grandfather.jpeg"
               name={DECEASED_NAME}
               className="sm:w-72"
             />
