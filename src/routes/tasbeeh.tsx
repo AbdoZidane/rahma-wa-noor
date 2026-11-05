@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,8 @@ function TasbeehPage() {
   const [total, setTotal] = useState(0);
   const [pulse, setPulse] = useState(0);
   const [vibrationEnabled, setVibrationEnabled] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const audioContextRef = useRef<AudioContext | null>(null);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -54,6 +56,7 @@ function TasbeehPage() {
         setDhikr(saved.dhikr ?? 0);
         setTarget([33, 100, 1000, 0].includes(saved.target) ? saved.target : 33);
         setVibrationEnabled(saved.vibrationEnabled === true);
+        setSoundEnabled(saved.soundEnabled !== false);
       }
     } catch {
       /* ignore */
@@ -65,14 +68,37 @@ function TasbeehPage() {
     if (!loaded) return;
     localStorage.setItem(
       "tasbeeh",
-      JSON.stringify({ counts, total, dhikr, target, vibrationEnabled }),
+      JSON.stringify({ counts, total, dhikr, target, vibrationEnabled, soundEnabled }),
     );
-  }, [counts, total, dhikr, target, vibrationEnabled, loaded]);
+  }, [counts, total, dhikr, target, vibrationEnabled, soundEnabled, loaded]);
 
   const count = counts[dhikr];
   const reached = target > 0 && count > 0 && count % target === 0;
 
   const tap = useCallback(() => {
+    if (soundEnabled && typeof window !== "undefined") {
+      try {
+        const AudioContextClass = window.AudioContext;
+        if (AudioContextClass) {
+          const audio = audioContextRef.current ?? new AudioContextClass();
+          audioContextRef.current = audio;
+          if (audio.state === "suspended") void audio.resume();
+          const oscillator = audio.createOscillator();
+          const gain = audio.createGain();
+          oscillator.type = "sine";
+          oscillator.frequency.setValueAtTime(880, audio.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(620, audio.currentTime + 0.045);
+          gain.gain.setValueAtTime(0.045, audio.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 0.05);
+          oscillator.connect(gain);
+          gain.connect(audio.destination);
+          oscillator.start();
+          oscillator.stop(audio.currentTime + 0.05);
+        }
+      } catch {
+        /* Sound is optional; counting must always work. */
+      }
+    }
     setCounts((c) => c.map((v, i) => (i === dhikr ? v + 1 : v)));
     setTotal((t) => t + 1);
     setPulse((p) => p + 1);
@@ -80,7 +106,7 @@ function TasbeehPage() {
       const next = counts[dhikr] + 1;
       navigator.vibrate(target > 0 && next % target === 0 ? [60, 40, 60] : 15);
     }
-  }, [dhikr, counts, target, vibrationEnabled]);
+  }, [dhikr, counts, target, vibrationEnabled, soundEnabled]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -212,6 +238,14 @@ function TasbeehPage() {
                 aria-pressed={vibrationEnabled}
               >
                 {vibrationEnabled ? "الاهتزاز مفعّل" : "تفعيل الاهتزاز"}
+              </Button>
+              <Button
+                variant={soundEnabled ? "gold" : "soft"}
+                className="rounded-full"
+                onClick={() => setSoundEnabled((enabled) => !enabled)}
+                aria-pressed={soundEnabled}
+              >
+                {soundEnabled ? "الصوت مفعّل" : "تفعيل الصوت"}
               </Button>
               <Button
                 variant="soft"
