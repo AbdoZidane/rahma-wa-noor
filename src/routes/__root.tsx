@@ -170,7 +170,7 @@ function RootComponent() {
   useEffect(() => {
     const rainAudio = rainAudioRef.current;
     if (!rainAudio) return;
-    rainAudio.volume = 0.055;
+    rainAudio.volume = 0.02;
 
     const syncRain = () => {
       if (!rainHasInteractedRef.current) return;
@@ -226,6 +226,15 @@ function RootComponent() {
         loop
         preload="auto"
         aria-hidden="true"
+        onEnded={(event) => {
+          const audio = event.currentTarget;
+          if (rainHasInteractedRef.current && !rainMutedRef.current && !quranIsPlayingRef.current) {
+            audio.currentTime = 0;
+            void audio.play().catch((error) => {
+              console.warn("Rain ambience could not restart:", error);
+            });
+          }
+        }}
       />
       <div className="flex min-h-screen flex-col pb-16 lg:pb-0">
         <SiteHeader rainMuted={rainMuted} onToggleRain={() => setRainMuted((muted) => !muted)} />
