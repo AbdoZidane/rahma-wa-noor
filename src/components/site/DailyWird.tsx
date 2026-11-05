@@ -22,10 +22,19 @@ const DHIKR = [
 ];
 
 export function DailyWird() {
-  const now = new Date();
+  // Use Cairo's calendar date so the daily wird changes at local midnight.
+  // An explicit time zone keeps the server and browser in sync during hydration.
+  const dateParts = new Intl.DateTimeFormat("en", {
+    timeZone: "Africa/Cairo",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  }).formatToParts(new Date());
+  const year = Number(dateParts.find((part) => part.type === "year")?.value);
+  const month = Number(dateParts.find((part) => part.type === "month")?.value);
+  const day = Number(dateParts.find((part) => part.type === "day")?.value);
   const dayIndex = Math.floor(
-    (Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) -
-      Date.UTC(2025, 0, 1)) / 86400000,
+    (Date.UTC(year, month - 1, day) - Date.UTC(2025, 0, 1)) / 86400000,
   );
   const index = (n: number) => ((dayIndex % n) + n) % n;
   const verse = VERSES[index(VERSES.length)];
