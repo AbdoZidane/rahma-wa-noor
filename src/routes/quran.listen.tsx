@@ -446,7 +446,7 @@ export function QuranListenPage() {
           {/* Section 2: Dedicated Master Audio Player Card */}
           <div
             ref={playerCardRef}
-            className="mb-12 rounded-3xl border-2 border-gold/40 bg-gradient-to-b from-card via-card to-secondary/30 p-6 shadow-xl sm:p-10"
+            className="mb-12 rounded-3xl border-2 border-gold/40 bg-gradient-to-b from-card via-card to-secondary/30 p-4 shadow-xl sm:p-10"
           >
             {/* Player Header Info */}
             <div className="flex flex-col items-center text-center">
@@ -506,7 +506,7 @@ export function QuranListenPage() {
             </div>
 
             {/* Central Controls Bar */}
-            <div className="mx-auto mt-8 flex max-w-xl flex-wrap items-center justify-center gap-4 sm:gap-6">
+            <div className="mx-auto mt-8 grid max-w-xl grid-cols-4 items-center justify-items-center gap-3 sm:flex sm:flex-wrap sm:gap-6">
               {/* Auto Advance Toggle */}
               <button
                 type="button"
@@ -576,7 +576,7 @@ export function QuranListenPage() {
                 size="icon"
                 onClick={handleTogglePlay}
                 disabled={isLoadingAudio}
-                className="size-16 rounded-full shadow-gold transition-transform active:scale-95 cursor-pointer"
+                className="size-14 rounded-full shadow-gold transition-transform active:scale-95 cursor-pointer sm:size-16"
                 title={isPlaying ? "إيقاف مؤقت" : "تشغيل التلاوة"}
               >
                 {isLoadingAudio ? (
