@@ -10,7 +10,6 @@ export const NAV = [
   { to: "/duas", label: "الأدعية" },
   { to: "/azkar", label: "الأذكار" },
   { to: "/tasbeeh", label: "المسبحة" },
-  { to: "/about", label: "سيرة جدي" },
   { to: "/prayers", label: "اترك دعاءً" },
 ] as const;
 
