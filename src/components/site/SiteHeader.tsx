@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { BookOpen, Home, Menu, Sparkles, Sun } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { StarMark } from "./Ornament";
@@ -67,6 +67,30 @@ export function SiteHeader() {
           </SheetContent>
         </Sheet>
       </div>
+      <nav
+        className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-gold/20 bg-forest-deep/95 px-2 pb-[env(safe-area-inset-bottom)] pt-2 text-forest-foreground shadow-[0_-8px_24px_rgba(0,0,0,0.12)] backdrop-blur lg:hidden"
+        aria-label="التنقل السريع"
+      >
+        {[
+          { to: "/", label: "الرئيسية", icon: Home },
+          { to: "/quran", label: "القرآن", icon: BookOpen },
+          { to: "/azkar", label: "الأذكار", icon: Sun },
+          { to: "/tasbeeh", label: "المسبحة", icon: Sparkles },
+        ].map((item) => {
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: true }}
+              className="flex min-h-12 flex-col items-center justify-center gap-1 rounded-lg py-1 text-[11px] text-forest-foreground/75 transition-colors data-[status=active]:text-gold"
+            >
+              <Icon className="size-5" />
+              <span>{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
     </header>
   );
 }
