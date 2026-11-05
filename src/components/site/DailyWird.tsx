@@ -24,8 +24,8 @@ const DHIKR = [
 export function DailyWird() {
   const now = new Date();
   const dayIndex = Math.floor(
-    (new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() -
-      new Date(2025, 0, 1).getTime()) / 86400000,
+    (Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) -
+      Date.UTC(2025, 0, 1)) / 86400000,
   );
   const index = (n: number) => ((dayIndex % n) + n) % n;
   const verse = VERSES[index(VERSES.length)];
