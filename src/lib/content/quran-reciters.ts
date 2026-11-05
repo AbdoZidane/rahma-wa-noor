@@ -1,3 +1,4 @@
+
 export interface Reciter {
   id: string;
   name: string;
@@ -64,9 +65,53 @@ export const RECITERS_LIST: Reciter[] = [
     country: "السعودية",
     cdnPath: "abdulrahman-sudais/r1",
   },
+  {
+    id: "ali-jaber",
+    name: "الشيخ علي جابر",
+    englishName: "Ali Jaber",
+    style: "المصحف المرتل — رواية حفص عن عاصم",
+    description: "إمام المسجد الحرام سابقًا، وصاحب الصوت الهادئ المميز.",
+    country: "السعودية",
+    cdnPath: "https://server11.mp3quran.net/a_jbr/",
+  },
+  {
+    id: "mustafa-ismail",
+    name: "الشيخ مصطفى إسماعيل",
+    englishName: "Mustafa Ismail",
+    style: "المصحف المجود — رواية حفص عن عاصم",
+    description: "من أعلام التلاوة المصرية، وصاحب الأداء المتفرد في التجويد والمقامات.",
+    country: "مصر",
+    cdnPath: "https://server8.mp3quran.net/mustafa/Almusshaf-Al-Mojawwad/",
+  },
+  {
+    id: "mahmoud-albanna",
+    name: "الشيخ محمود علي البنا",
+    englishName: "Mahmoud Ali Albanna",
+    style: "المصحف المجود — رواية حفص عن عاصم",
+    description: "من كبار قراء مصر، وصاحب صوت عذب وأداء قرآني مميز.",
+    country: "مصر",
+    cdnPath: "https://server8.mp3quran.net/bna/Almusshaf-Al-Mojawwad/",
+  },
+  {
+    id: "ahmed-naina",
+    name: "الشيخ أحمد نعينع",
+    englishName: "Ahmed Naina",
+    style: "المصحف المرتل — رواية حفص عن عاصم",
+    description: "قارئ مصري متميز، يتمتع بصوت قوي وأداء متقن.",
+    country: "مصر",
+    cdnPath: "https://server11.mp3quran.net/ahmad_nu/",
+  },
 ];
 
-export function getReciterAudioUrl(reciterCdnPath: string, surahNumber: number): string {
+export function getReciterAudioUrl(
+  reciterCdnPath: string,
+  surahNumber: number
+): string {
   const padded = String(surahNumber).padStart(3, "0");
-  return `https://cdn.mp3quran.net/audio/${reciterCdnPath}/${padded}.mp3`;
+
+  const baseUrl = reciterCdnPath.startsWith("https://")
+    ? reciterCdnPath
+    : `https://cdn.mp3quran.net/audio/${reciterCdnPath}/`;
+
+  return `${baseUrl}${padded}.mp3`;
 }
