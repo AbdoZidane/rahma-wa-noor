@@ -232,7 +232,7 @@ function IndexPage() {
 
       <DailyWird />
 
-      {/* Main Anchor Target */>
+      {/* Main Anchor Target */}
       <div id="main-sections" className="scroll-mt-16" />
 
       {/* 1. Quran */}
