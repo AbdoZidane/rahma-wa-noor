@@ -146,6 +146,8 @@ function RootComponent() {
   const rainAudioRef = useRef<HTMLAudioElement | null>(null);
   const [rainMuted, setRainMuted] = useState(false);
   const rainMutedRef = useRef(rainMuted);
+  const rainHasInteractedRef = useRef(false);
+  const quranIsPlayingRef = useRef(false);
   rainMutedRef.current = rainMuted;
 
   useEffect(() => {
@@ -168,13 +170,11 @@ function RootComponent() {
   useEffect(() => {
     const rainAudio = rainAudioRef.current;
     if (!rainAudio) return;
-    let hasInteracted = false;
-    let quranIsPlaying = false;
     rainAudio.volume = 0.055;
 
     const syncRain = () => {
-      if (!hasInteracted) return;
-      if (quranIsPlaying || rainMutedRef.current) {
+      if (!rainHasInteractedRef.current) return;
+      if (quranIsPlayingRef.current || rainMutedRef.current) {
         rainAudio.pause();
       } else if (rainAudio.paused) {
         void rainAudio.play().catch((error) => {
@@ -183,12 +183,12 @@ function RootComponent() {
       }
     };
     const onFirstInteraction = () => {
-      hasInteracted = true;
+      rainHasInteractedRef.current = true;
       syncRain();
     };
     const onQuranPlaybackChange = (event: Event) => {
       const playbackEvent = event as CustomEvent<{ playing: boolean }>;
-      quranIsPlaying = Boolean(playbackEvent.detail?.playing);
+      quranIsPlayingRef.current = Boolean(playbackEvent.detail?.playing);
       syncRain();
     };
     window.addEventListener("pointerdown", onFirstInteraction);
@@ -203,6 +203,20 @@ function RootComponent() {
       rainAudio.pause();
     };
   }, []);
+
+  // Apply mute/unmute immediately without resetting the first-interaction or Quran state.
+  useEffect(() => {
+    const rainAudio = rainAudioRef.current;
+    if (!rainAudio || !rainHasInteractedRef.current) return;
+
+    if (rainMuted || quranIsPlayingRef.current) {
+      rainAudio.pause();
+    } else {
+      void rainAudio.play().catch((error) => {
+        console.warn("Rain ambience could not start:", error);
+      });
+    }
+  }, [rainMuted]);
 
   return (
     <QueryClientProvider client={queryClient}>
