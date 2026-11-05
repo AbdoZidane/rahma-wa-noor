@@ -85,3 +85,17 @@ $$;
 
 revoke all on function public.get_admin_visitor_stats() from public, anon;
 grant execute on function public.get_admin_visitor_stats() to authenticated;
+
+
+-- عدد الزيارات الإجمالي للعرض العام دون كشف بيانات الزوار.
+create or replace function public.get_public_visitor_count()
+returns bigint
+language sql
+security definer
+set search_path = public
+as $$
+  select count(distinct visitor_id) from public.site_visits;
+$$;
+
+revoke all on function public.get_public_visitor_count() from public;
+grant execute on function public.get_public_visitor_count() to anon, authenticated;
