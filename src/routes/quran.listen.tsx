@@ -1,3 +1,4 @@
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
@@ -38,13 +39,13 @@ export const Route = createFileRoute("/quran/listen")({
       { title: "الاستماع إلى القرآن الكريم | رحمة ونور" },
       {
         name: "description",
-        content: `استمع إلى تلاوات خاشعة لجميع سور القرآن الكريم بأصوات كبار القراء الستة، صدقة جارية في ذكرى ${DECEASED_NAME}.`,
+        content: `استمع إلى تلاوات خاشعة لجميع سور القرآن الكريم بأصوات عشرة من كبار القراء، صدقة جارية في ذكرى ${DECEASED_NAME}.`,
       },
       { property: "og:title", content: "الاستماع إلى القرآن الكريم | رحمة ونور" },
       {
         property: "og:description",
         content:
-          "مشغل صوتي موثوق لتلاوات القرآن الكريم بأصوات عبد الباسط، الحصري، العفاسي، المنشاوي، المعيقلي، والسديس.",
+          "مشغل صوتي لتلاوات القرآن الكريم بأصوات عشرة من كبار القراء، من بينهم عبد الباسط والحصري والعفاسي والمنشاوي وعلي جابر ومصطفى إسماعيل ومحمود علي البنا وأحمد نعينع.",
       },
     ],
   }),
@@ -317,7 +318,7 @@ export function QuranListenPage() {
       <PageHeader eyebrow="القرآن الكريم" title="الاستماع إلى القرآن الكريم">
         «وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ»
         <span className="mt-2 block text-sm text-gold-soft">
-          تلاوات خاشعة لجميع سور القرآن الكريم بأصوات ستة من كبار القراء — صدقة جارية في ذكرى{" "}
+          تلاوات خاشعة للقرآن الكريم بأصوات عشرة من كبار القراء — صدقة جارية في ذكرى{" "}
           {DECEASED_NAME}
         </span>
       </PageHeader>
@@ -341,17 +342,17 @@ export function QuranListenPage() {
             </Button>
           </div>
 
-          {/* Section 1: The 6 Reciters Selection Grid */}
+          {/* Section 1: The 10 Reciters Selection Grid */}
           <div className="mb-10">
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <span className="text-xs font-semibold text-gold">أصوات مباركة خاشعة</span>
                 <h2 className="font-serif text-2xl font-bold text-primary sm:text-3xl">
-                  اختر القارئ (٦ قراء معتمدين)
+                  اختر القارئ (١٠ قراء معتمدين)
                 </h2>
               </div>
               <span className="hidden rounded-full bg-forest/10 px-3 py-1 text-xs font-semibold text-primary sm:inline-block">
-                تلاوات مسجلة كاملة لجميع السور
+                تلاوات قرآنية متاحة
               </span>
             </div>
 
@@ -407,7 +408,7 @@ export function QuranListenPage() {
                     </p>
 
                     <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
-                      <span>١١٤ سورة كاملة</span>
+                      <span>تلاوات قرآنية متاحة</span>
                       <span className={isSelected ? "font-semibold text-primary" : ""}>
                         {isSelected ? "القارئ الحالي" : "اختيار القارئ"}
                       </span>
