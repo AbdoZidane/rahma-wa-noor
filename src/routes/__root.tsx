@@ -145,6 +145,8 @@ function RootComponent() {
   const router = useRouter();
   const rainAudioRef = useRef<HTMLAudioElement | null>(null);
   const [rainMuted, setRainMuted] = useState(false);
+  const rainMutedRef = useRef(rainMuted);
+  rainMutedRef.current = rainMuted;
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -172,7 +174,7 @@ function RootComponent() {
 
     const syncRain = () => {
       if (!hasInteracted) return;
-      if (quranIsPlaying || rainMuted) {
+      if (quranIsPlaying || rainMutedRef.current) {
         rainAudio.pause();
       } else if (rainAudio.paused) {
         void rainAudio.play().catch((error) => {
@@ -200,7 +202,7 @@ function RootComponent() {
       window.removeEventListener("quran-playback-change", onQuranPlaybackChange);
       rainAudio.pause();
     };
-  }, [rainMuted]);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
