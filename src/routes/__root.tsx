@@ -150,8 +150,8 @@ function RootComponent() {
       if (quranIsPlaying) {
         rainAudio.pause();
       } else if (rainAudio.paused) {
-        void rainAudio.play().catch(() => {
-          // The browser may still block playback; a later visitor interaction can retry.
+        void rainAudio.play().catch((error) => {
+          console.warn("Rain ambience could not start:", error);
         });
       }
     };
@@ -181,9 +181,9 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <audio
         ref={rainAudioRef}
-        src="https://sfxmint.com/dl/ambience-rain-62.wav"
+        src="https://sfxmint.com/dl/ambience-rain-62.mp3"
         loop
-        preload="none"
+        preload="auto"
         aria-hidden="true"
       />
       <div className="flex min-h-screen flex-col">
