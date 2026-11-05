@@ -27,7 +27,7 @@ export function DailyWird() {
     (new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() -
       new Date(2025, 0, 1).getTime()) / 86400000,
   );
-  const index = (n: number) => ((n % dayIndex + dayIndex) % n);
+  const index = (n: number) => ((dayIndex % n) + n) % n;
   const verse = VERSES[index(VERSES.length)];
   const dhikr = DHIKR[index(DHIKR.length)];
   const dua = DUAS[index(DUAS.length)];
