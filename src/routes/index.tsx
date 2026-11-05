@@ -72,8 +72,6 @@ function IndexPage() {
   const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
   const latest = prayers.slice(0, 3);
 
-  const [welcomeOpen, setWelcomeOpen] = useState(true);
-
   // Embedded Mini Tasbeeh state for Section 4
   const [selectedDhikr, setSelectedDhikr] = useState(MINI_TASBEEH_PRESETS[0]);
   const [count, setCount] = useState(0);
@@ -115,45 +113,6 @@ function IndexPage() {
 
   return (
     <>
-      {/* Welcome Modal */}
-      {welcomeOpen && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-forest-deep/75 px-4 py-8 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="welcome-title"
-        >
-          <div className="relative w-full max-w-xl rounded-3xl border-2 border-gold/50 bg-card p-7 text-center shadow-2xl sm:p-10">
-            <button
-              type="button"
-              onClick={() => setWelcomeOpen(false)}
-              aria-label="إغلاق رسالة الترحيب"
-              className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full border border-gold/40 text-primary transition hover:bg-gold/15"
-            >
-              <span aria-hidden="true" className="text-2xl">
-                ×
-              </span>
-            </button>
-
-            <p className="mb-3 text-sm font-semibold text-gold">رحمة ونور</p>
-
-            <h2
-              id="welcome-title"
-              className="font-serif text-2xl font-bold text-primary sm:text-3xl"
-            >
-              عبدالرازق محمود زيدان
-            </h2>
-
-            <Divider className="my-5" />
-
-            <p className="font-serif text-lg leading-loose text-foreground">
-              عاش طيب الذكر، نقي السرير، محباً للخير وأهله، باراً بالجميع وكريم الخلق. ستبقى كلماته
-              ودعواته الطيبة منارة لنا في كل خطوة، وهذا الموقع صدقة جارية مستمرة عنه بإذن الله.
-            </p>
-          </div>
-        </div>
-      )}
-
       {/* HERO SECTION */}
       <section className="bg-forest-gradient pattern-islamic-strong relative overflow-hidden text-forest-foreground">
         <div
