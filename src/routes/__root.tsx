@@ -143,7 +143,7 @@ function RootComponent() {
     if (!rainAudio) return;
     let hasInteracted = false;
     let quranIsPlaying = false;
-    rainAudio.volume = 0.07;
+    rainAudio.volume = 0.04;
 
     const syncRain = () => {
       if (!hasInteracted) return;
