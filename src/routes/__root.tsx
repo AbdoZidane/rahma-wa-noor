@@ -8,7 +8,7 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -144,6 +144,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   const rainAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [rainMuted, setRainMuted] = useState(false);
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
@@ -171,7 +172,7 @@ function RootComponent() {
 
     const syncRain = () => {
       if (!hasInteracted) return;
-      if (quranIsPlaying) {
+      if (quranIsPlaying || rainMuted) {
         rainAudio.pause();
       } else if (rainAudio.paused) {
         void rainAudio.play().catch((error) => {
@@ -199,7 +200,7 @@ function RootComponent() {
       window.removeEventListener("quran-playback-change", onQuranPlaybackChange);
       rainAudio.pause();
     };
-  }, []);
+  }, [rainMuted]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -211,7 +212,7 @@ function RootComponent() {
         aria-hidden="true"
       />
       <div className="flex min-h-screen flex-col pb-16 lg:pb-0">
-        <SiteHeader />
+        <SiteHeader rainMuted={rainMuted} onToggleRain={() => setRainMuted((muted) => !muted)} />
         <main className="flex-1">
           <Outlet />
         </main>
