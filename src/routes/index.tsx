@@ -1,7 +1,7 @@
 
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BookOpen,
   Headphones,
@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Portrait } from "@/components/site/Portrait";
 import { Divider, StarMark } from "@/components/site/Ornament";
 import { CopyButton } from "@/components/site/CopyButton";
+import { DailyWird } from "@/components/site/DailyWird";
 import {
   approvedPrayersQuery,
   DECEASED_NAME,
@@ -79,6 +80,30 @@ function IndexPage() {
   const [count, setCount] = useState(0);
   const [target, setTarget] = useState(33);
   const [pulse, setPulse] = useState(0);
+  const [miniLoaded, setMiniLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("tasbeeh-home") || "null");
+      if (saved && typeof saved.count === "number") {
+        setCount(saved.count);
+        setSelectedDhikr(
+          MINI_TASBEEH_PRESETS.includes(saved.selectedDhikr)
+            ? saved.selectedDhikr
+            : MINI_TASBEEH_PRESETS[0],
+        );
+        setTarget([33, 100, 1000].includes(saved.target) ? saved.target : 33);
+      }
+    } catch {
+      /* Ignore invalid local progress and start fresh. */
+    }
+    setMiniLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!miniLoaded) return;
+    localStorage.setItem("tasbeeh-home", JSON.stringify({ count, selectedDhikr, target }));
+  }, [count, selectedDhikr, target, miniLoaded]);
 
   const increment = () => {
     setCount((c) => c + 1);
@@ -205,7 +230,9 @@ function IndexPage() {
         </div>
       </section>
 
-      {/* Main Anchor Target */}
+      <DailyWird />
+
+      {/* Main Anchor Target */>
       <div id="main-sections" className="scroll-mt-16" />
 
       {/* 1. Quran */}
@@ -504,7 +531,7 @@ function IndexPage() {
 
             <div className="mt-8 flex items-center justify-center gap-4">
               <div className="flex rounded-full bg-secondary p-1">
-                {[33, 100].map((t) => (
+                {[33, 100, 1000].map((t) => (
                   <button
                     key={t}
                     onClick={() => setTarget(t)}
