@@ -179,7 +179,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <audio ref={rainAudioRef} src="https://sfxmint.com/dl/ambience-rain-62.wav" loop preload="none" aria-hidden="true" />
+      <audio
+        ref={rainAudioRef}
+        src="https://sfxmint.com/dl/ambience-rain-62.wav"
+        loop
+        preload="none"
+        aria-hidden="true"
+      />
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1">
