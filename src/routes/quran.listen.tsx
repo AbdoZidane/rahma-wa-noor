@@ -52,6 +52,12 @@ export const Route = createFileRoute("/quran/listen")({
   component: QuranListenPage,
 });
 
+function notifyQuranPlayback(playing: boolean) {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("quran-playback-change", { detail: { playing } }));
+  }
+}
+
 function formatAudioTime(seconds: number): string {
   if (isNaN(seconds) || seconds < 0) return "00:00";
   const m = Math.floor(seconds / 60);
@@ -156,6 +162,7 @@ export function QuranListenPage() {
     audio.load();
 
     if (isPlaying) {
+      notifyQuranPlayback(true);
       setIsLoadingAudio(true);
       audio
         .play()
@@ -166,11 +173,17 @@ export function QuranListenPage() {
         .catch((err: unknown) => {
           setIsLoadingAudio(false);
           setIsPlaying(false);
+          notifyQuranPlayback(false);
           const msg = err instanceof Error ? err.message : "تعذر تشغيل التلاوة";
           setAudioError(msg);
         });
     }
   }, [audioSrc, isPlaying, selectedReciterId, selectedSurahNumber]);
+
+  // Keep the site-wide rain ambience mutually exclusive with Quran playback.
+  useEffect(() => {
+    return () => notifyQuranPlayback(false);
+  }, []);
 
   // Audio Event Handlers
   const handleTogglePlay = () => {
@@ -180,7 +193,9 @@ export function QuranListenPage() {
     if (isPlaying) {
       audio.pause();
       setIsPlaying(false);
+      notifyQuranPlayback(false);
     } else {
+      notifyQuranPlayback(true);
       setIsLoadingAudio(true);
       setAudioError(null);
       audio
@@ -192,6 +207,7 @@ export function QuranListenPage() {
         .catch((err: unknown) => {
           setIsLoadingAudio(false);
           setIsPlaying(false);
+          notifyQuranPlayback(false);
           setAudioError(
             "تعذر تشغيل الملف الصوتي من المصدر الموثوق. يرجى التحقق من اتصال الإنترنت.",
           );
@@ -250,15 +266,18 @@ export function QuranListenPage() {
 
   const handleTrackEnded = () => {
     if (isLooping) {
+      notifyQuranPlayback(true);
       if (audioRef.current) {
         audioRef.current.currentTime = 0;
         audioRef.current.play();
       }
     } else if (autoAdvance && selectedSurahNumber < 114) {
+      notifyQuranPlayback(true);
       setSelectedSurahNumber((prev) => prev + 1);
       toast.info(`الانتقال التلقائي إلى تلاوة ${SURAHS_LIST[selectedSurahNumber].nameSimple}`);
     } else {
       setIsPlaying(false);
+      notifyQuranPlayback(false);
       setCurrentTime(0);
     }
   };
@@ -280,6 +299,7 @@ export function QuranListenPage() {
   }, [searchQuery, filterType]);
 
   const handleSelectSurahAndPlay = (surahNum: number) => {
+    notifyQuranPlayback(true);
     setSelectedSurahNumber(surahNum);
     setIsPlaying(true);
     playerCardRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -306,11 +326,13 @@ export function QuranListenPage() {
         onPlaying={() => {
           setIsLoadingAudio(false);
           setIsPlaying(true);
+          notifyQuranPlayback(true);
         }}
         onEnded={handleTrackEnded}
         onError={() => {
           setIsLoadingAudio(false);
           setIsPlaying(false);
+          notifyQuranPlayback(false);
           setAudioError("تعذر تحميل الملف الصوتي للتلاوة من المصدر الموثوق. يرجى إعادة المحاولة.");
         }}
       />
