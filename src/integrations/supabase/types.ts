@@ -104,6 +104,12 @@ export type Database = {
         };
         Relationships: [];
       };
+      site_visits: {
+        Row: { id: number; visitor_id: string; page_path: string; visited_at: string };
+        Insert: { id?: number; visitor_id: string; page_path?: string; visited_at?: string };
+        Update: { id?: number; visitor_id?: string; page_path?: string; visited_at?: string };
+        Relationships: [];
+      };
       user_roles: {
         Row: {
           id: string;
