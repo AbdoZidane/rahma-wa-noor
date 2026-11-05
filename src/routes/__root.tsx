@@ -8,7 +8,7 @@ import {
   Scripts,
   type ErrorComponentProps,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -127,6 +127,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+  const rainAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
@@ -137,8 +138,54 @@ function RootComponent() {
     return () => data.subscription.unsubscribe();
   }, [router, queryClient]);
 
+  useEffect(() => {
+    const rainAudio = rainAudioRef.current;
+    if (!rainAudio) return;
+    let hasInteracted = false;
+    let quranIsPlaying = false;
+    rainAudio.volume = 0.12;
+
+    const syncRain = () => {
+      if (!hasInteracted) return;
+      if (quranIsPlaying) {
+        rainAudio.pause();
+      } else if (rainAudio.paused) {
+        void rainAudio.play().catch(() => {
+          // The browser may still block playback; a later visitor interaction can retry.
+        });
+      }
+    };
+    const onFirstInteraction = () => {
+      hasInteracted = true;
+      syncRain();
+    };
+    const onQuranPlaybackChange = (event: Event) => {
+      const playbackEvent = event as CustomEvent<{ playing: boolean }>;
+      quranIsPlaying = Boolean(playbackEvent.detail?.playing);
+      syncRain();
+    };
+    window.addEventListener("pointerdown", onFirstInteraction);
+    window.addEventListener("keydown", onFirstInteraction);
+    window.addEventListener("touchstart", onFirstInteraction);
+    window.addEventListener("quran-playback-change", onQuranPlaybackChange);
+    return () => {
+      window.removeEventListener("pointerdown", onFirstInteraction);
+      window.removeEventListener("keydown", onFirstInteraction);
+      window.removeEventListener("touchstart", onFirstInteraction);
+      window.removeEventListener("quran-playback-change", onQuranPlaybackChange);
+      rainAudio.pause();
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
+      <audio
+        ref={rainAudioRef}
+        src="https://sfxmint.com/dl/ambience-rain-62.wav"
+        loop
+        preload="none"
+        aria-hidden="true"
+      />
       <div className="flex min-h-screen flex-col">
         <SiteHeader />
         <main className="flex-1">
