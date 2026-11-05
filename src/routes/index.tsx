@@ -11,7 +11,7 @@ import {
   Sun,
   UserRound,
   RotateCcw,
-  ArrowLeft,
+  ArrowLeft,                                                                                                                                                                              
   Volume2,
   ScrollText,
 } from "lucide-react";
@@ -52,7 +52,6 @@ const QUICK_SECTIONS = [
   { id: "duas-section", number: "٢", label: "الأدعية", icon: HandHeart },
   { id: "azkar-section", number: "٣", label: "الأذكار", icon: Sun },
   { id: "tasbeeh-section", number: "٤", label: "المسبحة الإلكترونية", icon: Sparkles },
-  { id: "grandfather-section", number: "٥", label: "ذكرى جدي وسيرته", icon: UserRound },
 ] as const;
 
 const MINI_TASBEEH_PRESETS = [
@@ -68,6 +67,7 @@ function IndexPage() {
   const { data: content } = useSuspenseQuery(siteContentQuery);
   const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
   const latest = prayers.slice(0, 3);
+  const [welcomeOpen, setWelcomeOpen] = useState(true);
 
   // Embedded Mini Tasbeeh state for Section 4
   const [selectedDhikr, setSelectedDhikr] = useState(MINI_TASBEEH_PRESETS[0]);
@@ -86,6 +86,37 @@ function IndexPage() {
 
   return (
     <>
+      {welcomeOpen && (
+  <div
+    className="fixed inset-0 z-[100] flex items-center justify-center bg-forest-deep/75 px-4 py-8 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="welcome-title"
+  >
+    <div className="relative w-full max-w-xl rounded-3xl border-2 border-gold/50 bg-card p-7 text-center shadow-2xl sm:p-10">
+      <button
+        type="button"
+        onClick={() => setWelcomeOpen(false)}
+        aria-label="إغلاق رسالة الترحيب"
+        className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full border border-gold/40 text-primary hover:bg-gold/15"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <p className="mb-3 text-sm font-semibold text-gold">رحمة ونور</p>
+
+      <h2 id="welcome-title" className="font-serif text-2xl font-bold text-primary sm:text-3xl">
+        عبدالرازق محمود زيدان
+      </h2>
+
+      <Divider className="my-5" />
+
+      <p className="font-serif text-lg leading-loose text-foreground">
+        عاش طيب الذكر، نقي السرير، محباً للخير وأهله، باراً بالجميع وكريم الخلق. ستبقى كلماته ودعواته الطيبة منارة لنا في كل خطوة، وهذا الموقع صدقة جارية مستمرة عنه بإذن الله.
+      </p>
+    </div>
+  </div>
+)}
       {/* ────────────────────────────────────────────────────────── */}
       {/* HERO SECTION — الترحم على الجد والدعاء له                */}
       {/* ────────────────────────────────────────────────────────── */}
@@ -519,57 +550,7 @@ function IndexPage() {
           </div>
         </div>
       </section>
-
-      {/* ────────────────────────────────────────────────────────── */}
-      {/* 5. ذكرى جدي وسيرته وصورته (القسم الخامس)                   */}
-      {/* ────────────────────────────────────────────────────────── */}
-      <section id="grandfather-section" className="pattern-islamic scroll-mt-20 py-20">
-        <div className="mx-auto max-w-6xl px-5">
-          <div className="text-center">
-            <h2 className="font-serif text-3xl font-bold text-primary sm:text-4xl">
-              ذكرى جدي وسيرته وصورته
-            </h2>
-            <Divider className="mt-4" />
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              وفاءً لرجل عظيم ترك في نفوسنا أثراً طيباً لا يمحوه الزمن، نسأل الله أن يجمعنا به في
-              جنات النعيم.
-            </p>
-          </div>
-
-          {/* Grandfather Memorial Card */}
-          <div className="mt-12 overflow-hidden rounded-3xl border-2 border-border bg-card p-6 shadow-soft sm:p-10">
-            <div className="grid items-center gap-8 md:grid-cols-[auto_1fr]">
-              <div className="flex justify-center">
-                <Portrait
-                  src={portraitSrc(content.portraitPath)}
-                  name={DECEASED_NAME}
-                  className="w-48 sm:w-60"
-                />
-              </div>
-              <div className="space-y-4 text-center md:text-start">
-                <div className="inline-flex items-center gap-2 rounded-full bg-forest/10 px-3 py-1 text-xs font-medium text-primary">
-                  <Sparkles className="size-3.5 text-gold" />
-                  رحمه الله رحمة واسعة وأسكنه الفردوس الأعلى
-                </div>
-                <h3 className="font-serif text-3xl font-bold text-primary sm:text-4xl">
-                  {DECEASED_NAME}
-                </h3>
-                <p className="font-serif text-lg leading-relaxed text-foreground/85">
-                  {content.biography ||
-                    "عاش طيب الذكر، نقي السرير، محباً للخير وأهله، باراً بالجميع وكريم الخلق. ستبقى كلماته ودعواته الطيبة منارة لنا في كل خطوة، وهذا الموقع صدقة جارية مستمرة عنه بإذن الله."}
-                </p>
-                <div className="flex flex-wrap justify-center gap-3 pt-2 md:justify-start">
-                  <Button asChild variant="gold" size="lg">
-                    <Link to="/about">قراءة السيرة والذكريات العائلية</Link>
-                  </Button>
-                  <Button asChild variant="outline" size="lg">
-                    <Link to="/prayers">اترك دعاءً للمتوفى</Link>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-
+  
           {/* Latest Prayers from Visitors */}
           {latest.length > 0 && (
             <div className="mt-16">
