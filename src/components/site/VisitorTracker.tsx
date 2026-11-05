@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useRouterState } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 
-const VISITOR_ID_KEY = "rahma-noor-visitor-id";
+const VISITOR_SESSION_KEY = "rahma-noor-visit-session-id";
 
-function getVisitorId(): string | null {
+function getVisitSessionId(): string | null {
   try {
-    let id = localStorage.getItem(VISITOR_ID_KEY);
+    let id = sessionStorage.getItem(VISITOR_SESSION_KEY);
     if (!id) {
       id = crypto.randomUUID();
-      localStorage.setItem(VISITOR_ID_KEY, id);
+      sessionStorage.setItem(VISITOR_SESSION_KEY, id);
     }
     return id;
   } catch {
@@ -21,14 +21,18 @@ export function VisitorTracker() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   useEffect(() => {
-    const visitorId = getVisitorId();
-    if (!visitorId) return;
+    const visitSessionId = getVisitSessionId();
+    if (!visitSessionId) return;
 
     void supabase.rpc("record_site_visit", {
-      p_visitor_id: visitorId,
+      p_visitor_id: visitSessionId,
       p_page_path: pathname,
     }).then(({ error }) => {
-      if (error) console.warn("Visitor analytics could not record this visit:", error.message);
+      if (error) {
+        console.warn("Visitor analytics could not record this visit:", error.message);
+        return;
+      }
+      window.dispatchEvent(new Event("visitor-count-updated"));
     });
   }, [pathname]);
 
