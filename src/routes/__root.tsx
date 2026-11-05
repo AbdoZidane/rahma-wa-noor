@@ -95,6 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -128,6 +129,14 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
   const rainAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      void navigator.serviceWorker.register("/sw.js").catch((error) => {
+        console.warn("Service worker registration failed:", error);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
@@ -186,7 +195,7 @@ function RootComponent() {
         preload="auto"
         aria-hidden="true"
       />
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col pb-16 lg:pb-0">
         <SiteHeader />
         <main className="flex-1">
           <Outlet />
