@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Home, Menu, Sparkles, Sun } from "lucide-react";
+import { BookOpen, Home, Menu, Sparkles, Sun, Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { StarMark } from "./Ornament";
@@ -17,15 +17,27 @@ export const NAV = [
 const linkCls =
   "rounded-full px-3 py-2 text-sm text-forest-foreground/80 transition-colors hover:text-gold data-[status=active]:text-gold";
 
-export function SiteHeader() {
+export function SiteHeader({ rainMuted, onToggleRain }: { rainMuted: boolean; onToggleRain: () => void }) {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-gold/20 bg-forest-deep/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
-        <Link to="/" className="flex items-center gap-2 text-forest-foreground">
-          <StarMark className="size-7 text-gold" />
-          <span className="font-serif text-xl font-bold">رحمة ونور</span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-2 text-forest-foreground">
+            <StarMark className="size-7 text-gold" />
+            <span className="font-serif text-xl font-bold">رحمة ونور</span>
+          </Link>
+          <button
+            type="button"
+            onClick={onToggleRain}
+            aria-label={rainMuted ? "تشغيل صوت المطر" : "كتم صوت المطر"}
+            aria-pressed={rainMuted}
+            title={rainMuted ? "تشغيل صوت المطر" : "كتم صوت المطر"}
+            className="flex size-9 items-center justify-center rounded-full border border-gold/30 text-gold transition-colors hover:bg-gold/10"
+          >
+            {rainMuted ? <VolumeX className="size-5" /> : <Volume2 className="size-5" />}
+          </button>
+        </div>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="التنقل الرئيسي">
           {NAV.map((item) => (
