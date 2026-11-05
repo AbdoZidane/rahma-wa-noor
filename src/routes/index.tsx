@@ -1,3 +1,4 @@
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -5,13 +6,11 @@ import {
   BookOpen,
   Headphones,
   HandHeart,
-  Heart,
   Moon,
   Sparkles,
   Sun,
-  UserRound,
   RotateCcw,
-  ArrowLeft,                                                                                                                                                                              
+  ArrowLeft,
   Volume2,
   ScrollText,
 } from "lucide-react";
@@ -19,7 +18,12 @@ import { Button } from "@/components/ui/button";
 import { Portrait } from "@/components/site/Portrait";
 import { Divider, StarMark } from "@/components/site/Ornament";
 import { CopyButton } from "@/components/site/CopyButton";
-import { approvedPrayersQuery, DECEASED_NAME, portraitSrc, siteContentQuery } from "@/lib/queries";
+import {
+  approvedPrayersQuery,
+  DECEASED_NAME,
+  portraitSrc,
+  siteContentQuery,
+} from "@/lib/queries";
 import { DUAS, DUA_BENEFIT_HADITH } from "@/lib/content/duas";
 import { toArabicDigits } from "@/lib/content/quran";
 import { cn, formatArabicDate } from "@/lib/utils";
@@ -67,6 +71,7 @@ function IndexPage() {
   const { data: content } = useSuspenseQuery(siteContentQuery);
   const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
   const latest = prayers.slice(0, 3);
+
   const [welcomeOpen, setWelcomeOpen] = useState(true);
 
   // Embedded Mini Tasbeeh state for Section 4
@@ -86,40 +91,46 @@ function IndexPage() {
 
   return (
     <>
+      {/* Welcome Modal */}
       {welcomeOpen && (
-  <div
-    className="fixed inset-0 z-[100] flex items-center justify-center bg-forest-deep/75 px-4 py-8 backdrop-blur-sm"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="welcome-title"
-  >
-    <div className="relative w-full max-w-xl rounded-3xl border-2 border-gold/50 bg-card p-7 text-center shadow-2xl sm:p-10">
-      <button
-        type="button"
-        onClick={() => setWelcomeOpen(false)}
-        aria-label="إغلاق رسالة الترحيب"
-        className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full border border-gold/40 text-primary hover:bg-gold/15"
-      >
-        <span aria-hidden="true">×</span>
-      </button>
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-forest-deep/75 px-4 py-8 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="welcome-title"
+        >
+          <div className="relative w-full max-w-xl rounded-3xl border-2 border-gold/50 bg-card p-7 text-center shadow-2xl sm:p-10">
+            <button
+              type="button"
+              onClick={() => setWelcomeOpen(false)}
+              aria-label="إغلاق رسالة الترحيب"
+              className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full border border-gold/40 text-primary transition hover:bg-gold/15"
+            >
+              <span aria-hidden="true" className="text-2xl">
+                ×
+              </span>
+            </button>
 
-      <p className="mb-3 text-sm font-semibold text-gold">رحمة ونور</p>
+            <p className="mb-3 text-sm font-semibold text-gold">رحمة ونور</p>
 
-      <h2 id="welcome-title" className="font-serif text-2xl font-bold text-primary sm:text-3xl">
-        عبدالرازق محمود زيدان
-      </h2>
+            <h2
+              id="welcome-title"
+              className="font-serif text-2xl font-bold text-primary sm:text-3xl"
+            >
+              عبدالرازق محمود زيدان
+            </h2>
 
-      <Divider className="my-5" />
+            <Divider className="my-5" />
 
-      <p className="font-serif text-lg leading-loose text-foreground">
-        عاش طيب الذكر، نقي السرير، محباً للخير وأهله، باراً بالجميع وكريم الخلق. ستبقى كلماته ودعواته الطيبة منارة لنا في كل خطوة، وهذا الموقع صدقة جارية مستمرة عنه بإذن الله.
-      </p>
-    </div>
-  </div>
-)}
-      {/* ────────────────────────────────────────────────────────── */}
-      {/* HERO SECTION — الترحم على الجد والدعاء له                */}
-      {/* ────────────────────────────────────────────────────────── */}
+            <p className="font-serif text-lg leading-loose text-foreground">
+              عاش طيب الذكر، نقي السرير، محباً للخير وأهله، باراً بالجميع وكريم الخلق. ستبقى كلماته
+              ودعواته الطيبة منارة لنا في كل خطوة، وهذا الموقع صدقة جارية مستمرة عنه بإذن الله.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* HERO SECTION */}
       <section className="bg-forest-gradient pattern-islamic-strong relative overflow-hidden text-forest-foreground">
         <div
           className="pointer-events-none absolute left-1/2 top-24 size-[36rem] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl animate-glow"
@@ -160,7 +171,7 @@ function IndexPage() {
           </div>
         </div>
 
-        {/* Quick Nav Bar across the 5 Main Sections */}
+        {/* Quick Navigation */}
         <div className="border-t border-gold/15 bg-forest-deep/60 backdrop-blur-xs">
           <div className="mx-auto max-w-6xl px-4 py-4">
             <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
@@ -197,9 +208,7 @@ function IndexPage() {
       {/* Main Anchor Target */}
       <div id="main-sections" className="scroll-mt-16" />
 
-      {/* ────────────────────────────────────────────────────────── */}
-      {/* 1. القرآن الكريم (القسم الأول)                             */}
-      {/* ────────────────────────────────────────────────────────── */}
+      {/* 1. Quran */}
       <section
         id="quran-section"
         className="pattern-islamic scroll-mt-20 py-20 border-b border-border"
@@ -220,9 +229,7 @@ function IndexPage() {
             </p>
           </div>
 
-          {/* The Two Clear Choices for Quran */}
           <div className="mt-12 grid gap-6 sm:grid-cols-2">
-            {/* Choice 1: المصحف الكريم للقراءة */}
             <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-border bg-card p-8 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold">
               <div>
                 <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-forest text-gold transition-transform duration-300 group-hover:scale-110 shadow-soft">
@@ -248,7 +255,6 @@ function IndexPage() {
               </div>
             </div>
 
-            {/* Choice 2: الاستماع إلى القرآن الكريم بأصوات القراء */}
             <div className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border-2 border-border bg-card p-8 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-gold">
               <div>
                 <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-forest text-gold transition-transform duration-300 group-hover:scale-110 shadow-soft">
@@ -291,9 +297,7 @@ function IndexPage() {
         </div>
       </section>
 
-      {/* ────────────────────────────────────────────────────────── */}
-      {/* 2. الأدعية (القسم الثاني)                                 */}
-      {/* ────────────────────────────────────────────────────────── */}
+      {/* 2. Duas */}
       <section
         id="duas-section"
         className="bg-secondary/40 scroll-mt-20 py-20 border-b border-border"
@@ -350,9 +354,7 @@ function IndexPage() {
         </div>
       </section>
 
-      {/* ────────────────────────────────────────────────────────── */}
-      {/* 3. الأذكار (القسم الثالث)                                 */}
-      {/* ────────────────────────────────────────────────────────── */}
+      {/* 3. Azkar */}
       <section
         id="azkar-section"
         className="pattern-islamic scroll-mt-20 py-20 border-b border-border"
@@ -435,9 +437,7 @@ function IndexPage() {
         </div>
       </section>
 
-      {/* ────────────────────────────────────────────────────────── */}
-      {/* 4. المسبحة الإلكترونية (القسم الرابع)                       */}
-      {/* ────────────────────────────────────────────────────────── */}
+      {/* 4. Tasbeeh */}
       <section
         id="tasbeeh-section"
         className="bg-secondary/40 scroll-mt-20 py-20 border-b border-border"
@@ -458,7 +458,6 @@ function IndexPage() {
 
           {/* Interactive Embedded Mini Tasbeeh */}
           <div className="mt-10 rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-10">
-            {/* Dhikr Selector */}
             <div className="flex flex-wrap justify-center gap-2">
               {MINI_TASBEEH_PRESETS.map((d) => (
                 <button
@@ -479,14 +478,12 @@ function IndexPage() {
               ))}
             </div>
 
-            {/* Selected Dhikr Display */}
             <div className="mt-8">
               <p className="font-serif text-2xl font-bold text-primary sm:text-3xl">
                 {selectedDhikr}
               </p>
             </div>
 
-            {/* Circular Counter Button */}
             <div className="mt-8 flex justify-center">
               <button
                 onClick={increment}
@@ -505,7 +502,6 @@ function IndexPage() {
               </button>
             </div>
 
-            {/* Target and Controls */}
             <div className="mt-8 flex items-center justify-center gap-4">
               <div className="flex rounded-full bg-secondary p-1">
                 {[33, 100].map((t) => (
@@ -550,18 +546,25 @@ function IndexPage() {
           </div>
         </div>
       </section>
-  
-          {/* Latest Prayers from Visitors */}
+
+      {/* Visitor Prayers - Separate from the removed memorial section */}
+      <section
+        id="visitor-prayers"
+        className="pattern-islamic scroll-mt-20 py-16"
+      >
+        <div className="mx-auto max-w-6xl px-5">
           {latest.length > 0 && (
-            <div className="mt-16">
+            <div>
               <div className="text-center">
-                <h3 className="font-serif text-2xl font-bold text-primary sm:text-3xl">
+                <h2 className="font-serif text-2xl font-bold text-primary sm:text-3xl">
                   من دعوات الزوار والأحباب
-                </h3>
-                <p className="mt-1 text-sm text-muted-foreground">
+                </h2>
+                <Divider className="mt-4" />
+                <p className="mt-3 text-sm text-muted-foreground">
                   دعوات طيبة من قلوب محبة في ذكرى الجد رحمه الله
                 </p>
               </div>
+
               <div className="mt-8 grid gap-5 md:grid-cols-3">
                 {latest.map((p) => (
                   <figure
@@ -571,7 +574,7 @@ function IndexPage() {
                     <blockquote className="dua-text text-lg text-foreground">
                       {p.message}
                     </blockquote>
-                    <figcaption className="mt-4 border-t border-border pt-3 text-xs text-muted-foreground flex items-center justify-between">
+                    <figcaption className="mt-4 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
                       <span className="font-medium text-primary">
                         — {p.author_name || "فاعل خير"}
                       </span>
@@ -584,9 +587,12 @@ function IndexPage() {
                   </figure>
                 ))}
               </div>
+
               <div className="mt-8 text-center">
                 <Button asChild variant="default" size="lg" className="rounded-full">
-                  <Link to="/prayers">عرض كل الدعوات ({toArabicDigits(prayers.length)})</Link>
+                  <Link to="/prayers">
+                    عرض كل الدعوات ({toArabicDigits(prayers.length)})
+                  </Link>
                 </Button>
               </div>
             </div>
