@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Lock, ArrowRight, ShieldCheck } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,7 @@ function AuthPage() {
       if (error) {
         toast.error("بيانات الدخول غير صحيحة أو غير مفعلة حالياً");
       } else {
-        toast.success("تم تسجيل الدخول بنجاح");
+        toast.success("تم تسجيل الدخول بنجاح");\n        await navigate({ to: "/admin" });
       }
     } catch {
       toast.error("تعذر تسجيل الدخول حالياً");
