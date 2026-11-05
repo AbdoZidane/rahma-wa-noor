@@ -34,7 +34,7 @@ const DHIKR = [
   "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
   "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ",
 ];
-const TARGETS = [33, 100, 0] as const;
+const TARGETS = [33, 100, 1000, 0] as const;
 
 function TasbeehPage() {
   const [dhikr, setDhikr] = useState(0);
@@ -42,6 +42,8 @@ function TasbeehPage() {
   const [counts, setCounts] = useState<number[]>(() => DHIKR.map(() => 0));
   const [total, setTotal] = useState(0);
   const [pulse, setPulse] = useState(0);
+  const [vibrationEnabled, setVibrationEnabled] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     try {
@@ -50,16 +52,22 @@ function TasbeehPage() {
         setCounts(saved.counts);
         setTotal(saved.total ?? 0);
         setDhikr(saved.dhikr ?? 0);
-        setTarget(saved.target ?? 33);
+        setTarget([33, 100, 1000, 0].includes(saved.target) ? saved.target : 33);
+        setVibrationEnabled(saved.vibrationEnabled === true);
       }
     } catch {
       /* ignore */
     }
+    setLoaded(true);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("tasbeeh", JSON.stringify({ counts, total, dhikr, target }));
-  }, [counts, total, dhikr, target]);
+    if (!loaded) return;
+    localStorage.setItem(
+      "tasbeeh",
+      JSON.stringify({ counts, total, dhikr, target, vibrationEnabled }),
+    );
+  }, [counts, total, dhikr, target, vibrationEnabled, loaded]);
 
   const count = counts[dhikr];
   const reached = target > 0 && count > 0 && count % target === 0;
@@ -68,11 +76,11 @@ function TasbeehPage() {
     setCounts((c) => c.map((v, i) => (i === dhikr ? v + 1 : v)));
     setTotal((t) => t + 1);
     setPulse((p) => p + 1);
-    if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+    if (vibrationEnabled && typeof navigator !== "undefined" && "vibrate" in navigator) {
       const next = counts[dhikr] + 1;
       navigator.vibrate(target > 0 && next % target === 0 ? [60, 40, 60] : 15);
     }
-  }, [dhikr, counts, target]);
+  }, [dhikr, counts, target, vibrationEnabled]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -198,6 +206,14 @@ function TasbeehPage() {
                 ))}
               </div>
               <Button
+                variant={vibrationEnabled ? "gold" : "soft"}
+                className="rounded-full"
+                onClick={() => setVibrationEnabled((enabled) => !enabled)}
+                aria-pressed={vibrationEnabled}
+              >
+                {vibrationEnabled ? "الاهتزاز مفعّل" : "تفعيل الاهتزاز"}
+              </Button>
+              <Button
                 variant="soft"
                 className="rounded-full"
                 onClick={reset}
@@ -207,19 +223,32 @@ function TasbeehPage() {
               </Button>
             </div>
 
-            <p className="mt-6 text-sm text-muted-foreground">
-              مجموع تسبيحاتك: {toArabicDigits(total)}
+            <div className="mt-6 border-t border-border pt-5">
+              <p className="text-sm font-semibold text-primary">إحصائية أذكارك</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                مجموع تسبيحاتك المحفوظة: {toArabicDigits(total)}
+              </p>
+              <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {DHIKR.map((item, index) => (
+                  <div key={item} className="rounded-xl bg-secondary/70 p-3 text-start">
+                    <p className="text-xs leading-relaxed text-muted-foreground">{item}</p>
+                    <p className="mt-1 text-lg font-bold tabular-nums text-primary">
+                      {toArabicDigits(counts[index])}
+                    </p>
+                  </div>
+                ))}
+              </div>
               <button
                 type="button"
                 onClick={() => {
                   setTotal(0);
                   setCounts(DHIKR.map(() => 0));
                 }}
-                className="ms-3 underline-offset-4 hover:text-primary hover:underline"
+                className="mt-4 text-xs underline-offset-4 text-muted-foreground hover:text-primary hover:underline"
               >
-                تصفير الكل
+                تصفير الإحصائية
               </button>
-            </p>
+            </div>
           </div>
         </div>
       </section>
