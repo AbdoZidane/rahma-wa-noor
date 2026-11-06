@@ -232,7 +232,7 @@ function RootComponent() {
         ref={rainAudioRef}
         src="https://sfxmint.com/dl/ambience-rain-62.mp3"
         loop
-        preload="auto"
+        preload="none"
         aria-hidden="true"
         onEnded={(event) => {
           const audio = event.currentTarget;
