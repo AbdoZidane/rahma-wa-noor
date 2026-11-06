@@ -205,3 +205,49 @@ export const submitPrayer = createServerFn({ method: "POST" })
       return { ok: true };
     }
   });
+
+
+const visitSchema = z.object({
+  visitorId: z.string().uuid(),
+  pagePath: z.string().max(300).optional().default("/"),
+});
+
+export const recordSiteVisit = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => visitSchema.parse(input))
+  .handler(async ({ data }) => {
+    try {
+      if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
+        console.error("Visitor tracking is missing server Supabase environment variables.");
+        return { ok: false as const };
+      }
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { error } = await supabaseAdmin.rpc("record_site_visit", {
+        p_visitor_id: data.visitorId,
+        p_page_path: data.pagePath || "/",
+      });
+      if (error) {
+        console.error("recordSiteVisit:", error.message);
+        return { ok: false as const };
+      }
+      return { ok: true as const };
+    } catch (error) {
+      console.error("recordSiteVisit failed:", error);
+      return { ok: false as const };
+    }
+  });
+
+export const getPublicVisitorCount = createServerFn({ method: "GET" }).handler(async () => {
+  try {
+    if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_SERVICE_ROLE_KEY"]) return null;
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data, error } = await supabaseAdmin.rpc("get_public_visitor_count");
+    if (error) {
+      console.error("getPublicVisitorCount:", error.message);
+      return null;
+    }
+    return Number(data ?? 0);
+  } catch (error) {
+    console.error("getPublicVisitorCount failed:", error);
+    return null;
+  }
+});
