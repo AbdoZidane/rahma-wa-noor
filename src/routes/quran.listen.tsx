@@ -39,13 +39,13 @@ export const Route = createFileRoute("/quran/listen")({
       { title: "الاستماع إلى القرآن الكريم | رحمة ونور" },
       {
         name: "description",
-        content: `استمع إلى تلاوات خاشعة لجميع سور القرآن الكريم بأصوات عشرة من كبار القراء، صدقة جارية في ذكرى ${DECEASED_NAME}.`,
+        content: `استمع إلى تلاوات خاشعة للقرآن الكريم بأصوات أحد عشر قارئًا، صدقة جارية في ذكرى ${DECEASED_NAME}.`,
       },
       { property: "og:title", content: "الاستماع إلى القرآن الكريم | رحمة ونور" },
       {
         property: "og:description",
         content:
-          "مشغل صوتي لتلاوات القرآن الكريم بأصوات عشرة من كبار القراء، من بينهم عبد الباسط والحصري والعفاسي والمنشاوي وعلي جابر ومصطفى إسماعيل ومحمود علي البنا وأحمد نعينع.",
+          "مشغل صوتي لتلاوات القرآن الكريم بأصوات أحد عشر قارئًا، من بينهم عبد الباسط والحصري والعفاسي والمنشاوي وعلي جابر ومصطفى إسماعيل ومحمود علي البنا وأحمد نعينع.",
       },
     ],
   }),
@@ -131,15 +131,27 @@ export function QuranListenPage() {
     return SURAHS_LIST.find((s) => s.number === selectedSurahNumber) || SURAHS_LIST[0];
   }, [selectedSurahNumber]);
 
-  // Compute direct streaming MP3 URL
+  // Taha Al-Nomani uses an embedded archive library rather than numbered MP3 URLs.
+  const isArchiveReciter = currentReciter.id === "taha-nomani";
   const audioSrc = useMemo(() => {
-    return getReciterAudioUrl(currentReciter.cdnPath, currentSurah.number);
-  }, [currentReciter, currentSurah]);
+    return isArchiveReciter ? "" : getReciterAudioUrl(currentReciter.cdnPath, currentSurah.number);
+  }, [currentReciter, currentSurah, isArchiveReciter]);
 
   // Update audio element source when reciter or surah changes
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    if (isArchiveReciter) {
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+      setIsPlaying(false);
+      setIsLoadingAudio(false);
+      setAudioError(null);
+      notifyQuranPlayback(false);
+      return;
+    }
 
     setAudioError(null);
     setCurrentTime(0);
@@ -180,7 +192,7 @@ export function QuranListenPage() {
           setAudioError(msg);
         });
     }
-  }, [audioSrc, isPlaying, selectedReciterId, selectedSurahNumber]);
+  }, [audioSrc, isPlaying, selectedReciterId, selectedSurahNumber, isArchiveReciter]);
 
   // Keep the site-wide rain ambience mutually exclusive with Quran playback.
   useEffect(() => {
@@ -342,7 +354,7 @@ export function QuranListenPage() {
       <PageHeader eyebrow="القرآن الكريم" title="الاستماع إلى القرآن الكريم">
         «وَإِذَا قُرِئَ الْقُرْآنُ فَاسْتَمِعُوا لَهُ وَأَنصِتُوا لَعَلَّكُمْ تُرْحَمُونَ»
         <span className="mt-2 block text-sm text-gold-soft">
-          تلاوات خاشعة للقرآن الكريم بأصوات عشرة من كبار القراء — صدقة جارية في ذكرى{" "}
+          تلاوات خاشعة للقرآن الكريم بأصوات أحد عشر قارئًا — صدقة جارية في ذكرى{" "}
           {DECEASED_NAME}
         </span>
       </PageHeader>
@@ -372,7 +384,7 @@ export function QuranListenPage() {
               <div>
                 <span className="text-xs font-semibold text-gold">أصوات مباركة خاشعة</span>
                 <h2 className="font-serif text-2xl font-bold text-primary sm:text-3xl">
-                  اختر القارئ (١٠ قراء معتمدين)
+                  اختر القارئ (١١ قارئًا)
                 </h2>
               </div>
               <span className="hidden rounded-full bg-forest/10 px-3 py-1 text-xs font-semibold text-primary sm:inline-block">
@@ -442,32 +454,6 @@ export function QuranListenPage() {
               })}
             </div>
 
-            <div className="mt-5 overflow-hidden rounded-2xl border border-gold/40 bg-gradient-to-b from-gold/10 via-card to-card p-4 sm:p-6">
-              <div className="mb-4 text-center">
-                <span className="text-xs font-semibold text-gold">إضافة مميزة · تلاوات خاشعة</span>
-                <h3 className="mt-1 font-serif text-xl font-bold text-primary">
-                  الشيخ طه النعماني
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  مكتبة تضم تلاوات كثيرة للشيخ طه النعماني، ومنها تلاوتان لسورة الكهف،
-                  ومقاطع منشورة بمقام النهاوند. استمع إليها من هنا دون مغادرة صفحة الموقع.
-                </p>
-              </div>
-              <div className="overflow-hidden rounded-xl border border-border bg-background">
-                <iframe
-                  title="تلاوات الشيخ طه النعماني"
-                  src="https://archive.org/embed/aaaaaaaaaaa-19-20a"
-                  width="100%"
-                  height="480"
-                  loading="lazy"
-                  allow="autoplay; fullscreen"
-                  className="block w-full"
-                />
-              </div>
-              <p className="mt-3 text-center text-xs text-muted-foreground">
-                مشغّل مكتبة صوتية مضمّن داخل الموقع · يحتوي على ١٦٢ تلاوة
-              </p>
-            </div>
           </div>
 
           {/* Section 2: Dedicated Master Audio Player Card */}
@@ -494,6 +480,31 @@ export function QuranListenPage() {
               </p>
             </div>
 
+            {isArchiveReciter && (
+              <div className="mx-auto mt-7 w-full max-w-3xl overflow-hidden rounded-2xl border border-gold/40 bg-background">
+                <div className="border-b border-border bg-gold/10 px-4 py-3 text-center">
+                  <p className="font-semibold text-primary">مكتبة الشيخ طه النعماني</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    استمع إلى التلاوات من داخل الموقع، واختر التسجيل من القائمة بالأسفل
+                  </p>
+                </div>
+                <iframe
+                  title="مكتبة تلاوات الشيخ طه النعماني"
+                  src="https://archive.org/embed/aaaaaaaaaaa-19-20a"
+                  width="100%"
+                  height="480"
+                  loading="lazy"
+                  allow="autoplay; fullscreen"
+                  className="block w-full"
+                />
+                <p className="px-3 py-2 text-center text-[11px] text-muted-foreground">
+                  مكتبة صوتية تضم ١٦٢ تسجيلًا · المشغّل مضمّن داخل صفحة الاستماع
+                </p>
+              </div>
+            )}
+
+            {!isArchiveReciter && (
+              <>
             {/* Error Notification Banner if any */}
             {audioError && (
               <div className="mx-auto mt-6 flex max-w-xl items-center gap-3 rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-xs text-destructive">
@@ -690,6 +701,8 @@ export function QuranListenPage() {
                 <span>مشاركة التلاوة</span>
               </Button>
             </div>
+            </>
+            )}
           </div>
 
           {/* Section 3: Surahs Playlist & Filter Table (All 114 Surahs) */}
