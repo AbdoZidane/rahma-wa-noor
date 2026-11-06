@@ -192,6 +192,7 @@ export const submitPrayer = createServerFn({ method: "POST" })
       const { error } = await supabaseAdmin.from("prayers").insert({
         author_name: data.name || null,
         message: data.message,
+        status: "approved",
       });
       if (error) {
         console.error("submitPrayer", error.message);
