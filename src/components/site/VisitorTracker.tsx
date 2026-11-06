@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useRouterState } from "@tanstack/react-router";
-import { supabase } from "@/integrations/supabase/client";
+import { recordSiteVisit } from "@/lib/site.functions";
 
 const VISITOR_SESSION_KEY = "rahma-noor-visit-session-id";
 
@@ -24,15 +24,12 @@ export function VisitorTracker() {
     const visitSessionId = getVisitSessionId();
     if (!visitSessionId) return;
 
-    void supabase.rpc("record_site_visit", {
-      p_visitor_id: visitSessionId,
-      p_page_path: pathname,
-    }).then(({ error }) => {
-      if (error) {
-        console.warn("Visitor analytics could not record this visit:", error.message);
-        return;
+    void recordSiteVisit({ data: { visitorId: visitSessionId, pagePath: pathname } }).then((result) => {
+      if (result?.ok) {
+        window.dispatchEvent(new Event("visitor-count-updated"));
       }
-      window.dispatchEvent(new Event("visitor-count-updated"));
+    }).catch((error) => {
+      console.warn("Visitor analytics could not record this visit:", error);
     });
   }, [pathname]);
 
