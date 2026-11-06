@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { Heart, Send, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -33,6 +33,7 @@ export const Route = createFileRoute("/prayers")({
 
 function PrayersPage() {
   const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
+  const queryClient = useQueryClient();
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState(""); // Honeypot
@@ -67,6 +68,7 @@ function PrayersPage() {
         toast.success("جزاك الله خيراً، تم إرسال دعائك بنجاح");
         setName("");
         setMessage("");
+        await queryClient.invalidateQueries({ queryKey: ["approved-prayers"] });
         setSubmitted(true);
       } else {
         toast.error(res.error || "تعذر إرسال الدعاء، يرجى المحاولة لاحقاً");
