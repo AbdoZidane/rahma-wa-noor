@@ -83,6 +83,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#13301f" },
       { title: "رحمة ونور | ذكرى عبدالرازق محمود زيدان" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { name: "googlebot", content: "index, follow, max-image-preview:large" },
+      {
+        name: "keywords",
+        content: "رحمة ونور، عبدالرازق محمود زيدان، دعاء للمتوفى، القرآن الكريم، أذكار الصباح والمساء، صدقة جارية",
+      },
       {
         name: "description",
         content:
