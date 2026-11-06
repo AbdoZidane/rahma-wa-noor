@@ -131,27 +131,14 @@ export function QuranListenPage() {
     return SURAHS_LIST.find((s) => s.number === selectedSurahNumber) || SURAHS_LIST[0];
   }, [selectedSurahNumber]);
 
-  // Taha Al-Nomani uses an embedded archive library rather than numbered MP3 URLs.
-  const isArchiveReciter = currentReciter.id === "taha-nomani";
   const audioSrc = useMemo(() => {
-    return isArchiveReciter ? "" : getReciterAudioUrl(currentReciter.cdnPath, currentSurah.number);
-  }, [currentReciter, currentSurah, isArchiveReciter]);
+    return getReciterAudioUrl(currentReciter.cdnPath, currentSurah.number);
+  }, [currentReciter, currentSurah]);
 
   // Update audio element source when reciter or surah changes
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
-
-    if (isArchiveReciter) {
-      audio.pause();
-      audio.removeAttribute("src");
-      audio.load();
-      setIsPlaying(false);
-      setIsLoadingAudio(false);
-      setAudioError(null);
-      notifyQuranPlayback(false);
-      return;
-    }
 
     setAudioError(null);
     setCurrentTime(0);
@@ -192,7 +179,7 @@ export function QuranListenPage() {
           setAudioError(msg);
         });
     }
-  }, [audioSrc, isPlaying, selectedReciterId, selectedSurahNumber, isArchiveReciter]);
+  }, [audioSrc, isPlaying, selectedReciterId, selectedSurahNumber]);
 
   // Keep the site-wide rain ambience mutually exclusive with Quran playback.
   useEffect(() => {
@@ -469,7 +456,7 @@ export function QuranListenPage() {
               </span>
 
               <h3 className="mt-3 font-serif text-3xl font-bold text-primary sm:text-4xl md:text-5xl">
-                {isArchiveReciter ? "مكتبة تلاوات الشيخ طه النعماني" : currentSurah.name}
+                {currentSurah.name}
               </h3>
               <p className="mt-2 text-base font-medium text-foreground sm:text-lg">
                 بصوت {currentReciter.name}
@@ -480,39 +467,6 @@ export function QuranListenPage() {
               </p>
             </div>
 
-            {isArchiveReciter && (
-              <div className="mx-auto mt-7 w-full max-w-3xl overflow-hidden rounded-2xl border border-gold/40 bg-background">
-                <div className="border-b border-border bg-gold/10 px-4 py-3 text-center">
-                  <p className="font-semibold text-primary">مكتبة الشيخ طه النعماني</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    اختر السورة أو التلاوة من قائمة الشيخ داخل المشغّل
-                  </p>
-                </div>
-                <iframe
-                  title="مكتبة تلاوات الشيخ طه النعماني"
-                  src="https://alkabbah.com/recitations/playlist/697612/162-tlaoat-khashaa-mshf-th-alnaamany-almshf-almgod-th-alnaamany"
-                  width="100%"
-                  height="480"
-                  loading="lazy"
-                  allow="autoplay; fullscreen"
-                  className="block w-full"
-                />
-                <a
-                  href="https://alkabbah.com/recitations/playlist/697612/162-tlaoat-khashaa-mshf-th-alnaamany-almshf-almgod-th-alnaamany"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block px-3 py-3 text-center text-sm font-semibold text-primary underline underline-offset-4"
-                >
-                  لو المشغّل لم يظهر، افتح مكتبة الشيخ من هنا
-                </a>
-                <p className="px-3 py-2 text-center text-[11px] text-muted-foreground">
-                  مكتبة الشيخ تضم ١٦٢ تسجيلًا، ويمكنك اختيار التلاوة من القائمة داخل المشغّل
-                </p>
-              </div>
-            )}
-
-            {!isArchiveReciter && (
-              <>
             {/* Error Notification Banner if any */}
             {audioError && (
               <div className="mx-auto mt-6 flex max-w-xl items-center gap-3 rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-xs text-destructive">
@@ -709,12 +663,10 @@ export function QuranListenPage() {
                 <span>مشاركة التلاوة</span>
               </Button>
             </div>
-            </>
-            )}
           </div>
 
           {/* Section 3: Surahs Playlist & Filter Table (All 114 Surahs) */}
-          {!isArchiveReciter && <div className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
+          <div className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
             <div className="flex flex-col justify-between gap-4 border-b border-border pb-6 md:flex-row md:items-center">
               <div>
                 <span className="text-xs font-semibold text-gold">فهرس السور</span>
@@ -837,7 +789,7 @@ export function QuranListenPage() {
                 );
               })}
             </div>
-          </div>}
+          </div>
         </div>
       </section>
     </>
