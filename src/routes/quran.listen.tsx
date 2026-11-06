@@ -441,6 +441,31 @@ export function QuranListenPage() {
                 );
               })}
             </div>
+
+            <div className="mt-5 rounded-2xl border border-gold/40 bg-gradient-to-l from-gold/10 via-card to-card p-5 sm:p-6">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <span className="text-xs font-semibold text-gold">إضافة مميزة · تلاوات بالنهاوند</span>
+                  <h3 className="mt-1 font-serif text-xl font-bold text-primary">
+                    الشيخ طه النعماني
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    تلاوات مختارة من المصحف المجوّد، تتضمن مقاطع منشورة بمقام النهاوند.
+                    هذه مكتبة خارجية مختارة وليست مصحفًا كاملًا مدمجًا في المشغّل حتى الآن.
+                  </p>
+                </div>
+                <a
+                  href="https://alkabbah.com/recitations/playlist/697612/162-tlaoat-khashaa-mshf-th-alnaamany-almshf-almgod-th-alnaamany"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-forest px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-forest/90"
+                >
+                  <Headphones className="size-4" />
+                  استمع إلى تلاوات الشيخ طه
+                  <ExternalLink className="size-4" />
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Section 2: Dedicated Master Audio Player Card */}
