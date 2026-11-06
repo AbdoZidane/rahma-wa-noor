@@ -216,12 +216,12 @@ export const recordSiteVisit = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => visitSchema.parse(input))
   .handler(async ({ data }) => {
     try {
-      if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-        console.error("Visitor tracking is missing server Supabase environment variables.");
+      if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_PUBLISHABLE_KEY"]) {
+        console.error("Visitor tracking is missing public Supabase environment variables.");
         return { ok: false as const };
       }
-      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      const { error } = await supabaseAdmin.rpc("record_site_visit", {
+      const sb = publicClient();
+      const { error } = await sb.rpc("record_site_visit", {
         p_visitor_id: data.visitorId,
         p_page_path: data.pagePath || "/",
       });
@@ -238,9 +238,9 @@ export const recordSiteVisit = createServerFn({ method: "POST" })
 
 export const getPublicVisitorCount = createServerFn({ method: "GET" }).handler(async () => {
   try {
-    if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_SERVICE_ROLE_KEY"]) return null;
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data, error } = await supabaseAdmin.rpc("get_public_visitor_count");
+    if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_PUBLISHABLE_KEY"]) return null;
+    const sb = publicClient();
+    const { data, error } = await sb.rpc("get_public_visitor_count");
     if (error) {
       console.error("getPublicVisitorCount:", error.message);
       return null;
