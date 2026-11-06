@@ -157,6 +157,9 @@ function IndexPage() {
             <p className="mt-4 font-serif text-base leading-loose text-muted-foreground">
               مساحة للقرآن الكريم والذكر والدعاء، نهدي ثوابها إلى روح جدنا الغالي
               <span className="mt-1 block font-bold text-primary">{DECEASED_NAME}</span>
+              <span className="mt-2 inline-flex rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-xs font-semibold text-primary">
+                تاريخ الوفاة: 16/1/2026
+              </span>
               نسأل الله أن يتغمده بواسع رحمته.
             </p>
             <Button
