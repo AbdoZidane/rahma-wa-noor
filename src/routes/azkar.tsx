@@ -127,9 +127,8 @@ function AzkarList({ period, items }: { period: Period; items: Zikr[] }) {
         {items.map((z) => {
           const checked = !!done[z.id];
           return (
-            <label
+            <article
               key={z.id}
-              htmlFor={`${period}-${z.id}`}
               className={cn(
                 "block cursor-pointer rounded-2xl border bg-card p-6 shadow-soft transition-all duration-300 sm:p-8",
                 checked ? "border-gold/70 bg-secondary/60" : "border-border hover:border-gold/40",
@@ -140,7 +139,7 @@ function AzkarList({ period, items }: { period: Period; items: Zikr[] }) {
                   {z.count === 1 ? "مرة واحدة" : `${toArabicDigits(z.count)} مرات`}
                 </span>
                 <div className="flex items-center gap-3">
-                  <CopyButton text={`${z.text}\\n\\n${z.source}`} />
+                  <CopyButton text={`${z.text}\n\n${z.source}`} />
                   <label htmlFor={`${period}-${z.id}`} className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
                     {checked ? "تمّ" : "تحديد كمكتمل"}
                     <Checkbox
@@ -164,7 +163,7 @@ function AzkarList({ period, items }: { period: Period; items: Zikr[] }) {
               <p className="mt-4 border-t border-border pt-3 text-sm text-muted-foreground">
                 {z.source}
               </p>
-            </label>
+            </article>
           );
         })}
       </div>
