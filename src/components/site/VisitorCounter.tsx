@@ -1,17 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { Eye } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { getPublicVisitorCount } from "@/lib/site.functions";
 
 export function VisitorCounter() {
   const [count, setCount] = useState<number | null>(null);
 
   const loadCount = useCallback(async () => {
-    const { data, error } = await supabase.rpc("get_public_visitor_count");
-    if (error) {
-      console.warn("Visitor count could not be loaded:", error.message);
-      return;
-    }
-    setCount(Number(data));
+    const value = await getPublicVisitorCount();
+    if (value !== null && value !== undefined) setCount(Number(value));
   }, []);
 
   useEffect(() => {
