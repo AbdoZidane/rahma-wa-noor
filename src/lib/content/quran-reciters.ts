@@ -102,13 +102,13 @@ export const RECITERS_LIST: Reciter[] = [
     cdnPath: "https://server11.mp3quran.net/ahmad_nu/",
   },
   {
-    id: "taha-nomani",
-    name: "الشيخ طه النعماني",
-    englishName: "Taha Al-Nomani",
-    style: "تلاوات مجودة ومقاطع قرآنية متنوعة",
-    description: "قارئ مصري صاحب أداء مميز، وتضم مكتبته تسجيلات متنوعة ومقاطع بمقامات مختلفة.",
-    country: "مصر",
-    cdnPath: "archive-library",
+    id: "yasser-dosari",
+    name: "الشيخ ياسر الدوسري",
+    englishName: "Yasser Al-Dosari",
+    style: "تلاوات الحرم المكي — المصحف المرتل",
+    description: "إمام وخطيب المسجد الحرام، صاحب صوت قوي وخاشع وأداء مميز في تلاوات الحرم المكي.",
+    country: "السعودية",
+    cdnPath: "yasser-dosari/r1",
   },
 ];
 
