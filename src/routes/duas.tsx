@@ -35,7 +35,7 @@ function DuasPage() {
           {DUAS.map((d) => (
             <article
               key={d.id}
-              className="rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8"
+              className="rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-8"
             >
               <header className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="flex items-center gap-2 text-xl font-bold text-primary">
@@ -50,7 +50,7 @@ function DuasPage() {
               </header>
               <p
                 className={cn(
-                  "mt-5 text-2xl text-foreground",
+                  "mt-5 text-xl leading-[2.2] text-foreground sm:text-2xl",
                   d.kind === "quran" ? "quran-text" : "dua-text",
                 )}
               >
