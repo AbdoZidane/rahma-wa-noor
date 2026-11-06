@@ -35,7 +35,8 @@ function AuthPage() {
       if (error) {
         toast.error("بيانات الدخول غير صحيحة أو غير مفعلة حالياً");
       } else {
-        toast.success("تم تسجيل الدخول بنجاح");\n        await navigate({ to: "/admin" });
+        toast.success("تم تسجيل الدخول بنجاح");
+        await navigate({ to: "/admin" });
       }
     } catch {
       toast.error("تعذر تسجيل الدخول حالياً");
