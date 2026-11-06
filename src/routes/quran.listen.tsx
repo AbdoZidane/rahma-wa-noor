@@ -469,7 +469,7 @@ export function QuranListenPage() {
               </span>
 
               <h3 className="mt-3 font-serif text-3xl font-bold text-primary sm:text-4xl md:text-5xl">
-                {currentSurah.name}
+                {isArchiveReciter ? "مكتبة تلاوات الشيخ طه النعماني" : currentSurah.name}
               </h3>
               <p className="mt-2 text-base font-medium text-foreground sm:text-lg">
                 بصوت {currentReciter.name}
@@ -485,12 +485,12 @@ export function QuranListenPage() {
                 <div className="border-b border-border bg-gold/10 px-4 py-3 text-center">
                   <p className="font-semibold text-primary">مكتبة الشيخ طه النعماني</p>
                   <p className="mt-1 text-xs text-muted-foreground">
-                    استمع إلى التلاوات من داخل الموقع، واختر التسجيل من القائمة بالأسفل
+                    اختر السورة أو التلاوة من قائمة الشيخ داخل المشغّل
                   </p>
                 </div>
                 <iframe
                   title="مكتبة تلاوات الشيخ طه النعماني"
-                  src="https://archive.org/embed/aaaaaaaaaaa-19-20a"
+                  src="https://alkabbah.com/recitations/playlist/697612/162-tlaoat-khashaa-mshf-th-alnaamany-almshf-almgod-th-alnaamany"
                   width="100%"
                   height="480"
                   loading="lazy"
@@ -498,7 +498,7 @@ export function QuranListenPage() {
                   className="block w-full"
                 />
                 <p className="px-3 py-2 text-center text-[11px] text-muted-foreground">
-                  مكتبة صوتية تضم ١٦٢ تسجيلًا · المشغّل مضمّن داخل صفحة الاستماع
+                  مكتبة الشيخ تضم ١٦٢ تسجيلًا، ويمكنك اختيار التلاوة من القائمة داخل المشغّل
                 </p>
               </div>
             )}
@@ -706,7 +706,7 @@ export function QuranListenPage() {
           </div>
 
           {/* Section 3: Surahs Playlist & Filter Table (All 114 Surahs) */}
-          <div className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
+          {!isArchiveReciter && <div className="rounded-3xl border border-border bg-card p-6 shadow-soft sm:p-8">
             <div className="flex flex-col justify-between gap-4 border-b border-border pb-6 md:flex-row md:items-center">
               <div>
                 <span className="text-xs font-semibold text-gold">فهرس السور</span>
@@ -829,7 +829,7 @@ export function QuranListenPage() {
                 );
               })}
             </div>
-          </div>
+          </div>}
         </div>
       </section>
     </>
