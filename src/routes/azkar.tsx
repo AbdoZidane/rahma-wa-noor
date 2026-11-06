@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import { CopyButton } from "@/components/site/CopyButton";
 import { EVENING_AZKAR, MORNING_AZKAR, type Zikr } from "@/lib/content/azkar";
 import { toArabicDigits } from "@/lib/content/quran";
 import { cn } from "@/lib/utils";
@@ -29,7 +30,13 @@ export const Route = createFileRoute("/azkar")({
 });
 
 type Period = "morning" | "evening";
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 const storageKey = (p: Period) => `azkar:${p}:${today()}`;
 
 function AzkarPage() {
@@ -87,7 +94,11 @@ function AzkarList({ period, items }: { period: Period; items: Zikr[] }) {
 
   const update = (next: Record<string, boolean>) => {
     setDone(next);
-    localStorage.setItem(storageKey(period), JSON.stringify(next));
+    try {
+      localStorage.setItem(storageKey(period), JSON.stringify(next));
+    } catch {
+      // Keep the current session usable when browser storage is unavailable.
+    }
   };
 
   const completed = useMemo(() => items.filter((z) => done[z.id]).length, [items, done]);
@@ -124,23 +135,26 @@ function AzkarList({ period, items }: { period: Period; items: Zikr[] }) {
                 checked ? "border-gold/70 bg-secondary/60" : "border-border hover:border-gold/40",
               )}
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="rounded-full bg-forest px-3 py-1 text-xs text-forest-foreground">
                   {z.count === 1 ? "مرة واحدة" : `${toArabicDigits(z.count)} مرات`}
                 </span>
-                <span className="flex items-center gap-2 text-sm text-muted-foreground">
-                  {checked ? "تمّ" : "تحديد كمكتمل"}
-                  <Checkbox
-                    id={`${period}-${z.id}`}
-                    checked={checked}
-                    onCheckedChange={(v) => update({ ...done, [z.id]: v === true })}
-                    className="size-6 rounded-md border-gold data-[state=checked]:bg-primary data-[state=checked]:border-primary"
-                  />
-                </span>
+                <div className="flex items-center gap-3">
+                  <CopyButton text={`${z.text}\\n\\n${z.source}`} />
+                  <label htmlFor={`${period}-${z.id}`} className="flex cursor-pointer items-center gap-2 text-sm text-muted-foreground">
+                    {checked ? "تمّ" : "تحديد كمكتمل"}
+                    <Checkbox
+                      id={`${period}-${z.id}`}
+                      checked={checked}
+                      onCheckedChange={(v) => update({ ...done, [z.id]: v === true })}
+                      className="size-6 rounded-md border-gold data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                    />
+                  </label>
+                </div>
               </div>
               <p
                 className={cn(
-                  "mt-5 whitespace-pre-line text-2xl text-foreground transition-opacity",
+                  "mt-5 whitespace-pre-line text-xl leading-[2.2] text-foreground transition-opacity sm:text-2xl",
                   z.isQuran ? "quran-text" : "dua-text",
                   checked && "opacity-60",
                 )}
