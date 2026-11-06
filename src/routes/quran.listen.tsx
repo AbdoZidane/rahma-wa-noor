@@ -497,6 +497,14 @@ export function QuranListenPage() {
                   allow="autoplay; fullscreen"
                   className="block w-full"
                 />
+                <a
+                  href="https://alkabbah.com/recitations/playlist/697612/162-tlaoat-khashaa-mshf-th-alnaamany-almshf-almgod-th-alnaamany"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="block px-3 py-3 text-center text-sm font-semibold text-primary underline underline-offset-4"
+                >
+                  لو المشغّل لم يظهر، افتح مكتبة الشيخ من هنا
+                </a>
                 <p className="px-3 py-2 text-center text-[11px] text-muted-foreground">
                   مكتبة الشيخ تضم ١٦٢ تسجيلًا، ويمكنك اختيار التلاوة من القائمة داخل المشغّل
                 </p>
