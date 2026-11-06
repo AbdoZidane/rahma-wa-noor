@@ -93,6 +93,8 @@ export function QuranListenPage() {
   const [filterType, setFilterType] = useState<"all" | "Meccan" | "Medinan">("all");
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const isPlayingRef = useRef(isPlaying);
+  isPlayingRef.current = isPlaying;
   const playerCardRef = useRef<HTMLDivElement | null>(null);
 
   // Initialize from URL search params or localStorage
@@ -162,7 +164,7 @@ export function QuranListenPage() {
     audio.src = audioSrc;
     audio.load();
 
-    if (isPlaying) {
+    if (isPlayingRef.current) {
       notifyQuranPlayback(true);
       setIsLoadingAudio(true);
       audio
@@ -179,7 +181,7 @@ export function QuranListenPage() {
           setAudioError(msg);
         });
     }
-  }, [audioSrc, isPlaying, selectedReciterId, selectedSurahNumber]);
+  }, [audioSrc, selectedReciterId, selectedSurahNumber]);
 
   // Keep the site-wide rain ambience mutually exclusive with Quran playback.
   useEffect(() => {
