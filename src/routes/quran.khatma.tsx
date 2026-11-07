@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ArrowRight, BookOpen, LoaderCircle, RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
@@ -35,6 +35,9 @@ function readClaims(): LocalClaims {
 }
 
 function QuranKhatmaPage() {
+  const isReadingPart = useRouterState({
+    select: (state) => state.location.pathname.startsWith("/quran/khatma/read/"),
+  });
   const [parts, setParts] = useState<KhatmaPart[]>([]);
   const [claims, setClaims] = useState<LocalClaims>({});
   const [loading, setLoading] = useState(true);
@@ -96,6 +99,8 @@ function QuranKhatmaPage() {
     }
     setBusyPart(null);
   };
+
+  if (isReadingPart) return <Outlet />;
 
   return (
     <>
@@ -174,15 +179,13 @@ function QuranKhatmaPage() {
                       </Button>
                     ) : mine ? (
                       <div className="grid gap-1">
-                        <Button
-                          size="sm"
-                          className="w-full"
-                          type="button"
-                          onClick={() => {
-                            window.location.assign(`/quran/khatma/read/${part.part_number}`);
-                          }}
-                        >
-                          <BookOpen className="ms-1 size-3.5" /> اقرأ الجزء
+                        <Button asChild size="sm" className="w-full">
+                          <Link
+                            to="/quran/khatma/read/$part"
+                            params={{ part: String(part.part_number) }}
+                          >
+                            <BookOpen className="ms-1 size-3.5" /> اقرأ الجزء
+                          </Link>
                         </Button>
                         <Button size="sm" variant="ghost" className="w-full text-xs" onClick={() => void release(part.part_number)} disabled={busyPart !== null}>إلغاء الحجز</Button>
                       </div>
