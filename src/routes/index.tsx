@@ -333,6 +333,26 @@ function IndexPage() {
             </div>
           </div>
 
+          <div className="mx-auto mt-10 max-w-3xl rounded-3xl border-2 border-gold/50 bg-card p-6 text-center shadow-gold sm:p-8">
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold/15 px-4 py-1.5 text-sm font-semibold text-primary">
+              <BookOpen className="size-4 text-gold" />
+              ختمة القرآن الكريم الجماعية
+            </span>
+            <h3 className="mt-4 font-serif text-2xl font-bold text-primary sm:text-3xl">
+              شارك في ختمة القرآن واهدِ ثواب قراءتك
+            </h3>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
+              اختر جزءًا من الأجزاء المتاحة، واقرأه، ثم سجّل إتمام القراءة لتساهم في ختم القرآن الكريم.
+            </p>
+            <Button asChild variant="gold" size="lg" className="mt-5 w-full rounded-full sm:w-auto sm:min-w-64">
+              <Link to="/quran/khatma">
+                <BookOpen className="ms-2 size-4" />
+                ادخل إلى الختمة وشارك الآن
+                <ArrowLeft className="me-2 size-4" />
+              </Link>
+            </Button>
+          </div>
+
           <div className="mt-10 text-center">
             <Button asChild variant="soft" size="lg" className="rounded-full gap-2">
               <Link to="/quran">
