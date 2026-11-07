@@ -5,12 +5,15 @@ import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
   completeQuranKhatmaPart,
+  getQuranKhatmaCycles,
   getQuranKhatmaParts,
   releaseQuranKhatmaPart,
   reserveQuranKhatmaPart,
+  resetQuranKhatma,
   type KhatmaPart,
 } from "@/lib/site.functions";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/quran/khatma")({
   head: () => ({
@@ -39,19 +42,36 @@ function QuranKhatmaPage() {
     select: (state) => state.location.pathname.startsWith("/quran/khatma/read/"),
   });
   const [parts, setParts] = useState<KhatmaPart[]>([]);
+  const [cycles, setCycles] = useState<Awaited<ReturnType<typeof getQuranKhatmaCycles>>>([]);
   const [claims, setClaims] = useState<LocalClaims>({});
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [busyPart, setBusyPart] = useState<number | null>(null);
   const [name, setName] = useState("");
 
   const refresh = useCallback(async () => {
-    const data = await getQuranKhatmaParts();
+    const [data, history] = await Promise.all([getQuranKhatmaParts(), getQuranKhatmaCycles()]);
     setParts(data);
+    setCycles(history);
     setLoading(false);
   }, []);
 
   useEffect(() => {
     setClaims(readClaims());
+    let active = true;
+    void (async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) return;
+      const { data: adminRole, error } = await supabase.rpc("has_role", {
+        _user_id: userData.user.id,
+        _role: "admin",
+      });
+      if (active && !error) setIsAdmin(Boolean(adminRole));
+    })();
+    return () => {
+      active = false;
+    };
   }, []);
 
   // Refresh the server state whenever the reader route returns to the khatma list.
@@ -85,6 +105,34 @@ function QuranKhatmaPage() {
       await refresh();
     }
     setBusyPart(null);
+  };
+
+  const resetKhatma = async () => {
+    if (!isAdmin || resetting) return;
+    const confirmed = window.confirm(
+      "هل تريد بدء ختمة جديدة؟ سيتم إتاحة الأجزاء الثلاثين من جديد، مع حفظ ملخص الختمة الحالية في السجل."
+    );
+    if (!confirmed) return;
+
+    setResetting(true);
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData.session?.access_token;
+      if (!accessToken) {
+        toast.error("انتهت جلسة الإدارة. سجّل الدخول مرة أخرى.");
+        return;
+      }
+      const result = await resetQuranKhatma({ data: { accessToken } });
+      if (!result.ok) {
+        toast.error("تعذر بدء ختمة جديدة. تأكد من صلاحية حساب الإدارة.");
+        return;
+      }
+      saveClaims({});
+      toast.success(`بدأت الختمة رقم ${result.cycleNumber}، وتم حفظ ملخص الختمة السابقة.`);
+      await refresh();
+    } finally {
+      setResetting(false);
+    }
   };
 
   const release = async (part: number) => {
@@ -140,6 +188,29 @@ function QuranKhatmaPage() {
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-muted-foreground">
               <span>متاح: {available}</span><span>محجوز: {reserved}</span><span>مكتمل: {completed}</span>
             </div>
+            {cycles.length > 0 && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                الختمات السابقة المحفوظة: {cycles.length} — آخر ختمة أُنجز منها {cycles[0].completed_parts}/30 جزءًا
+              </p>
+            )}
+            {isAdmin && (
+              <div className="mt-4 border-t border-border pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => void resetKhatma()}
+                  disabled={resetting || loading}
+                  className="gap-2"
+                >
+                  {resetting ? <LoaderCircle className="size-4 animate-spin" /> : <RotateCcw className="size-4" />}
+                  {resetting ? "جارٍ بدء ختمة جديدة..." : "بدء ختمة جديدة"}
+                </Button>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  خاص بالإدارة فقط. التحديث العادي لا يمسح تقدم المشاركين.
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="mt-5 rounded-2xl border border-border bg-card p-4 sm:p-5">
