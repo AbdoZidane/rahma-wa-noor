@@ -103,7 +103,8 @@ function QuranKhatmaPage() {
     try {
       const result = await resetQuranKhatma();
       if (!result.ok) {
-        toast.error("تعذر إعادة بدء الختمة الآن. حاول مرة أخرى بعد قليل.");
+        const reason = "reason" in result ? result.reason : "UNKNOWN_ERROR";
+        toast.error(`تعذر إعادة بدء الختمة: ${reason}`);
         return;
       }
       saveClaims({});
