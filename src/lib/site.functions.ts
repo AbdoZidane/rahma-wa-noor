@@ -359,17 +359,27 @@ export const getQuranKhatmaCycles = createServerFn({ method: "GET" }).handler(
 
 export const resetQuranKhatma = createServerFn({ method: "POST" }).handler(async () => {
   try {
-    // This RPC is deliberately callable by public visitors; the database function
-    // itself only resets after all 30 parts are completed and none are reserved.
+    // Public visitors may start a new cycle only after the database verifies
+    // that all 30 parts are completed and none are reserved.
     const sb = publicClient();
     const { data: reset, error } = await sb.rpc("public_reset_quran_khatma");
-    if (error) throw error;
+    if (error) {
+      console.error("resetQuranKhatma RPC error:", error);
+      return {
+        ok: false as const,
+        reason: [error.code, error.message].filter(Boolean).join(": ").slice(0, 180) || "RPC_FAILED",
+      };
+    }
     const result = reset as { cycle_number?: number } | null;
-    if (!result?.cycle_number) return { ok: false as const };
+    if (!result?.cycle_number) {
+      console.error("resetQuranKhatma returned an unexpected response:", reset);
+      return { ok: false as const, reason: "EMPTY_RPC_RESULT" };
+    }
     return { ok: true as const, cycleNumber: Number(result.cycle_number) };
   } catch (error) {
-    console.error("resetQuranKhatma:", error);
-    return { ok: false as const };
+    console.error("resetQuranKhatma failed:", error);
+    const message = error instanceof Error ? error.message : String(error);
+    return { ok: false as const, reason: message.slice(0, 180) || "SERVER_ACTION_FAILED" };
   }
 });
 
