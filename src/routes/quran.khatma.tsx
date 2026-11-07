@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ArrowRight, BookOpen, LoaderCircle, RotateCcw } from "lucide-react";
+import { ArrowRight, BookOpen, LoaderCircle, RotateCcw, Sparkles, Trophy } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
@@ -146,17 +146,19 @@ function QuranKhatmaPage() {
               <Link to="/quran"><ArrowRight className="ms-1 size-4" /> العودة للقرآن</Link>
             </Button>
             <div className="flex items-center gap-2">
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => void resetKhatma()}
-                disabled={resetting || loading}
-                className="gap-1"
-              >
-                {resetting ? <LoaderCircle className="size-4 animate-spin" /> : <RotateCcw className="size-4" />}
-                إعادة البدء
-              </Button>
+              {completed === 30 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => void resetKhatma()}
+                  disabled={resetting || loading}
+                  className="gap-1 border-gold text-primary hover:bg-gold/10"
+                >
+                  {resetting ? <LoaderCircle className="size-4 animate-spin" /> : <RotateCcw className="size-4" />}
+                  ابدأ ختمة جديدة
+                </Button>
+              )}
               <Button variant="ghost" size="sm" onClick={() => void refresh()} disabled={loading}>
                 <RotateCcw className="ms-1 size-4" /> تحديث
               </Button>
@@ -248,10 +250,29 @@ function QuranKhatmaPage() {
             </div>
           )}
 
-          <div className="mt-6 rounded-xl bg-secondary/60 p-4 text-center text-sm text-muted-foreground">
-            <BookOpen className="mx-auto mb-2 size-5 text-gold" />
-            اجعل نيتك خالصة لله، ونسأل الله أن يتقبل من الجميع.
-          </div>
+          {completed === 30 ? (
+            <div className="mt-6 overflow-hidden rounded-2xl border border-gold/40 bg-gradient-to-br from-amber-50 via-card to-yellow-100 p-6 text-center shadow-soft dark:from-amber-950/30 dark:to-yellow-950/20 sm:p-8">
+              <div className="mx-auto mb-3 flex size-14 items-center justify-center rounded-full bg-gold/15 text-gold">
+                <Trophy className="size-8" />
+              </div>
+              <div className="mb-2 flex items-center justify-center gap-2 text-gold">
+                <Sparkles className="size-4" />
+                <span className="text-sm font-bold">إنجاز مبارك</span>
+                <Sparkles className="size-4" />
+              </div>
+              <h2 className="font-serif text-2xl font-bold text-primary">الحمد لله، اكتملت الختمة!</h2>
+              <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
+                بفضل الله ثم بمشاركة أهل الخير، اكتملت قراءة الأجزاء الثلاثين. نسأل الله أن يتقبل من كل من قرأ وشارك، وأن يجعل القرآن نورًا ورحمة.
+              </p>
+              <p className="mt-3 text-sm font-semibold text-primary">اللهم اجعلها خالصة لوجهك الكريم، وتقبّلها من الجميع.</p>
+              <p className="mt-4 text-xs text-muted-foreground">يمكنكم بدء ختمة جديدة من الزر الموجود أعلى الصفحة.</p>
+            </div>
+          ) : (
+            <div className="mt-6 rounded-xl bg-secondary/60 p-4 text-center text-sm text-muted-foreground">
+              <BookOpen className="mx-auto mb-2 size-5 text-gold" />
+              اجعل نيتك خالصة لله، ونسأل الله أن يتقبل من الجميع.
+            </div>
+          )}
         </div>
       </section>
     </>
