@@ -331,6 +331,64 @@ export const completeQuranKhatmaPart = createServerFn({ method: "POST" })
     }
   });
 
+
+export type KhatmaCycle = {
+  cycle_number: number;
+  completed_parts: number;
+  reserved_parts: number;
+  reset_at: string;
+};
+
+export const getQuranKhatmaCycles = createServerFn({ method: "GET" }).handler(
+  async (): Promise<KhatmaCycle[]> => {
+    try {
+      if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return [];
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data, error } = await supabaseAdmin
+        .from("quran_khatma_cycles")
+        .select("cycle_number, completed_parts, reserved_parts, reset_at")
+        .order("cycle_number", { ascending: false })
+        .limit(5);
+      if (error) throw error;
+      return (data ?? []) as KhatmaCycle[];
+    } catch (error) {
+      console.error("getQuranKhatmaCycles:", error);
+      return [];
+    }
+  },
+);
+
+const khatmaResetSchema = z.object({
+  accessToken: z.string().min(1).max(4096),
+});
+
+export const resetQuranKhatma = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => khatmaResetSchema.parse(input))
+  .handler(async ({ data }) => {
+    try {
+      if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(data.accessToken);
+      if (authError || !authData.user) return { ok: false as const };
+
+      const { data: isAdmin, error: roleError } = await supabaseAdmin.rpc("has_role", {
+        _user_id: authData.user.id,
+        _role: "admin",
+      });
+      if (roleError || !isAdmin) return { ok: false as const };
+
+      const { data: reset, error } = await supabaseAdmin.rpc("admin_reset_quran_khatma", {
+        p_admin_user_id: authData.user.id,
+      });
+      if (error) throw error;
+      const result = reset as { cycle_number?: number } | null;
+      return { ok: true as const, cycleNumber: Number(result?.cycle_number ?? 0) };
+    } catch (error) {
+      console.error("resetQuranKhatma:", error);
+      return { ok: false as const };
+    }
+  });
+
 export const releaseQuranKhatmaPart = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => khatmaActionSchema.parse(input))
   .handler(async ({ data }) => {
