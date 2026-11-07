@@ -142,9 +142,6 @@ function QuranKhatmaPage() {
       <section className="pattern-islamic min-h-[65vh] py-8 sm:py-12">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-            <Button asChild variant="outline" size="sm">
-              <Link to="/quran"><ArrowRight className="ms-1 size-4" /> العودة للقرآن</Link>
-            </Button>
             <div className="flex items-center gap-2">
               {completed === 30 && (
                 <Button
@@ -163,6 +160,9 @@ function QuranKhatmaPage() {
                 <RotateCcw className="ms-1 size-4" /> تحديث
               </Button>
             </div>
+            <Button asChild variant="outline" size="sm">
+              <Link to="/quran"><ArrowRight className="ms-1 size-4" /> العودة للقرآن</Link>
+            </Button>
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6">
