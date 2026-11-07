@@ -251,3 +251,92 @@ export const getPublicVisitorCount = createServerFn({ method: "GET" }).handler(a
     return null;
   }
 });
+
+
+export type KhatmaPart = {
+  part_number: number;
+  status: "available" | "reserved" | "completed";
+  participant_name: string | null;
+};
+
+export const getQuranKhatmaParts = createServerFn({ method: "GET" }).handler(
+  async (): Promise<KhatmaPart[]> => {
+    try {
+      const sb = publicClient();
+      const { data, error } = await sb
+        .from("quran_khatma_parts")
+        .select("part_number, status, participant_name")
+        .order("part_number", { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as KhatmaPart[];
+    } catch (error) {
+      console.error("getQuranKhatmaParts:", error);
+      return [];
+    }
+  },
+);
+
+const khatmaReserveSchema = z.object({
+  part: z.number().int().min(1).max(30),
+  name: z.string().trim().max(60).optional().default(""),
+  token: z.string().uuid(),
+});
+const khatmaActionSchema = z.object({
+  part: z.number().int().min(1).max(30),
+  token: z.string().uuid(),
+});
+
+export const reserveQuranKhatmaPart = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => khatmaReserveSchema.parse(input))
+  .handler(async ({ data }) => {
+    try {
+      if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: reserved, error } = await supabaseAdmin.rpc("reserve_quran_khatma_part", {
+        p_part: data.part,
+        p_name: data.name,
+        p_token: data.token,
+      });
+      if (error) throw error;
+      return { ok: Boolean(reserved) as boolean };
+    } catch (error) {
+      console.error("reserveQuranKhatmaPart:", error);
+      return { ok: false as const };
+    }
+  });
+
+export const completeQuranKhatmaPart = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => khatmaActionSchema.parse(input))
+  .handler(async ({ data }) => {
+    try {
+      if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: completed, error } = await supabaseAdmin.rpc("complete_quran_khatma_part", {
+        p_part: data.part,
+        p_token: data.token,
+      });
+      if (error) throw error;
+      return { ok: Boolean(completed) as boolean };
+    } catch (error) {
+      console.error("completeQuranKhatmaPart:", error);
+      return { ok: false as const };
+    }
+  });
+
+export const releaseQuranKhatmaPart = createServerFn({ method: "POST" })
+  .inputValidator((input: unknown) => khatmaActionSchema.parse(input))
+  .handler(async ({ data }) => {
+    try {
+      if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: released, error } = await supabaseAdmin.rpc("release_quran_khatma_part", {
+        p_part: data.part,
+        p_token: data.token,
+      });
+      if (error) throw error;
+      return { ok: Boolean(released) as boolean };
+    } catch (error) {
+      console.error("releaseQuranKhatmaPart:", error);
+      return { ok: false as const };
+    }
+  });
