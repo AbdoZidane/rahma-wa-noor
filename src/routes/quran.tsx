@@ -1,4 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { BookOpen, Headphones, ArrowLeft, Sparkles, Volume2 } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { CopyButton } from "@/components/site/CopyButton";
@@ -27,6 +28,16 @@ export const Route = createFileRoute("/quran")({
 
 function QuranPortalPage() {
   const location = useLocation();
+  const [lastReadSurah, setLastReadSurah] = useState<number | null>(null);
+
+  useEffect(() => {
+    try {
+      const saved = Number(localStorage.getItem("quran_last_read_surah"));
+      if (saved >= 1 && saved <= 114) setLastReadSurah(saved);
+    } catch {
+      // Continue without a saved reading position when storage is unavailable.
+    }
+  }, []);
   const isSubroute = location.pathname.startsWith("/quran/") && location.pathname !== "/quran";
 
   if (isSubroute) {
@@ -57,6 +68,18 @@ function QuranPortalPage() {
               نوفر لك خيارين مباركين للتدبر في آيات الله: القراءة المتأنية أو الاستماع الخاشع
             </p>
           </div>
+
+          {lastReadSurah && (
+            <div className="mt-5 text-center">
+              <Link
+                to="/quran/read"
+                search={{ surah: String(lastReadSurah) } as never}
+                className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
+              >
+                متابعة القراءة من آخر سورة وصلت إليها
+              </Link>
+            </div>
+          )}
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">
             {/* Choice 1: المصحف الكريم للقراءة */}
