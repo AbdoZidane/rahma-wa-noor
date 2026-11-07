@@ -38,6 +38,33 @@ export type Database = {
         };
         Relationships: [];
       };
+      quran_khatma_cycles: {
+        Row: {
+          id: number;
+          cycle_number: number;
+          completed_parts: number;
+          reserved_parts: number;
+          reset_by: string | null;
+          reset_at: string;
+        };
+        Insert: {
+          id?: number;
+          cycle_number: number;
+          completed_parts?: number;
+          reserved_parts?: number;
+          reset_by?: string | null;
+          reset_at?: string;
+        };
+        Update: {
+          id?: number;
+          cycle_number?: number;
+          completed_parts?: number;
+          reserved_parts?: number;
+          reset_by?: string | null;
+          reset_at?: string;
+        };
+        Relationships: [];
+      };
       quran_khatma_parts: {
         Row: {
           part_number: number;
@@ -157,6 +184,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      admin_reset_quran_khatma: {
+        Args: { p_admin_user_id: string };
+        Returns: Json;
+      };
       reserve_quran_khatma_part: {
         Args: { p_part: number; p_name: string; p_token: string };
         Returns: boolean;
