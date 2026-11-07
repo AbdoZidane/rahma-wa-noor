@@ -357,36 +357,19 @@ export const getQuranKhatmaCycles = createServerFn({ method: "GET" }).handler(
   },
 );
 
-const khatmaResetSchema = z.object({
-  accessToken: z.string().min(1).max(4096),
+export const resetQuranKhatma = createServerFn({ method: "POST" }).handler(async () => {
+  try {
+    if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: reset, error } = await supabaseAdmin.rpc("public_reset_quran_khatma");
+    if (error) throw error;
+    const result = reset as { cycle_number?: number } | null;
+    return { ok: true as const, cycleNumber: Number(result?.cycle_number ?? 0) };
+  } catch (error) {
+    console.error("resetQuranKhatma:", error);
+    return { ok: false as const };
+  }
 });
-
-export const resetQuranKhatma = createServerFn({ method: "POST" })
-  .inputValidator((input: unknown) => khatmaResetSchema.parse(input))
-  .handler(async ({ data }) => {
-    try {
-      if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
-      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-      const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(data.accessToken);
-      if (authError || !authData.user) return { ok: false as const };
-
-      const { data: isAdmin, error: roleError } = await supabaseAdmin.rpc("has_role", {
-        _user_id: authData.user.id,
-        _role: "admin",
-      });
-      if (roleError || !isAdmin) return { ok: false as const };
-
-      const { data: reset, error } = await supabaseAdmin.rpc("admin_reset_quran_khatma", {
-        p_admin_user_id: authData.user.id,
-      });
-      if (error) throw error;
-      const result = reset as { cycle_number?: number } | null;
-      return { ok: true as const, cycleNumber: Number(result?.cycle_number ?? 0) };
-    } catch (error) {
-      console.error("resetQuranKhatma:", error);
-      return { ok: false as const };
-    }
-  });
 
 export const releaseQuranKhatmaPart = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => khatmaActionSchema.parse(input))
