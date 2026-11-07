@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ArrowRight, BookOpen, CheckCircle2, LoaderCircle, RotateCcw } from "lucide-react";
+import { ArrowRight, BookOpen, LoaderCircle, RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import {
@@ -76,23 +76,6 @@ function QuranKhatmaPage() {
     } else {
       toast.error("الجزء لم يعد متاحًا أو تعذر الحجز. حدّث الصفحة وحاول مرة أخرى.");
       await refresh();
-    }
-    setBusyPart(null);
-  };
-
-  const complete = async (part: number) => {
-    const token = claims[String(part)];
-    if (!token) return;
-    setBusyPart(part);
-    const result = await completeQuranKhatmaPart({ data: { part, token } });
-    if (result.ok) {
-      const next = { ...claims };
-      delete next[String(part)];
-      saveClaims(next);
-      toast.success("بارك الله فيك، تم تسجيل إتمام الجزء.");
-      await refresh();
-    } else {
-      toast.error("تعذر تسجيل الإتمام. حدّث الحالة وحاول مرة أخرى.");
     }
     setBusyPart(null);
   };
