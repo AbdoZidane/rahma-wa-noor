@@ -359,12 +359,14 @@ export const getQuranKhatmaCycles = createServerFn({ method: "GET" }).handler(
 
 export const resetQuranKhatma = createServerFn({ method: "POST" }).handler(async () => {
   try {
-    if (!process.env["SUPABASE_SERVICE_ROLE_KEY"]) return { ok: false as const };
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: reset, error } = await supabaseAdmin.rpc("public_reset_quran_khatma");
+    // This RPC is deliberately callable by public visitors; the database function
+    // itself only resets after all 30 parts are completed and none are reserved.
+    const sb = publicClient();
+    const { data: reset, error } = await sb.rpc("public_reset_quran_khatma");
     if (error) throw error;
     const result = reset as { cycle_number?: number } | null;
-    return { ok: true as const, cycleNumber: Number(result?.cycle_number ?? 0) };
+    if (!result?.cycle_number) return { ok: false as const };
+    return { ok: true as const, cycleNumber: Number(result.cycle_number) };
   } catch (error) {
     console.error("resetQuranKhatma:", error);
     return { ok: false as const };
