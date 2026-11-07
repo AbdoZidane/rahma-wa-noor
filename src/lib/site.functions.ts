@@ -347,8 +347,7 @@ export const getQuranKhatmaCycles = createServerFn({ method: "GET" }).handler(
       const { data, error } = await supabaseAdmin
         .from("quran_khatma_cycles")
         .select("cycle_number, completed_parts, reserved_parts, reset_at")
-        .order("cycle_number", { ascending: false })
-        .limit(5);
+        .order("cycle_number", { ascending: false });
       if (error) throw error;
       return (data ?? []) as KhatmaCycle[];
     } catch (error) {
