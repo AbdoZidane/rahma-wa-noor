@@ -13,7 +13,6 @@ import {
   type KhatmaPart,
 } from "@/lib/site.functions";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/quran/khatma")({
   head: () => ({
@@ -44,7 +43,6 @@ function QuranKhatmaPage() {
   const [parts, setParts] = useState<KhatmaPart[]>([]);
   const [cycles, setCycles] = useState<Awaited<ReturnType<typeof getQuranKhatmaCycles>>>([]);
   const [claims, setClaims] = useState<LocalClaims>({});
-  const [isAdmin, setIsAdmin] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [busyPart, setBusyPart] = useState<number | null>(null);
@@ -59,19 +57,6 @@ function QuranKhatmaPage() {
 
   useEffect(() => {
     setClaims(readClaims());
-    let active = true;
-    void (async () => {
-      const { data: userData } = await supabase.auth.getUser();
-      if (!userData.user) return;
-      const { data: adminRole, error } = await supabase.rpc("has_role", {
-        _user_id: userData.user.id,
-        _role: "admin",
-      });
-      if (active && !error) setIsAdmin(Boolean(adminRole));
-    })();
-    return () => {
-      active = false;
-    };
   }, []);
 
   // Refresh the server state whenever the reader route returns to the khatma list.
@@ -108,7 +93,7 @@ function QuranKhatmaPage() {
   };
 
   const resetKhatma = async () => {
-    if (!isAdmin || resetting) return;
+    if (resetting) return;
     const confirmed = window.confirm(
       "هل تريد بدء ختمة جديدة؟ سيتم إتاحة الأجزاء الثلاثين من جديد، مع حفظ ملخص الختمة الحالية في السجل."
     );
@@ -116,19 +101,13 @@ function QuranKhatmaPage() {
 
     setResetting(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const accessToken = sessionData.session?.access_token;
-      if (!accessToken) {
-        toast.error("انتهت جلسة الإدارة. سجّل الدخول مرة أخرى.");
-        return;
-      }
-      const result = await resetQuranKhatma({ data: { accessToken } });
+      const result = await resetQuranKhatma();
       if (!result.ok) {
-        toast.error("تعذر بدء ختمة جديدة. تأكد من صلاحية حساب الإدارة.");
+        toast.error("تعذر إعادة بدء الختمة الآن. حاول مرة أخرى بعد قليل.");
         return;
       }
       saveClaims({});
-      toast.success(`بدأت الختمة رقم ${result.cycleNumber}، وتم حفظ ملخص الختمة السابقة.`);
+      toast.success(`تمت إعادة البدء وبدأت الختمة رقم ${result.cycleNumber}.`);
       await refresh();
     } finally {
       setResetting(false);
@@ -166,9 +145,22 @@ function QuranKhatmaPage() {
             <Button asChild variant="outline" size="sm">
               <Link to="/quran"><ArrowRight className="ms-1 size-4" /> العودة للقرآن</Link>
             </Button>
-            <Button variant="ghost" size="sm" onClick={() => void refresh()} disabled={loading}>
-              <RotateCcw className="ms-1 size-4" /> تحديث
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => void resetKhatma()}
+                disabled={resetting || loading}
+                className="gap-1"
+              >
+                {resetting ? <LoaderCircle className="size-4 animate-spin" /> : <RotateCcw className="size-4" />}
+                إعادة البدء
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => void refresh()} disabled={loading}>
+                <RotateCcw className="ms-1 size-4" /> تحديث
+              </Button>
+            </div>
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-6">
@@ -193,24 +185,7 @@ function QuranKhatmaPage() {
                 الختمات السابقة المحفوظة: {cycles.length} — آخر ختمة أُنجز منها {cycles[0].completed_parts}/30 جزءًا
               </p>
             )}
-            {isAdmin && (
-              <div className="mt-4 border-t border-border pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => void resetKhatma()}
-                  disabled={resetting || loading}
-                  className="gap-2"
-                >
-                  {resetting ? <LoaderCircle className="size-4 animate-spin" /> : <RotateCcw className="size-4" />}
-                  {resetting ? "جارٍ بدء ختمة جديدة..." : "بدء ختمة جديدة"}
-                </Button>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  خاص بالإدارة فقط. التحديث العادي لا يمسح تقدم المشاركين.
-                </p>
-              </div>
-            )}
+
           </div>
 
           <div className="mt-5 rounded-2xl border border-border bg-card p-4 sm:p-5">
