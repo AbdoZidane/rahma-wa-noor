@@ -5,8 +5,16 @@ import { z } from "zod";
 import type { Database } from "@/integrations/supabase/types";
 
 function publicClient() {
-  const url = process.env["SUPABASE_URL"] || "https://placeholder-project.supabase.co";
-  const key = process.env["SUPABASE_PUBLISHABLE_KEY"] || "placeholder-publishable-key";
+  // Match the public Supabase configuration used by the browser client.
+  // Cloudflare may expose only the Vite-prefixed variables at runtime/build time.
+  const url =
+    process.env["SUPABASE_URL"] ||
+    process.env["VITE_SUPABASE_URL"] ||
+    "https://qupnogjbzpwpdepkjubg.supabase.co";
+  const key =
+    process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+    process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
+    "sb_publishable_Ge9va81KiKPyWupazWY6Vg_U_u2Ag6-";
   return createClient<Database>(url, key, {
     auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
     global: {
