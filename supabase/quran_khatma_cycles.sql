@@ -7,6 +7,8 @@ create table if not exists public.quran_khatma_cycles (
   reset_at timestamptz not null default now()
 );
 
+create index if not exists quran_khatma_cycles_reset_by_idx on public.quran_khatma_cycles(reset_by);
+
 alter table public.quran_khatma_cycles enable row level security;
 revoke all on table public.quran_khatma_cycles from anon, authenticated, public;
 grant select, insert, update, delete on table public.quran_khatma_cycles to service_role;
