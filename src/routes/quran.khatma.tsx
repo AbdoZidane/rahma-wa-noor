@@ -52,8 +52,12 @@ function QuranKhatmaPage() {
 
   useEffect(() => {
     setClaims(readClaims());
-    void refresh();
-  }, [refresh]);
+  }, []);
+
+  // Refresh the server state whenever the reader route returns to the khatma list.
+  useEffect(() => {
+    if (!isReadingPart) void refresh();
+  }, [isReadingPart, refresh]);
 
   const completed = useMemo(() => parts.filter((part) => part.status === "completed").length, [parts]);
   const reserved = useMemo(() => parts.filter((part) => part.status === "reserved").length, [parts]);
