@@ -174,10 +174,15 @@ function QuranKhatmaPage() {
                       </Button>
                     ) : mine ? (
                       <div className="grid gap-1">
-                        <Button asChild size="sm" className="w-full">
-                          <Link to="/quran/khatma/read/$part" params={{ part: String(part.part_number) }}>
-                            <BookOpen className="ms-1 size-3.5" /> اقرأ الجزء
-                          </Link>
+                        <Button
+                          size="sm"
+                          className="w-full"
+                          type="button"
+                          onClick={() => {
+                            window.location.assign(`/quran/khatma/read/${part.part_number}`);
+                          }}
+                        >
+                          <BookOpen className="ms-1 size-3.5" /> اقرأ الجزء
                         </Button>
                         <Button size="sm" variant="ghost" className="w-full text-xs" onClick={() => void release(part.part_number)} disabled={busyPart !== null}>إلغاء الحجز</Button>
                       </div>
