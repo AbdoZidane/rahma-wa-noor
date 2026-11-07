@@ -38,6 +38,30 @@ export type Database = {
         };
         Relationships: [];
       };
+      quran_khatma_parts: {
+        Row: {
+          part_number: number;
+          status: "available" | "reserved" | "completed";
+          participant_name: string | null;
+          claim_token: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          part_number: number;
+          status?: "available" | "reserved" | "completed";
+          participant_name?: string | null;
+          claim_token?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          part_number?: number;
+          status?: "available" | "reserved" | "completed";
+          participant_name?: string | null;
+          claim_token?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
       prayers: {
         Row: {
           author_name: string | null;
@@ -133,6 +157,18 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      reserve_quran_khatma_part: {
+        Args: { p_part: number; p_name: string; p_token: string };
+        Returns: boolean;
+      };
+      complete_quran_khatma_part: {
+        Args: { p_part: number; p_token: string };
+        Returns: boolean;
+      };
+      release_quran_khatma_part: {
+        Args: { p_part: number; p_token: string };
+        Returns: boolean;
+      };
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"];
