@@ -135,6 +135,16 @@ function QuranPortalPage() {
             </article>
           </div>
 
+          <div className="mt-6 flex flex-col items-center justify-between gap-3 rounded-2xl border border-gold/30 bg-gold/5 p-4 sm:flex-row sm:px-6">
+            <div className="text-center sm:text-start">
+              <h3 className="font-serif text-lg font-bold text-primary">ختمة القرآن الجماعية</h3>
+              <p className="mt-1 text-sm text-muted-foreground">شارك بقراءة جزء واحد، وتابع اكتمال الختمة مع الجميع.</p>
+            </div>
+            <Button asChild variant="outline" className="shrink-0 border-gold/50">
+              <Link to="/quran/khatma">المشاركة في الختمة <ArrowLeft className="ms-2 size-4" /></Link>
+            </Button>
+          </div>
+
           {/* Preserved Feature: Selected Quranic Verses in Ottoman Script */}
           <div className="mt-20 border-t border-border pt-16">
             <div className="text-center">
