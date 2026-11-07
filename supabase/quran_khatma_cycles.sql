@@ -61,3 +61,57 @@ $$;
 
 revoke all on function public.admin_reset_quran_khatma(uuid) from public, anon, authenticated;
 grant execute on function public.admin_reset_quran_khatma(uuid) to service_role;
+
+ 
+create or replace function public.public_reset_quran_khatma()
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_cycle_number integer;
+  v_completed integer;
+  v_reserved integer;
+begin
+  perform pg_advisory_xact_lock(hashtext('quran_khatma_public_reset'));
+
+  if exists (
+    select 1 from public.quran_khatma_cycles
+    where reset_at > now() - interval '60 seconds'
+  ) then
+    raise exception 'A new Quran khatma was started recently. Please wait before resetting again.';
+  end if;
+
+  select
+    count(*) filter (where status = 'completed'),
+    count(*) filter (where status = 'reserved')
+  into v_completed, v_reserved
+  from public.quran_khatma_parts;
+
+  select coalesce(max(cycle_number), 0) + 1
+  into v_cycle_number
+  from public.quran_khatma_cycles;
+
+  insert into public.quran_khatma_cycles (
+    cycle_number, completed_parts, reserved_parts, reset_by
+  ) values (
+    v_cycle_number, coalesce(v_completed, 0), coalesce(v_reserved, 0), null
+  );
+
+  update public.quran_khatma_parts
+  set status = 'available',
+      participant_name = null,
+      claim_token = null,
+      updated_at = now();
+
+  return jsonb_build_object(
+    'cycle_number', v_cycle_number,
+    'completed_parts', coalesce(v_completed, 0),
+    'reserved_parts', coalesce(v_reserved, 0)
+  );
+end;
+$$;
+
+revoke all on function public.public_reset_quran_khatma() from public, anon, authenticated;
+grant execute on function public.public_reset_quran_khatma() to service_role;
