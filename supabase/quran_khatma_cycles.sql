@@ -71,10 +71,22 @@ set search_path = ''
 as $$
 declare
   v_cycle_number integer;
+  v_total integer;
   v_completed integer;
   v_reserved integer;
 begin
   perform pg_advisory_xact_lock(hashtext('quran_khatma_public_reset'));
+
+  select
+    count(*),
+    count(*) filter (where status = 'completed'),
+    count(*) filter (where status = 'reserved')
+  into v_total, v_completed, v_reserved
+  from public.quran_khatma_parts;
+
+  if v_total <> 30 or v_completed <> 30 or v_reserved <> 0 then
+    raise exception 'A new Quran khatma can only start after all 30 parts are completed.';
+  end if;
 
   if exists (
     select 1 from public.quran_khatma_cycles
@@ -83,12 +95,6 @@ begin
     raise exception 'A new Quran khatma was started recently. Please wait before resetting again.';
   end if;
 
-  select
-    count(*) filter (where status = 'completed'),
-    count(*) filter (where status = 'reserved')
-  into v_completed, v_reserved
-  from public.quran_khatma_parts;
-
   select coalesce(max(cycle_number), 0) + 1
   into v_cycle_number
   from public.quran_khatma_cycles;
@@ -96,7 +102,7 @@ begin
   insert into public.quran_khatma_cycles (
     cycle_number, completed_parts, reserved_parts, reset_by
   ) values (
-    v_cycle_number, coalesce(v_completed, 0), coalesce(v_reserved, 0), null
+    v_cycle_number, v_completed, v_reserved, null
   );
 
   update public.quran_khatma_parts
@@ -107,8 +113,8 @@ begin
 
   return jsonb_build_object(
     'cycle_number', v_cycle_number,
-    'completed_parts', coalesce(v_completed, 0),
-    'reserved_parts', coalesce(v_reserved, 0)
+    'completed_parts', v_completed,
+    'reserved_parts', v_reserved
   );
 end;
 $$;
