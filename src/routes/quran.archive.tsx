@@ -655,11 +655,6 @@ function QuranArchivePage() {
                       <span className="block font-serif text-base font-bold text-foreground">{reciter}</span>
                       <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                         <span>{recordings.length} تسجيلات</span>
-                        {recordings.some((item) => item.featured) && (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-gold/15 px-2 py-1 font-bold text-gold">
-                            ⭐ {recordings.filter((item) => item.featured).length} نادرة مميزة بالأول
-                          </span>
-                        )}
                       </span>
                     </span>
                     {expanded ? <ChevronUp className="size-5 text-gold" /> : <ChevronDown className="size-5 text-gold" />}
