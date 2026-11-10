@@ -460,8 +460,9 @@ const RECORDINGS: ArchiveRecording[] = [
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "حم والكتاب المبين – مطلع سورة الزخرف",
     surah: "الزخرف",
-    details: "تلاوة مجودة مميزة من الآيات 1 إلى 8 - تسجيل متداول بقناة تلاوات المنشاوي",
-    url: "https://t.me/jmalyaat/1021?embed=1",
+    details: "سورة الزخرف كاملة بصوت المنشاوي - يبدأ التسجيل من حم والكتاب المبين",
+    url: "https://media.assabile.com/siteislam/recitations/mp3/Mohamed%20Seddik%20El%20Menchaoui%20-%20043%20-%20Sourat%20Zoukhrouf.mp3",
+    audio: true,
   },
   {
     id: "mustafa-ibrahim-bushra-tilawah",
