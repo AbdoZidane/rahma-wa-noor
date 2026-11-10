@@ -366,13 +366,32 @@ export function QuranListenPage() {
               </Link>
             </Button>
 
-            <Button asChild variant="gold" size="sm" className="gap-1.5 shadow-gold">
-              <Link to="/quran/archive">
-                <Radio className="size-4" />
-                <span>نوادر التلاوات والمحافل</span>
-              </Link>
-            </Button>
           </div>
+
+          {/* Featured archive entrance */}
+          <section className="mb-10 overflow-hidden rounded-3xl border border-gold/40 bg-gradient-to-br from-forest via-primary to-forest p-5 text-primary-foreground shadow-lg sm:p-7">
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-gold/40 bg-white/10 text-gold">
+                  <Radio className="size-7" />
+                </span>
+                <div>
+                  <span className="text-xs font-bold tracking-wide text-gold">ركن خاص لعشّاق التلاوات</span>
+                  <h2 className="mt-1 font-serif text-xl font-bold sm:text-2xl">نوادر التلاوات والمحافل</h2>
+                  <p className="mt-2 max-w-2xl text-sm leading-7 text-primary-foreground/85">
+                    استمع إلى تسجيلات نادرة لكبار القراء من المحافل والمساجد والإذاعات، واكتشف أصواتًا وتلاوات مميزة.
+                  </p>
+                </div>
+              </div>
+              <Button asChild variant="gold" size="lg" className="min-h-12 w-full shrink-0 gap-2 shadow-gold sm:w-auto">
+                <Link to="/quran/archive">
+                  <Headphones className="size-5" />
+                  <span>اكتشف التسجيلات النادرة</span>
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
+          </section>
 
           {/* Section 1: The 10 Reciters Selection Grid */}
           <div className="mb-10">
