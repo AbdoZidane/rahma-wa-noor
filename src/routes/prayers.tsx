@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import { Heart, Send, Sparkles } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Heart, Send, Sparkles, Search } from "lucide-react";
 import { toast } from "sonner";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
@@ -40,6 +40,22 @@ function PrayersPage() {
   const [startTime, setStartTime] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [prayerSearch, setPrayerSearch] = useState("");
+  const [prayerSort, setPrayerSort] = useState<"newest" | "oldest">("newest");
+
+  const visiblePrayers = useMemo(() => {
+    const term = prayerSearch.trim().toLocaleLowerCase("ar");
+    return [...prayers]
+      .filter((prayer) => {
+        const searchable = [prayer.message, prayer.author_name ?? ""].join(" ").toLocaleLowerCase("ar");
+        return !term || searchable.includes(term);
+      })
+      .sort((first, second) => {
+        const firstDate = first.created_at ? new Date(first.created_at).getTime() : 0;
+        const secondDate = second.created_at ? new Date(second.created_at).getTime() : 0;
+        return prayerSort === "newest" ? secondDate - firstDate : firstDate - secondDate;
+      });
+  }, [prayers, prayerSearch, prayerSort]);
 
   useEffect(() => {
     setStartTime(Date.now());
@@ -87,9 +103,9 @@ function PrayersPage() {
       </PageHeader>
 
       <section className="pattern-islamic">
-        <div className="mx-auto max-w-4xl px-5 py-16">
+        <div className="mx-auto max-w-4xl px-4 py-10 sm:px-5 sm:py-16">
           {/* Submission Card */}
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-soft sm:p-8">
+          <div className="rounded-2xl border border-border bg-card p-4 shadow-soft sm:p-8">
             <div className="flex items-center gap-3">
               <span className="flex size-10 items-center justify-center rounded-xl bg-forest text-gold">
                 <Heart className="size-5" />
@@ -179,18 +195,39 @@ function PrayersPage() {
           </div>
 
           {/* List of prayers */}
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-primary sm:text-3xl">دعوات الأحباب والزوار</h2>
+          <div className="mt-12 sm:mt-16">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-primary sm:text-3xl">دعوات الأحباب والزوار</h2>
+                <p className="mt-1 text-sm text-muted-foreground">{visiblePrayers.length} دعاء ظاهر</p>
+              </div>
+              {prayers.length > 0 && (
+                <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+                  <div className="relative min-w-0 flex-1 sm:min-w-[230px]">
+                    <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                    <Input value={prayerSearch} onChange={(event) => setPrayerSearch(event.target.value)} placeholder="ابحث في نص الدعاء أو الاسم..." aria-label="البحث في دعوات الزوار" className="h-11 pr-9" />
+                  </div>
+                  <select value={prayerSort} onChange={(event) => setPrayerSort(event.target.value as "newest" | "oldest")} aria-label="ترتيب الدعوات" className="h-11 rounded-md border border-input bg-background px-3 text-sm text-foreground">
+                    <option value="newest">الأحدث أولاً</option>
+                    <option value="oldest">الأقدم أولاً</option>
+                  </select>
+                </div>
+              )}
+            </div>
             <div className="mt-6 grid gap-4">
               {prayers.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground">
                   كن أول من يترك دعاءً للمتوفى رحمه الله.
                 </div>
               ) : (
-                prayers.map((p) => (
+                visiblePrayers.length === 0 ? (
+                  <div className="rounded-2xl border border-dashed border-border bg-card/60 p-8 text-center text-muted-foreground">
+                    مفيش دعوات مطابقة للبحث. جرّب كلمة تانية.
+                  </div>
+                ) : visiblePrayers.map((p) => (
                   <article
                     key={p.id}
-                    className="rounded-2xl border border-border bg-card p-6 shadow-soft transition-all"
+                    className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-all sm:p-6"
                   >
                     <p className="dua-text text-xl leading-relaxed text-foreground">{p.message}</p>
                     <footer className="mt-4 flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
