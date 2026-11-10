@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, Headphones, Play, Pause, Search, Sparkles, ChevronDown, ChevronUp, Volume2 } from "lucide-react";
+import { ArrowRight, Headphones, Play, Pause, Search, Sparkles, ChevronDown, ChevronUp, Volume2, Star } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -670,6 +670,29 @@ function QuranArchivePage() {
   const [query, setQuery] = useState("");
   const [expandedReciter, setExpandedReciter] = useState<string | null>(null);
   const [active, setActive] = useState<ArchiveRecording | null>(null);
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    try {
+      const saved = window.localStorage.getItem("rahma-noor-archive-favorites");
+      return saved ? JSON.parse(saved) as string[] : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem("rahma-noor-archive-favorites", JSON.stringify(favorites));
+    } catch {
+      // Favorites remain available for the current page session if storage is unavailable.
+    }
+  }, [favorites]);
+
+  const toggleFavorite = (id: string) => {
+    setFavorites((current) =>
+      current.includes(id) ? current.filter((favoriteId) => favoriteId !== id) : [...current, id]
+    );
+  };
 
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase("ar");
@@ -746,7 +769,19 @@ function QuranArchivePage() {
                     <div className="mt-3 grid gap-3 sm:grid-cols-2">
                       {recordings.map((item) => (
                         <article key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
-                          <h3 className="font-serif text-base font-bold leading-relaxed text-foreground">{item.title}</h3>
+                          <div className="flex items-start gap-3">
+                            <h3 className="min-w-0 flex-1 font-serif text-base font-bold leading-relaxed text-foreground">{item.title}</h3>
+                            <button
+                              type="button"
+                              onClick={() => toggleFavorite(item.id)}
+                              aria-label={favorites.includes(item.id) ? "إزالة من المفضلة" : "إضافة إلى المفضلة"}
+                              aria-pressed={favorites.includes(item.id)}
+                              title={favorites.includes(item.id) ? "إزالة من المفضلة" : "علّم التسجيل كمفضّل"}
+                              className={`flex size-9 shrink-0 items-center justify-center rounded-full border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${favorites.includes(item.id) ? "border-gold bg-gold/15 text-gold" : "border-border text-muted-foreground hover:border-gold hover:text-gold"}`}
+                            >
+                              <Star className={`size-5 ${favorites.includes(item.id) ? "fill-current" : ""}`} />
+                            </button>
+                          </div>
                           <p className="mt-2 inline-flex rounded-full bg-gold/10 px-2.5 py-1 text-xs font-semibold text-gold">السورة: {item.surah}</p>
                           <p className="mt-2 text-xs leading-6 text-muted-foreground">{item.details}</p>
                           <Button onClick={() => setActive(item)} variant="gold" className="mt-3 w-full gap-2">
