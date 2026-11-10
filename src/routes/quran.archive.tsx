@@ -246,14 +246,6 @@ function QuranArchivePage() {
               <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ابحث باسم الشيخ أو السورة..." className="pr-9" />
             </div>
-            <select
-              value={reciterFilter}
-              onChange={(event) => setReciterFilter(event.target.value)}
-              className="h-10 rounded-md border border-input bg-background px-3 text-sm"
-              aria-label="اختر القارئ"
-            >
-              {reciters.map((reciter) => <option key={reciter} value={reciter}>{reciter}</option>)}
-            </select>
           </div>
 
           <div className="space-y-7">
