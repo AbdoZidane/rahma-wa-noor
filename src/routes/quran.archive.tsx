@@ -667,7 +667,7 @@ function QuranArchivePage() {
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {grouped.map(([reciter, recordings]) => {
-              const expanded = expandedReciter === reciter;
+              const expanded = showFavoritesOnly || expandedReciter === reciter;
               return (
                 <section key={reciter} className={expanded ? "sm:col-span-2 lg:col-span-3" : ""}>
                   <button
@@ -687,17 +687,6 @@ function QuranArchivePage() {
                   </button>
                   {expanded && (
                     <div className="mt-3">
-                      {reciter === "الشيخ محمد صديق المنشاوي" && (
-                        <a
-                          href="https://www.alminshawi.com/"
-                          target="_blank"
-                          rel="noreferrer"
-                          className="mb-3 flex items-center justify-between gap-3 rounded-xl border border-gold/30 bg-gold/5 p-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/10"
-                        >
-                          <span>مكتبة الشيخ المنشاوي الموثّقة — تسجيلات إذاعية ومحافل ونسخ مختارة</span>
-                          <span aria-hidden="true">↗</span>
-                        </a>
-                      )}
                       <div className="grid gap-3 sm:grid-cols-2">
                       {recordings.map((item) => (
                         <article key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
