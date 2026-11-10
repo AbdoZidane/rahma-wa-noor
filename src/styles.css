@@ -74,9 +74,9 @@
   --radius: 0.875rem;
   --background: oklch(0.965 0.018 85);
   --foreground: oklch(0.26 0.045 160);
-  --card: #f3e6c8;
+  --card: #e8d3a8;
   --card-foreground: oklch(0.26 0.045 160);
-  --popover: #f3e6c8;
+  --popover: #e8d3a8;
   --popover-foreground: oklch(0.26 0.045 160);
   --primary: oklch(0.38 0.075 158);
   --primary-foreground: oklch(0.97 0.015 85);
