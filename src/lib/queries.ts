@@ -10,7 +10,10 @@ export const siteContentQuery = queryOptions({
 export const approvedPrayersQuery = queryOptions({
   queryKey: ["approved-prayers"],
   queryFn: () => getApprovedPrayers(),
-  staleTime: 30_000,
+  staleTime: 5_000,
+  // Keep the public prayer wall fresh for visitors who already have the page open.
+  refetchInterval: 15_000,
+  refetchIntervalInBackground: false,
 });
 
 export function portraitSrc(path: string | null | undefined) {
