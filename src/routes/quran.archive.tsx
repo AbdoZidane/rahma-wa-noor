@@ -537,6 +537,14 @@ const RECORDINGS: ArchiveRecording[] = [
 
 
   {
+    id: "naina-nahawand-special",
+    reciter: "الشيخ أحمد نعينع",
+    title: "إبداع في مقام النهاوند",
+    surah: "تلاوة مختارة",
+    details: "اختيار مميز من القناة الرسمية لتلاوات د. أحمد نعينع - مقام النهاوند",
+    url: "https://www.youtube-nocookie.com/embed/ZdHtmmwWO2s",
+  },
+  {
     id: "naina-duha-mujawwad",
     reciter: "الشيخ أحمد نعينع",
     title: "سورة الضحى - من المصحف المجوّد",
