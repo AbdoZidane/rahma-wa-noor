@@ -367,6 +367,67 @@ export function QuranListenPage() {
             </Button>
           </div>
 
+          {/* Curated archive links: external sources, no audio rehosting */}
+          <section className="mb-10 rounded-3xl border border-gold/30 bg-card/80 p-5 shadow-soft sm:p-7">
+            <div className="mb-5">
+              <span className="text-xs font-semibold text-gold">مختارات من تراث التلاوة</span>
+              <h2 className="mt-1 font-serif text-2xl font-bold text-primary sm:text-3xl">
+                نوادر التلاوات والحفلات
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                استكشف التسجيلات النادرة والحفلات المجوّدة من مكتباتها الأصلية. يظل مشغل المصحف الكامل والقراء الحاليون كما هم.
+              </p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                {
+                  name: "الشيخ أحمد نعينع",
+                  detail: "حفلات مجوّدة وتسجيلات من إيران ولبنان ومصر",
+                  count: "260 تلاوة وحفلة",
+                  href: "https://alkabbah.com/recitations/playlist/773541/260-hfl-tlaoat-khashaa-hflat-mgod-mshf-ahmd-naaynaa-ahmd-naaynaa",
+                },
+                {
+                  name: "الشيخ محمد صديق المنشاوي",
+                  detail: "مختارات من الحفلات المجوّدة والتسجيلات الخارجية",
+                  count: "تلاوات نادرة",
+                  href: "https://alkabbah.com/recitations/playlist/232341/mkhtarat-mn-alhflat-almgod-o-altsgylat-alkhargy-llkary-mhmd-sdyk-almnshaoy-mhmd-sdyk-almnshaoy",
+                },
+                {
+                  name: "الشيخ محمود علي البنا",
+                  detail: "حفلات خارجية ومقاطع من المصحف المجوّد",
+                  count: "261 حفلة خارجية",
+                  href: "https://alkabbah.com/scholar/134/mhmod-aal-albna/recitations",
+                },
+                {
+                  name: "الشيخ مصطفى إسماعيل",
+                  detail: "روائع التلاوات والحفلات من تسجيلات متنوعة",
+                  count: "تسجيلات مختارة",
+                  href: "https://alkabbah.com/recitations/playlist/206475/roayaa-tlaoat-alshykh-mstf-asmaaayl-mstf-asmaaayl",
+                },
+              ].map((archive) => (
+                <a
+                  key={archive.name}
+                  href={archive.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-background p-4 transition-colors hover:border-gold/60 hover:bg-secondary/40"
+                >
+                  <div className="min-w-0">
+                    <h3 className="font-serif text-base font-bold text-foreground group-hover:text-primary">
+                      {archive.name}
+                    </h3>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{archive.detail}</p>
+                    <span className="mt-2 inline-block text-[11px] font-semibold text-gold">{archive.count}</span>
+                  </div>
+                  <ExternalLink className="size-5 shrink-0 text-gold" />
+                </a>
+              ))}
+            </div>
+            <p className="mt-4 text-[11px] leading-relaxed text-muted-foreground">
+              تفتح التسجيلات في مواقعها الأصلية احترامًا لحقوق أصحاب التسجيلات والجهات المنتجة.
+            </p>
+          </section>
+
           {/* Section 1: The 10 Reciters Selection Grid */}
           <div className="mb-10">
             <div className="mb-4 flex items-center justify-between">
