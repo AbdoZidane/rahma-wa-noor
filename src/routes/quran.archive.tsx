@@ -26,6 +26,7 @@ type ArchiveRecording = {
   year?: string;
   url: string;
   audio?: boolean;
+  featured?: boolean;
 };
 
 const RECORDINGS: ArchiveRecording[] = [
@@ -228,6 +229,7 @@ const RECORDINGS: ArchiveRecording[] = [
   // نوادر زيارة المنشاوي للعراق وبغداد 1965
   {
     id: "minshawi-baghdad-ibrahim",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "إبراهيم من جامع 14 آذار ببغداد",
     surah: "إبراهيم",
@@ -237,6 +239,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-shuara",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "الشعراء من تسجيلات بغداد",
     surah: "الشعراء",
@@ -246,6 +249,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-furqan-shuara",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "الفرقان والشعراء من القصر الجمهوري",
     surah: "الفرقان والشعراء",
@@ -255,6 +259,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-qasas",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "القصص من القصر الجمهوري",
     surah: "القصص",
@@ -295,6 +300,7 @@ const RECORDINGS: ArchiveRecording[] = [
   // مختارات الشيخ عبد الباسط عبد الصمد
   {
     id: "basit-ibrahim-haram",
+    featured: true,
     reciter: "الشيخ عبد الباسط عبد الصمد",
     title: "إبراهيم وقصار السور من المسجد الحرام",
     surah: "إبراهيم وقصار السور",
@@ -459,6 +465,7 @@ const RECORDINGS: ArchiveRecording[] = [
 
   {
     id: "naina-kahf-sahib-nahawand",
+    featured: true,
     reciter: "الشيخ أحمد نعينع",
     title: "قال له صاحبه وهو يحاوره – أشهر نهاوند",
     surah: "الكهف",
@@ -493,6 +500,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-ibrahim-bushra-tilawah",
+    featured: true,
     reciter: "الشيخ مصطفى إسماعيل",
     title: "ولقد جاءت رسلنا إبراهيم بالبشرى",
     surah: "هود",
@@ -511,6 +519,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "bahtimi-musa-tilawah",
+    featured: true,
     reciter: "الشيخ كامل يوسف البهتيمي",
     title: "وما تلك بيمينك يا موسى",
     surah: "طه",
@@ -520,6 +529,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "shisha-kahf-tilawah",
+    featured: true,
     reciter: "الشيخ أبو العينين شعيشع",
     title: "الكهف 75–86 – التلاوة المشهورة الإعجازية",
     surah: "الكهف",
@@ -529,6 +539,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "rifaat-noor-tilawah",
+    featured: true,
     reciter: "الشيخ محمد رفعت",
     title: "الله نور السماوات والأرض",
     surah: "النور",
@@ -685,7 +696,7 @@ function QuranArchivePage() {
                       {recordings.map((item) => (
                         <article key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
                           <div className="flex items-start gap-3">
-                            <h3 className="min-w-0 flex-1 font-serif text-base font-bold leading-relaxed text-foreground">{item.title}</h3>
+                            <h3 className="flex min-w-0 flex-1 items-start gap-2 font-serif text-base font-bold leading-relaxed text-foreground"><span>{item.title}</span>{item.featured && <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-gold/15 px-2 py-1 text-[10px] font-sans font-bold text-gold" title="من أشهر النوادر المختارة"><Star className="size-3 fill-current" /> نادرة مميزة</span>}</h3>
                             <button
                               type="button"
                               onClick={() => toggleFavorite(item.id)}
