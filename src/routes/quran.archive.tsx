@@ -177,6 +177,7 @@ const RECORDINGS: ArchiveRecording[] = [
 function QuranArchivePage() {
   const [query, setQuery] = useState("");
   const [reciterFilter, setReciterFilter] = useState("الكل");
+  const [archiveFilter, setArchiveFilter] = useState<"الكل" | "محافل ومساجد" | "تسجيلات مؤرخة" | "أرشيف الإذاعة">("الكل");
   const [active, setActive] = useState<ArchiveRecording | null>(null);
 
   const reciters = useMemo(
@@ -187,10 +188,15 @@ function QuranArchivePage() {
     const term = query.trim();
     return RECORDINGS.filter((item) => {
       const matchesReciter = reciterFilter === "الكل" || item.reciter === reciterFilter;
+      const matchesArchive =
+        archiveFilter === "الكل" ||
+        (archiveFilter === "محافل ومساجد" && Boolean(item.place)) ||
+        (archiveFilter === "تسجيلات مؤرخة" && Boolean(item.year)) ||
+        (archiveFilter === "أرشيف الإذاعة" && item.url.includes("misrquran.gov.eg"));
       const haystack = [item.reciter, item.title, item.details, item.place ?? "", item.year ?? ""].join(" ");
-      return matchesReciter && (!term || haystack.includes(term));
+      return matchesReciter && matchesArchive && (!term || haystack.includes(term));
     });
-  }, [query, reciterFilter]);
+  }, [query, reciterFilter, archiveFilter]);
 
   return (
     <>
@@ -250,6 +256,23 @@ function QuranArchivePage() {
             >
               {reciters.map((reciter) => <option key={reciter} value={reciter}>{reciter}</option>)}
             </select>
+          </div>
+
+          <div className="mb-5 flex flex-wrap gap-2">
+            {(["الكل", "محافل ومساجد", "تسجيلات مؤرخة", "أرشيف الإذاعة"] as const).map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                onClick={() => setArchiveFilter(filter)}
+                className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors ${
+                  archiveFilter === filter
+                    ? "border-gold bg-gold text-forest shadow-gold"
+                    : "border-border bg-card text-muted-foreground hover:border-gold/50 hover:text-foreground"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
