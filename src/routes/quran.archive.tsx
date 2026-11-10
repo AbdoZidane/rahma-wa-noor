@@ -225,6 +225,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "banna-rad",
+    featured: true,
     reciter: "الشيخ محمود علي البنا",
     title: "تلاوة قرآنية من سورة الرعد وقصار السور",
     surah: "الرعد وقصار السور",
