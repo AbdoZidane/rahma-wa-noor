@@ -25,6 +25,7 @@ type ArchiveRecording = {
   place?: string;
   year?: string;
   url: string;
+  audio?: boolean;
 };
 
 const RECORDINGS: ArchiveRecording[] = [
@@ -144,36 +145,12 @@ const RECORDINGS: ArchiveRecording[] = [
     url: "https://misrquran.gov.eg/episodedetails/98b6c686-c560-4fa4-9332-295b134a8fa9",
   },
   {
-    id: "banna-naml",
-    surah: "النمل",
-    reciter: "الشيخ محمود علي البنا",
-    title: "مقطع من المصحف المرتل",
-    details: "تسجيل إذاعي برواية حفص",
-    url: "https://misrquran.gov.eg/recorddetails/423c7293-bb08-4415-b281-79302b9e65f9",
-  },
-  {
     id: "mustafa-qamar-rahman",
     surah: "القمر والرحمن والبلد والشمس",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "سهرة قرآنية من سور متعددة",
     details: "سهرة قرآنية من أرشيف إذاعة القرآن الكريم",
     url: "https://misrquran.gov.eg/episodedetails/f8ead001-050c-4d2c-aefb-16df20b85120",
-  },
-  {
-    id: "mustafa-baqara-murattal",
-    surah: "البقرة",
-    reciter: "الشيخ مصطفى إسماعيل",
-    title: "مقطع من المصحف المرتل",
-    details: "من الآية 113 حتى الآية 218",
-    url: "https://misrquran.gov.eg/recorddetails/a810891b-cab6-4c2f-a8d4-13d1d958fe56",
-  },
-  {
-    id: "minshawi-isra-murattal",
-    surah: "الإسراء",
-    reciter: "الشيخ محمد صديق المنشاوي",
-    title: "مقطع من المصحف المرتل",
-    details: "من الآية 1 حتى الآية 81",
-    url: "https://misrquran.gov.eg/recorddetails/51271eef-2643-4302-915b-b329dcbbabfc",
   },
 
   {
@@ -241,30 +218,6 @@ const RECORDINGS: ArchiveRecording[] = [
     surah: "الرعد وقصار السور",
     details: "تلاوة إذاعية مع تعليق للدكتور علي عبد اللطيف منصور",
     url: "https://misrquran.gov.eg/episodedetails/6a0fb111-e68e-402d-8134-abeb9d061e0b",
-  },
-  {
-    id: "banna-yusuf",
-    reciter: "الشيخ محمود علي البنا",
-    title: "مقطع من المصحف المرتل",
-    surah: "يوسف",
-    details: "من الآية 53 حتى الآية 111",
-    url: "https://misrquran.gov.eg/recorddetails/0b71e37e-7f85-4bce-bbc2-2bbfd76c2a15",
-  },
-  {
-    id: "banna-hud",
-    reciter: "الشيخ محمود علي البنا",
-    title: "مقطع من المصحف المرتل",
-    surah: "هود",
-    details: "من الآية 61 حتى الآية 123",
-    url: "https://misrquran.gov.eg/recorddetails/c4bf798a-a2ae-4460-ab30-1d18c03620ce",
-  },
-  {
-    id: "banna-furqan",
-    reciter: "الشيخ محمود علي البنا",
-    title: "مقطع من المصحف المرتل",
-    surah: "الفرقان",
-    details: "تسجيل إذاعي برواية حفص",
-    url: "https://misrquran.gov.eg/recorddetails/e899f990-bef5-45f4-9be6-ce94a95aac4f",
   },
   
   
@@ -513,30 +466,75 @@ const RECORDINGS: ArchiveRecording[] = [
     url: "https://www.youtube.com/embed/mgzOfXrt9qU",
   },
   {
-    id: "naina-homs-2005-nahawand",
+    id: "naina-kahf-sahib-nahawand",
     reciter: "الشيخ أحمد نعينع",
-    title: "حفلة تاريخية من مدينة حمص السورية",
-    surah: "ما تيسر من القرآن الكريم",
-    details: "تسجيل من مدينة حمص سنة 2005 - مقام النهاوند",
-    place: "حمص - سوريا",
-    year: "2005",
-    url: "https://www.youtube.com/embed/zBkbt7kIu-w",
+    title: "قال له صاحبه وهو يحاوره – أشهر نهاوند",
+    surah: "الكهف",
+    details: "تلاوة مميزة من سورة الكهف - مقام النهاوند - 13:26",
+    url: "https://www.youtube.com/embed/mgzOfXrt9qU",
   },
   {
-    id: "naina-duha-youtube",
+    id: "naina-tur-verse-tilawah",
     reciter: "الشيخ أحمد نعينع",
-    title: "إبداع وجمال بلا حدود – سورة الضحى",
-    surah: "الضحى",
-    details: "تلاوة نادرة من التسعينات - المصدر: قناة تلاوات د. أحمد نعينع",
-    url: "https://www.youtube.com/embed/4HpyFzKwDDs",
+    title: "وناديناه من جانب الطور الأيمن",
+    surah: "مريم",
+    details: "تلاوة نادرة - نسخة صوتية مباشرة - 5:16",
+    url: "https://tilawah.net/audios/ahmd-ahmd-naaynaa-ondynh-mn-ganb-ltor-laymn-okrbnh-ngya-42147/download?original=1",
+    audio: true,
   },
   {
-    id: "naina-fater-nahawand",
-    reciter: "الشيخ أحمد نعينع",
-    title: "تجويد وإحساس نادر من سورة فاطر – مقام النهاوند",
-    surah: "فاطر",
-    details: "تلاوة منشورة بعنوان مقام النهاوند - المصدر: قناة حلية القرآن",
-    url: "https://www.youtube.com/embed/3nsjJHLDUh0",
+    id: "minshawi-ghafir-tilawah",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "يا قوم إنما هذه الحياة الدنيا متاع",
+    surah: "غافر",
+    details: "تلاوة نادرة - نسخة صوتية مباشرة - 11:38",
+    url: "https://tilawah.net/audios/mhmd-sdyk-almnshaoy-ya-kom-anma-hthh-alhya-aldnya-mtaaa-oan-alakhr-hy-dar-alkra-42123/download?original=1",
+    audio: true,
+  },
+  {
+    id: "mustafa-ibrahim-bushra-tilawah",
+    reciter: "الشيخ مصطفى إسماعيل",
+    title: "ولقد جاءت رسلنا إبراهيم بالبشرى",
+    surah: "هود",
+    details: "من المقاطع النادرة المميزة - نسخة أصلية - 7:22",
+    url: "https://tilawah.net/audios/mstf-asmaaayl-olkd-gaaat-rslna-abrahym-balbshr-42146/download?original=1",
+    audio: true,
+  },
+  {
+    id: "banna-imran-185-200-tilawah",
+    reciter: "الشيخ محمود علي البنا",
+    title: "خواتيم آل عمران – الآيات 185 إلى 200",
+    surah: "آل عمران",
+    details: "مصنفة كتلاوة نادرة - نسخة أصلية - 23:08",
+    url: "https://tilawah.net/audios/mhmod-aaly-albna-al-aamran-185-200-10761/download?original=1",
+    audio: true,
+  },
+  {
+    id: "bahtimi-musa-tilawah",
+    reciter: "الشيخ كامل يوسف البهتيمي",
+    title: "وما تلك بيمينك يا موسى",
+    surah: "طه",
+    details: "من أشهر مقاطعه النادرة - نسخة أصلية - 3:53",
+    url: "https://tilawah.net/audios/kaml-yosf-albhtymy-oma-tlk-bymynk-ya-mos-42134/download?original=1",
+    audio: true,
+  },
+  {
+    id: "shisha-kahf-tilawah",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "الكهف 75–86 – التلاوة المشهورة الإعجازية",
+    surah: "الكهف",
+    details: "تلاوة نادرة - نسخة أصلية - 13:54",
+    url: "https://tilawah.net/audios/abo-alaaynyn-shaayshaa-alkhf-75-86-altlao-almshhor-alaaagazy-6583/download?original=1",
+    audio: true,
+  },
+  {
+    id: "rifaat-noor-tilawah",
+    reciter: "الشيخ محمد رفعت",
+    title: "الله نور السماوات والأرض",
+    surah: "النور",
+    details: "تلاوة نادرة - نسخة أصلية - 5:50",
+    url: "https://tilawah.net/audios/mhmd-rfaat-allh-nor-alsmoat-oalard-42132/download?original=1",
+    audio: true,
   },
   {
     id: "naina-hussein-evening",
@@ -730,7 +728,7 @@ function QuranArchivePage() {
                   <Button variant="outline" size="sm" onClick={() => setActive(null)}>إغلاق</Button>
                 </div>
                 <div className="bg-secondary/30 p-2 sm:p-4">
-                  {active.url.toLowerCase().includes(".mp3") ? (
+                  {active.audio || active.url.toLowerCase().includes(".mp3") ? (
                     <div className="rounded-xl border border-border bg-background p-4">
                       <audio
                         key={active.id}
