@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, ArrowRight, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
+import { ArrowRight, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -245,7 +245,7 @@ const RECORDINGS: ArchiveRecording[] = [
     surah: "الشعراء",
     details: "تسجيل من لقاء بغداد سنة 1965",
     place: "بغداد",
-    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsha_Shou3araa-1965-Iraq.mp3",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsha_Shou3ara.mp3",
   },
   {
     id: "minshawi-baghdad-furqan-shuara",
@@ -565,7 +565,6 @@ const RECORDINGS: ArchiveRecording[] = [
 function QuranArchivePage() {
   const [query, setQuery] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [showFeaturedOnly, setShowFeaturedOnly] = useState(true);
   const [expandedReciter, setExpandedReciter] = useState<string | null>(null);
   const [active, setActive] = useState<ArchiveRecording | null>(null);
   const [audioFailed, setAudioFailed] = useState(false);
@@ -603,10 +602,9 @@ function QuranArchivePage() {
       const haystack = [item.reciter, item.title, item.surah, item.details, item.place ?? ""].join(" ").toLocaleLowerCase("ar");
       const matchesQuery = !term || haystack.includes(term);
       const matchesFavoriteFilter = !showFavoritesOnly || favorites.includes(item.id);
-      const matchesFeaturedFilter = !showFeaturedOnly || item.featured === true;
-      return matchesQuery && matchesFavoriteFilter && matchesFeaturedFilter;
+      return matchesQuery && matchesFavoriteFilter;
     });
-  }, [query, showFavoritesOnly, showFeaturedOnly, favorites]);
+  }, [query, showFavoritesOnly, favorites]);
   const grouped = useMemo(() => {
     const groups = new Map<string, ArchiveRecording[]>();
     for (const item of filtered) {
@@ -656,16 +654,6 @@ function QuranArchivePage() {
               <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ابحث باسم الشيخ أو السورة..." className="h-11 pr-9" />
             </div>
-            <button
-              type="button"
-              onClick={() => setShowFeaturedOnly((current) => !current)}
-              aria-pressed={showFeaturedOnly}
-              aria-label={showFeaturedOnly ? "عرض كل التسجيلات" : "العودة لأشهر النوادر فقط"}
-              title={showFeaturedOnly ? "عرض كل التسجيلات" : "العودة لأشهر النوادر فقط"}
-              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${showFeaturedOnly ? "border-gold bg-gold/15 text-gold" : "border-border bg-card text-muted-foreground hover:border-gold hover:text-gold"}`}
-            >
-              {showFeaturedOnly ? <><Star className="size-4 fill-current" />عرض كل التسجيلات</> : <ArrowLeft className="size-5" aria-hidden="true" />}
-            </button>
             <button
               type="button"
               onClick={() => setShowFavoritesOnly((current) => !current)}
@@ -730,7 +718,7 @@ function QuranArchivePage() {
 
           {filtered.length === 0 && (
             <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-sm text-muted-foreground">
-              {showFavoritesOnly && favorites.length === 0 ? "لسه مفيش تسجيلات في المفضّلة. اضغط على النجمة بجوار أي تسجيل لإضافته." : showFeaturedOnly ? "مفيش نتائج ضمن أشهر النوادر المطابقة. جرّب البحث أو اعرض كل التسجيلات." : "مفيش نتائج مطابقة. جرّب اسم قارئ أو سورة تانية."}
+              {showFavoritesOnly && favorites.length === 0 ? "لسه مفيش تسجيلات في المفضّلة. اضغط على النجمة بجوار أي تسجيل لإضافته." : "مفيش نتائج مطابقة. جرّب اسم قارئ أو سورة تانية."}
             </div>
           )}
 
