@@ -225,6 +225,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "banna-rad",
+    featured: true,
     reciter: "الشيخ محمود علي البنا",
     title: "تلاوة قرآنية من سورة الرعد وقصار السور",
     surah: "الرعد وقصار السور",
@@ -240,7 +241,6 @@ const RECORDINGS: ArchiveRecording[] = [
   // نوادر زيارة المنشاوي للعراق وبغداد 1965
   {
     id: "minshawi-baghdad-ibrahim",
-    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "إبراهيم من جامع 14 آذار ببغداد",
     surah: "إبراهيم",
@@ -250,7 +250,6 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-shuara",
-    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "الشعراء من تسجيلات بغداد",
     surah: "الشعراء",
@@ -260,7 +259,6 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-furqan-shuara",
-    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "الفرقان والشعراء من القصر الجمهوري",
     surah: "الفرقان والشعراء",
@@ -333,6 +331,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "basit-ibrahim-iraq",
+    featured: true,
     reciter: "الشيخ عبد الباسط عبد الصمد",
     title: "إبراهيم مع الأذان من العراق",
     surah: "إبراهيم",
@@ -375,6 +374,7 @@ const RECORDINGS: ArchiveRecording[] = [
   // مختارات الشيخ أبي العينين شعيشع
   {
     id: "shisha-ibrahim-1",
+    featured: true,
     reciter: "الشيخ أبو العينين شعيشع",
     title: "إبراهيم من تسجيلات الإذاعة السعودية",
     surah: "إبراهيم",
@@ -383,7 +383,6 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "shisha-ibrahim-2",
-    featured: true,
     reciter: "الشيخ أبو العينين شعيشع",
     title: "إبراهيم والحاقة – المسجد الحسيني",
     surah: "إبراهيم والحاقة",
@@ -438,6 +437,7 @@ const RECORDINGS: ArchiveRecording[] = [
 
   {
     id: "naina-tur-verse-tilawah",
+    featured: true,
     reciter: "الشيخ أحمد نعينع",
     title: "وناديناه من جانب الطور الأيمن",
     surah: "مريم",
@@ -447,6 +447,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-ghafir-tilawah",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "يا قوم إنما هذه الحياة الدنيا متاع",
     surah: "غافر",
