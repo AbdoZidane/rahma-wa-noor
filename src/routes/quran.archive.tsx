@@ -321,6 +321,287 @@ const RECORDINGS: ArchiveRecording[] = [
     details: "تسجيل خارجي من أرشيف أعلام التلاوة",
     url: "https://www.youtube-nocookie.com/embed/ZYsDjXvomzg",
   },
+
+  // نوادر زيارة المنشاوي للعراق وبغداد 1965
+  {
+    id: "minshawi-baghdad-ibrahim",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "إبراهيم من جامع 14 آذار ببغداد",
+    surah: "إبراهيم",
+    details: "تسجيل من زيارته للعراق سنة 1965",
+    place: "بغداد - جامع 14 آذار",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsh_Ibraheem_1965.mp3",
+  },
+  {
+    id: "minshawi-baghdad-shuara",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "الشعراء من تسجيلات بغداد",
+    surah: "الشعراء",
+    details: "تسجيل من لقاء بغداد سنة 1965",
+    place: "بغداد",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsha_Shou3araa-1965-Iraq.mp3",
+  },
+  {
+    id: "minshawi-baghdad-furqan-shuara",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "الفرقان والشعراء من القصر الجمهوري",
+    surah: "الفرقان والشعراء",
+    details: "من تسجيلات القصر الجمهوري ببغداد سنة 1965",
+    place: "القصر الجمهوري - بغداد",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsh_Furqan_Shou3araa-1965-Iraq.mp3",
+  },
+  {
+    id: "minshawi-baghdad-qasas",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "القصص من القصر الجمهوري",
+    surah: "القصص",
+    details: "من الآية 76 إلى 88 - بغداد 1965",
+    place: "القصر الجمهوري - بغداد",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Qassas_76-88%3D%3D22-01-1965-Iraq.mp3",
+  },
+  {
+    id: "minshawi-baghdad-qamar-rahman",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "القمر والرحمن من جلسة عراقية",
+    surah: "القمر والرحمن",
+    details: "من تسجيلات زيارته للعراق سنة 1965",
+    place: "العراق",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsh_Qamar-Rahman.mp3",
+  },
+  {
+    id: "minshawi-baghdad-muminun",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "المؤمنون من القصر الجمهوري",
+    surah: "المؤمنون",
+    details: "من الآية 1 إلى 29 - بغداد 1965",
+    place: "القصر الجمهوري - بغداد",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Moenoon-1-29%3D%3D20-01-1965-Iraq.mp3",
+  },
+  {
+    id: "minshawi-baghdad-naml",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "النمل من القصر الجمهوري",
+    surah: "النمل",
+    details: "من الآية 1 إلى 29 - بغداد 1965",
+    place: "القصر الجمهوري - بغداد",
+    url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsh_Naml_1-29--Iraq.mp3",
+  },
+  {
+    id: "minshawi-baghdad-saff-qadr",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "الصف والقدر من القصر الجمهوري",
+    surah: "الصف والقدر",
+    details: "تلاوة مسجلة بالقصر الجمهوري في رمضان 1384 هـ / 1965",
+    place: "بغداد - القصر الجمهوري",
+    year: "1965",
+    url: "https://www.youtube-nocookie.com/embed/As82FEqAMTw",
+  },
+  {
+    id: "minshawi-baghdad-yusuf",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "يوسف من تلفزيون العراق",
+    surah: "يوسف",
+    details: "من الآية 1 إلى 24 - تسجيل تلفزيون العراق سنة 1965",
+    place: "بغداد - تلفزيون العراق",
+    year: "1965",
+    url: "https://www.youtube-nocookie.com/embed/MbuOMiffB6g",
+  },
+
+  // مختارات الشيخ عبد الباسط عبد الصمد
+  {
+    id: "basit-ibrahim-haram",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "إبراهيم وقصار السور من المسجد الحرام",
+    surah: "إبراهيم وقصار السور",
+    details: "تسجيل مكة سنة 1951",
+    place: "المسجد الحرام - مكة",
+    year: "1951",
+    url: "https://archive.org/download/AbdelBasit_InPublic_qr/1951%20%20%D8%A7%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85%20%D9%88%D9%82%D8%B5%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B3%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%AD%D8%B1%D8%A7%D9%85.mp3",
+  },
+  {
+    id: "basit-ibrahim-aqsa",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "إبراهيم من المسجد الأقصى",
+    surah: "إبراهيم",
+    details: "تسجيل من المسجد الأقصى سنة 1965",
+    place: "المسجد الأقصى",
+    year: "1965",
+    url: "https://archive.org/download/AbdelBasit_InPublic_qr/%D8%A5%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85%20-%201965%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A3%D9%82%D8%B5%D9%89.mp3",
+  },
+  {
+    id: "basit-ibrahim-iraq",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "إبراهيم مع الأذان من العراق",
+    surah: "إبراهيم",
+    details: "تسجيل من العراق سنة 1986",
+    place: "العراق",
+    year: "1986",
+    url: "https://archive.org/download/AbdelBasit_InPublic_qr/%D8%A5%D8%A8%D8%B1%D8%A7%D9%87%D9%8A%D9%85%20%D9%85%D8%B9%20%D8%A7%D9%84%D8%A2%D8%B0%D8%A7%D9%86%20-%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82%201986.mp3",
+  },
+  {
+    id: "basit-imran-baghdad",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "آل عمران من بغداد",
+    surah: "آل عمران",
+    details: "تسجيل من بغداد سنة 1986",
+    place: "بغداد",
+    year: "1986",
+    url: "https://archive.org/download/AbdelBasit_InPublic_qr/%D8%A2%D9%84%20%D8%B9%D9%85%D8%B1%D8%A7%D9%86%20-%20%D8%A8%D8%BA%D8%AF%D8%A7%D8%AF%20%D8%A7%D9%84%D8%B9%D8%B1%D8%A7%D9%82%201986.mp3",
+  },
+  {
+    id: "basit-kahf-last",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "آخر ما قرأ من سورة الكهف",
+    surah: "الكهف",
+    details: "تسجيل نادر من أرشيف التلاوات الخارجية",
+    url: "https://archive.org/download/AbdelBasit_InPublic_qr/%D8%A7%D8%AE%D8%B1%20%D9%85%D8%A7%20%D9%82%D8%B1%D8%A7%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D8%A8%D8%A7%D8%B3%D8%B7%20%D8%A7%D9%84%D9%83%D9%87%D9%81.mp3",
+  },
+  {
+    id: "basit-ahzab-aqsa",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "الأحزاب من المسجد الأقصى",
+    surah: "الأحزاب",
+    details: "تسجيل من المسجد الأقصى سنة 1964",
+    place: "المسجد الأقصى",
+    year: "1964",
+    url: "https://archive.org/download/AbdelBasit_InPublic_qr/%D8%A7%D9%84%D8%A3%D8%AD%D8%B2%D8%A7%D8%A8%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D9%89%201964.mp3",
+  },
+  {
+    id: "basit-classic-youtube",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "من كنوز الخمسينات",
+    surah: "القيامة والطارق والأعلى والغاشية",
+    details: "تسجيل إذاعي من فترة الخمسينات",
+    year: "الخمسينات",
+    url: "https://www.youtube-nocookie.com/embed/-1rPASUmZ5g",
+  },
+  {
+    id: "basit-fater-yasin",
+    reciter: "الشيخ عبد الباسط عبد الصمد",
+    title: "فاطر ويس من نوادر الستينات",
+    surah: "فاطر ويس",
+    details: "من تسجيلات الإذاعة المصرية",
+    year: "الستينات",
+    url: "https://www.youtube-nocookie.com/embed/HTnkRHU95ys",
+  },
+
+  // مختارات الشيخ أبي العينين شعيشع
+  {
+    id: "shisha-ibrahim-1",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "إبراهيم من تسجيلات الإذاعة السعودية",
+    surah: "إبراهيم",
+    details: "من الآية 1 إلى 20",
+    url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/sho3isha3-Ibraheem_1-20_st.mp3",
+  },
+  {
+    id: "shisha-ibrahim-2",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "إبراهيم والنصر",
+    surah: "إبراهيم والنصر",
+    details: "من الآية 31 إلى آخر السورة مع سورة النصر",
+    url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/sho3isha3-Ibraheem_31-End_Nasr_st.mp3",
+  },
+  {
+    id: "shisha-shams-alaq-qadr",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "الشمس والعلق والقدر",
+    surah: "الشمس والعلق والقدر",
+    details: "تسجيل منقول مباشرة من أسطوانة",
+    url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/Sho3ayshe3_Shams_Alaq_Qadr.mp3",
+  },
+  {
+    id: "shisha-baqara",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "ما تيسر من سورة البقرة",
+    surah: "البقرة",
+    details: "تسجيل إذاعي من أرشيف مزامير",
+    url: "https://www.mazameer.com/upload/sounds/sho3esh3/baqarh_sh3ish3.mp3",
+  },
+  {
+    id: "shisha-kahf",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "ما تيسر من سورة الكهف",
+    surah: "الكهف",
+    details: "من تسجيلات الإذاعة السعودية",
+    url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/sho3isha3-Kahf-st.mp3",
+  },
+  {
+    id: "shisha-muhammad",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "تلاوة من سورة محمد",
+    surah: "محمد",
+    details: "من تسجيلات الإذاعة السعودية",
+    url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/sho3isha3-Mohammad-st.mp3",
+  },
+  {
+    id: "shisha-hajj",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "الحج من تسجيلات الإذاعة المصرية",
+    surah: "الحج",
+    details: "تلاوة نادرة من تسجيلات الإذاعة المصرية في أوائل الستينات",
+    year: "أوائل الستينات",
+    url: "https://www.youtube-nocookie.com/embed/a0rBj3QXMNg",
+  },
+  {
+    id: "shisha-imran-rahman",
+    reciter: "الشيخ أبو العينين شعيشع",
+    title: "وكفلها زكريا",
+    surah: "آل عمران والرحمن",
+    details: "من أشهر التلاوات المتداولة للشيخ",
+    url: "https://www.youtube-nocookie.com/embed/tjl-zg59PVE",
+  },
+
+  // مختارات الشيخ محمد رفعت
+  {
+    id: "rifaat-01",
+    reciter: "الشيخ محمد رفعت",
+    title: "الفاتحة وما تيسر من البقرة والنساء",
+    surah: "الفاتحة والبقرة والنساء",
+    details: "من أرشيف التسجيلات الصوتية المحفوظة",
+    url: "https://ia700301.us.archive.org/17/items/M.Refat_01/01a_M.Refat.mp3",
+  },
+  {
+    id: "rifaat-02",
+    reciter: "الشيخ محمد رفعت",
+    title: "ما تيسر من النساء والأعراف والتوبة",
+    surah: "النساء والأعراف والتوبة",
+    details: "تسجيل أرشيفي من التراث الصوتي للشيخ",
+    url: "https://ia600301.us.archive.org/17/items/M.Refat_01/01b_M.Refat.mp3",
+  },
+  {
+    id: "rifaat-03",
+    reciter: "الشيخ محمد رفعت",
+    title: "البقرة من الآية 44 إلى 73",
+    surah: "البقرة",
+    details: "تسجيل أرشيفي",
+    url: "https://ia700301.us.archive.org/17/items/M.Refat_01/02a_M.Refat.mp3",
+  },
+  {
+    id: "rifaat-04",
+    reciter: "الشيخ محمد رفعت",
+    title: "النساء من الآية 58 إلى 79",
+    surah: "النساء",
+    details: "تسجيل أرشيفي",
+    url: "https://ia600301.us.archive.org/17/items/M.Refat_01/02b_M.Refat.mp3",
+  },
+  {
+    id: "rifaat-05",
+    reciter: "الشيخ محمد رفعت",
+    title: "آل عمران من الآية 6 إلى 20 ومن 28 إلى 32",
+    surah: "آل عمران",
+    details: "تسجيل أرشيفي",
+    url: "https://ia700301.us.archive.org/17/items/M.Refat_01/03a_M.Refat.mp3",
+  },
+  {
+    id: "rifaat-06",
+    reciter: "الشيخ محمد رفعت",
+    title: "الإسراء من الآية 1 إلى 19",
+    surah: "الإسراء",
+    details: "تسجيل أرشيفي",
+    url: "https://ia600301.us.archive.org/17/items/M.Refat_01/03b_M.Refat.mp3",
+  },
+
 ];
 
 function QuranArchivePage() {
@@ -435,14 +716,20 @@ function QuranArchivePage() {
                   <Button variant="outline" size="sm" onClick={() => setActive(null)}>إغلاق</Button>
                 </div>
                 <div className="bg-secondary/30 p-2 sm:p-4">
-                  <iframe
-                    key={active.id}
-                    src={active.url}
-                    title={active.title}
-                    className="h-[65vh] min-h-[360px] w-full rounded-xl border border-border bg-background"
-                    allow="autoplay; encrypted-media"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                  />
+                  {active.url.toLowerCase().includes(".mp3") ? (
+                    <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-border bg-background p-6">
+                      <audio key={active.id} src={active.url} controls autoPlay preload="metadata" className="w-full" />
+                    </div>
+                  ) : (
+                    <iframe
+                      key={active.id}
+                      src={active.url}
+                      title={active.title}
+                      className="h-[65vh] min-h-[360px] w-full rounded-xl border border-border bg-background"
+                      allow="autoplay; encrypted-media"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                    />
+                  )}
                 </div>
                 <p className="px-4 pb-4 text-xs leading-6 text-muted-foreground">
                   مصدر التسجيل يظهر داخل المشغل؛ وقد يتوقف تشغيل بعض المصادر مؤقتًا إذا كانت الخدمة الأصلية غير متاحة.
