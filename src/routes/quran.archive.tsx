@@ -183,7 +183,6 @@ const RECORDINGS: ArchiveRecording[] = [
     url: "https://www.nourelquran.com/play-6867.html?ref=site",
   },
 
-,
   {
     id: "naina-muminun-noor",
     reciter: "الشيخ أحمد نعينع",
