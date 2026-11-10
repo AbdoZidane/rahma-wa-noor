@@ -537,12 +537,12 @@ const RECORDINGS: ArchiveRecording[] = [
 
 
   {
-    id: "naina-duha-apple",
+    id: "naina-duha-youtube",
     reciter: "الشيخ أحمد نعينع",
-    title: "سورة الضحى",
+    title: "إبداع وجمال بلا حدود – سورة الضحى",
     surah: "الضحى",
-    details: "تسجيل منشور على Apple Music - المدة 5:52",
-    url: "https://embed.music.apple.com/us/album/%D8%B3%D9%88%D8%B1%D8%A9-%D8%A7%D9%84%D8%B6%D8%AD%D9%89/1561327758?i=1561327772",
+    details: "تلاوة نادرة من التسعينات - المصدر: قناة تلاوات د. أحمد نعينع",
+    url: "https://www.youtube.com/embed/4HpyFzKwDDs",
   },
   {
     id: "naina-duha-mixcloud",
