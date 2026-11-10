@@ -492,7 +492,7 @@ const RECORDINGS: ArchiveRecording[] = [
     title: "الفاتحة وما تيسر من البقرة والنساء",
     surah: "الفاتحة والبقرة والنساء",
     details: "من أرشيف التسجيلات الصوتية المحفوظة",
-    url: "https://ia700301.us.archive.org/17/items/M.Refat_01/01a_M.Refat.mp3",
+    url: "https://archive.org/download/M.Refat_01/01a_M.Refat.mp3",
   },
   {
     id: "rifaat-02",
@@ -500,7 +500,7 @@ const RECORDINGS: ArchiveRecording[] = [
     title: "ما تيسر من النساء والأعراف والتوبة",
     surah: "النساء والأعراف والتوبة",
     details: "تسجيل أرشيفي من التراث الصوتي للشيخ",
-    url: "https://ia600301.us.archive.org/17/items/M.Refat_01/01b_M.Refat.mp3",
+    url: "https://archive.org/download/M.Refat_01/01b_M.Refat.mp3",
   },
   {
     id: "rifaat-03",
@@ -508,7 +508,7 @@ const RECORDINGS: ArchiveRecording[] = [
     title: "البقرة من الآية 44 إلى 73",
     surah: "البقرة",
     details: "تسجيل أرشيفي",
-    url: "https://ia700301.us.archive.org/17/items/M.Refat_01/02a_M.Refat.mp3",
+    url: "https://archive.org/download/M.Refat_01/02a_M.Refat.mp3",
   },
   {
     id: "rifaat-04",
@@ -516,7 +516,7 @@ const RECORDINGS: ArchiveRecording[] = [
     title: "النساء من الآية 58 إلى 79",
     surah: "النساء",
     details: "تسجيل أرشيفي",
-    url: "https://ia600301.us.archive.org/17/items/M.Refat_01/02b_M.Refat.mp3",
+    url: "https://archive.org/download/M.Refat_01/02b_M.Refat.mp3",
   },
   {
     id: "rifaat-05",
@@ -524,7 +524,7 @@ const RECORDINGS: ArchiveRecording[] = [
     title: "آل عمران من الآية 6 إلى 20 ومن 28 إلى 32",
     surah: "آل عمران",
     details: "تسجيل أرشيفي",
-    url: "https://ia700301.us.archive.org/17/items/M.Refat_01/03a_M.Refat.mp3",
+    url: "https://archive.org/download/M.Refat_01/03a_M.Refat.mp3",
   },
   {
     id: "rifaat-06",
@@ -532,7 +532,7 @@ const RECORDINGS: ArchiveRecording[] = [
     title: "الإسراء من الآية 1 إلى 19",
     surah: "الإسراء",
     details: "تسجيل أرشيفي",
-    url: "https://ia600301.us.archive.org/17/items/M.Refat_01/03b_M.Refat.mp3",
+    url: "https://archive.org/download/M.Refat_01/03b_M.Refat.mp3",
   },
 
 
@@ -562,6 +562,7 @@ function QuranArchivePage() {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [expandedReciter, setExpandedReciter] = useState<string | null>(null);
   const [active, setActive] = useState<ArchiveRecording | null>(null);
+  const [audioFailed, setAudioFailed] = useState(false);
   const [favorites, setFavorites] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -571,6 +572,10 @@ function QuranArchivePage() {
       return [];
     }
   });
+
+  useEffect(() => {
+    setAudioFailed(false);
+  }, [active?.id]);
 
   useEffect(() => {
     try {
@@ -725,7 +730,14 @@ function QuranArchivePage() {
                         src={active.url}
                         className="w-full"
                         aria-label={`تشغيل ${active.title}`}
+                        onError={() => setAudioFailed(true)}
                       />
+                      {audioFailed && (
+                        <div className="mt-3 rounded-lg border border-gold/30 bg-gold/10 p-3 text-sm leading-6 text-foreground">
+                          تعذر تشغيل الملف داخل الصفحة. جرّب فتح التسجيل مباشرة من المصدر.
+                          <a href={active.url} target="_blank" rel="noreferrer" className="mr-1 font-semibold text-primary underline underline-offset-4">فتح التسجيل</a>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <iframe
