@@ -404,12 +404,6 @@ export function QuranListenPage() {
                   count: "تسجيلات مختارة",
                   href: "https://alkabbah.com/recitations/playlist/206475/roayaa-tlaoat-alshykh-mstf-asmaaayl-mstf-asmaaayl",
                 },
-                {
-                  name: "الشيخ كامل يوسف البهتيمي",
-                  detail: "تلاوات مجوّدة نادرة من الحفلات والمحافل",
-                  count: "أرشيف التلاوات والمحافل",
-                  href: "https://mktba.online/audios?category_id=79&duration=all&sort=newest",
-                },
               ].map((archive) => (
                 <a
                   key={archive.name}
