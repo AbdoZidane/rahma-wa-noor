@@ -537,12 +537,20 @@ const RECORDINGS: ArchiveRecording[] = [
 
 
   {
-    id: "naina-duha-mujawwad",
+    id: "naina-duha-apple",
     reciter: "الشيخ أحمد نعينع",
-    title: "أوائل سورة الضحى - مقام النهاوند",
+    title: "سورة الضحى",
     surah: "الضحى",
-    details: "تلاوة مميزة من مكة المكرمة - أوائل الضحى والشرح والعاديات جمعًا بالقراءات العشر، برواية خلف عن حمزة",
-    url: "https://www.youtube-nocookie.com/embed/kemL5dpn4BI",
+    details: "تسجيل منشور على Apple Music - المدة 5:52",
+    url: "https://music.apple.com/us/album/%D8%B3%D9%88%D8%B1%D8%A9-%D8%A7%D9%84%D8%B6%D8%AD%D9%89/1561327758?i=1561327772",
+  },
+  {
+    id: "naina-duha-mixcloud",
+    reciter: "الشيخ أحمد نعينع",
+    title: "تلاوة نادرة أمام الشيخ مصطفى إسماعيل",
+    surah: "الضحى",
+    details: "تسجيل منشور على Mixcloud - المدة 9:56",
+    url: "https://www.mixcloud.com/elbastawy9/%D8%A7%D9%84%D8%B4%D9%82%D8%A7%D8%B1%D8%A6-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE-%D8%A3%D8%AD%D9%85%D8%AF-%D9%86%D8%B9%D9%8A%D9%86%D8%B9-%D9%8A%D9%82%D8%B1%D8%A3-%D8%A7%D9%85%D8%A7%D9%85-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE-%D9%85%D8%B5%D8%B7%D9%81%D9%89-%D8%A7%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D9%86%D8%A7%D8%AF%D8%B1-%D8%AC%D8%AF%D8%A7/",
   },
   {
     id: "naina-hussein-evening",
@@ -615,7 +623,14 @@ function QuranArchivePage() {
       current.push(item);
       groups.set(item.reciter, current);
     }
-    return Array.from(groups.entries());
+    return Array.from(groups.entries())
+      .map(([reciter, items]) => [
+        reciter,
+        [...items].sort((a, b) =>
+          a.surah.localeCompare(b.surah, "ar") || a.title.localeCompare(b.title, "ar")
+        ),
+      ] as [string, ArchiveRecording[]])
+      .sort(([a], [b]) => a.localeCompare(b, "ar"));
   }, [filtered]);
 
   return (
