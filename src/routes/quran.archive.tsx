@@ -20,6 +20,7 @@ type ArchiveRecording = {
   id: string;
   reciter: string;
   title: string;
+  surah: string;
   details: string;
   place?: string;
   year?: string;
@@ -29,6 +30,7 @@ type ArchiveRecording = {
 const RECORDINGS: ArchiveRecording[] = [
   {
     id: "naina-south-africa-qiyama",
+    surah: "القيامة وقصار السور",
     reciter: "الشيخ أحمد نعينع",
     title: "سهرة قرآنية من سورة القيامة وقصار السور",
     details: "سهرة قرآنية مسجلة من جنوب أفريقيا",
@@ -38,6 +40,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "naina-south-africa-yusuf",
+    surah: "يوسف",
     reciter: "الشيخ أحمد نعينع",
     title: "سهرة قرآنية من سورة يوسف",
     details: "تلاوة مسجلة من جنوب أفريقيا",
@@ -47,6 +50,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-al-imam",
+    surah: "البقرة وقصار السور",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "سهرة قرآنية من سورة البقرة وقصار السور",
     details: "سهرة قرآنية مسجلة من المسجد الأقصى",
@@ -55,6 +59,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-ali-imran",
+    surah: "آل عمران وقصار السور",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "تلاوة من آل عمران وقصار السور",
     details: "تلاوة إذاعية مع تعليق للشيخ محمد الغزالي",
@@ -62,6 +67,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-ibrahim",
+    surah: "إبراهيم",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "تلاوة من سورة إبراهيم",
     details: "تلاوة مسجلة من مسجد السيدة زينب",
@@ -70,6 +76,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-sajda-alaq",
+    surah: "السجدة والعلق",
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "تلاوة نادرة من سورتي السجدة والعلق",
     details: "من أول سورة السجدة حتى الآية 19، ومن أول سورة العلق حتى الآية 8",
@@ -77,6 +84,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-tauba",
+    surah: "التوبة",
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "تلاوة نادرة من سورة التوبة",
     details: "من الآية 36 حتى الآية 40",
@@ -84,6 +92,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "banna-anbiya",
+    surah: "الأنبياء",
     reciter: "الشيخ محمود علي البنا",
     title: "تلاوة قرآنية من سورة الأنبياء",
     details: "تلاوة قرآنية مع تعليق للدكتور محمد الطيب النجار",
@@ -91,6 +100,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "banna-baqara",
+    surah: "البقرة",
     reciter: "الشيخ محمود علي البنا",
     title: "تلاوة قرآنية من سورة البقرة",
     details: "تلاوة ضمن احتفال محافظة الإسكندرية بالمولد النبوي الشريف",
@@ -99,6 +109,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "bahtimi-baqara",
+    surah: "البقرة",
     reciter: "الشيخ كامل يوسف البهتيمي",
     title: "تلاوة قرآنية من سورة البقرة",
     details: "تلاوة مسجلة من مسجد الإمام الحسين",
@@ -107,6 +118,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "bahtimi-maryam",
+    surah: "مريم",
     reciter: "الشيخ كامل يوسف البهتيمي",
     title: "سهرة قرآنية من سورة مريم",
     details: "سهرة قرآنية مسجلة من مسجد الإمام الحسين",
@@ -116,6 +128,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "naina-furqan-hussein-1990",
+    surah: "الفرقان",
     reciter: "الشيخ أحمد نعينع",
     title: "سورة الفرقان",
     details: "تسجيل محفل من مسجد الإمام الحسين",
@@ -125,6 +138,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-ahzab-rare",
+    surah: "الأحزاب",
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "تلاوة نادرة من سورة الأحزاب",
     details: "تسجيل أرشيفي من مكتبة نور القرآن",
@@ -132,6 +146,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "banna-noor-hussein",
+    surah: "النور",
     reciter: "الشيخ محمود علي البنا",
     title: "سورة النور",
     details: "تلاوة مسجلة من مسجد الإمام الحسين",
@@ -140,6 +155,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-short-surahs-tv",
+    surah: "قصار السور",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "قصار السور",
     details: "تسجيل من مسجد التليفزيون",
@@ -148,6 +164,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-yusuf-1965",
+    surah: "يوسف",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "سورة يوسف",
     details: "تسجيل أرشيفي من عام 1965",
@@ -157,8 +174,9 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-1965",
+    surah: "غير محددة في المصدر",
     reciter: "الشيخ محمد صديق المنشاوي",
-    title: "تلاوة من تليفزيون بغداد",
+    title: "تسجيل تليفزيون بغداد",
     details: "تسجيل تلفزيوني أرشيفي",
     place: "بغداد",
     year: "1965",
@@ -166,8 +184,9 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-tv-studios",
+    surah: "غير محددة في المصدر",
     reciter: "الشيخ مصطفى إسماعيل",
-    title: "تلاوة من استوديوهات التليفزيون",
+    title: "تسجيل من استوديوهات التليفزيون",
     details: "تسجيل إذاعي من أرشيف التلاوات النادرة",
     place: "استوديوهات التليفزيون",
     url: "https://www.nourelquran.com/play-5989.html?ref=site",
@@ -176,21 +195,24 @@ const RECORDINGS: ArchiveRecording[] = [
 
 function QuranArchivePage() {
   const [query, setQuery] = useState("");
-  const [reciterFilter, setReciterFilter] = useState("الكل");
-  const [active, setActive] = useState<ArchiveRecording | null>(null);
+    const [active, setActive] = useState<ArchiveRecording | null>(null);
 
-  const reciters = useMemo(
-    () => ["الكل", ...Array.from(new Set(RECORDINGS.map((item) => item.reciter)))],
-    [],
-  );
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase("ar");
     return RECORDINGS.filter((item) => {
-      const matchesReciter = reciterFilter === "الكل" || item.reciter === reciterFilter;
-      const haystack = [item.reciter, item.title, item.details].join(" ").toLocaleLowerCase("ar");
-      return matchesReciter && (!term || haystack.includes(term));
+      const haystack = [item.reciter, item.title, item.surah, item.details].join(" ").toLocaleLowerCase("ar");
+      return !term || haystack.includes(term);
     });
-  }, [query, reciterFilter]);
+  }, [query]);
+  const grouped = useMemo(() => {
+    const groups = new Map<string, ArchiveRecording[]>();
+    for (const item of filtered) {
+      const current = groups.get(item.reciter) ?? [];
+      current.push(item);
+      groups.set(item.reciter, current);
+    }
+    return Array.from(groups.entries());
+  }, [filtered]);
 
   return (
     <>
@@ -234,23 +256,33 @@ function QuranArchivePage() {
             </select>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            {filtered.map((item) => (
-              <article key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors hover:border-gold/50">
-                <div className="flex items-start gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-forest/10 text-primary">
-                    <Headphones className="size-5" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-semibold text-gold">{item.reciter}</p>
-                    <h3 className="mt-1 font-serif text-base font-bold leading-relaxed text-foreground">{item.title}</h3>
-                    <p className="mt-1 text-xs leading-6 text-muted-foreground">{item.details}</p>
-                  </div>
+          <div className="space-y-7">
+            {grouped.map(([reciter, recordings]) => (
+              <section key={reciter} aria-label={reciter}>
+                <div className="mb-3 flex items-center justify-between border-b border-gold/30 pb-2">
+                  <h2 className="font-serif text-lg font-bold text-primary">{reciter}</h2>
+                  <span className="text-xs text-muted-foreground">{recordings.length} تلاوة</span>
                 </div>
-                <Button onClick={() => setActive(item)} variant="gold" className="mt-3 w-full gap-2">
-                  <Play className="size-4" />استمع
-                </Button>
-              </article>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {recordings.map((item) => (
+                    <article key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft transition-colors hover:border-gold/50">
+                      <div className="flex items-start gap-3">
+                        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-forest/10 text-primary">
+                          <Headphones className="size-5" />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-serif text-base font-bold leading-relaxed text-foreground">{item.title}</h3>
+                          <p className="mt-1 inline-flex rounded-full bg-gold/10 px-2.5 py-1 text-xs font-semibold text-gold">السورة: {item.surah}</p>
+                          <p className="mt-2 text-xs leading-6 text-muted-foreground">{item.details}</p>
+                        </div>
+                      </div>
+                      <Button onClick={() => setActive(item)} variant="gold" className="mt-3 w-full gap-2">
+                        <Play className="size-4" />استمع
+                      </Button>
+                    </article>
+                  ))}
+                </div>
+              </section>
             ))}
           </div>
 
