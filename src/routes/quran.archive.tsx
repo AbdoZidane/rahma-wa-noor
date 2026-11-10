@@ -586,10 +586,10 @@ function QuranArchivePage() {
     return Array.from(groups.entries())
       .map(([reciter, items]) => [
         reciter,
-        [...items].sort((a, b) =>
-          Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
-          a.surah.localeCompare(b.surah, "ar") || a.title.localeCompare(b.title, "ar")
-        ),
+        [...items].sort((a, b) => {
+          if (a.featured !== b.featured) return a.featured ? -1 : 1;
+          return a.surah.localeCompare(b.surah, "ar") || a.title.localeCompare(b.title, "ar");
+        }),
       ] as [string, ArchiveRecording[]])
       .sort(([a], [b]) => a.localeCompare(b, "ar"));
   }, [filtered]);
@@ -653,7 +653,14 @@ function QuranArchivePage() {
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block font-serif text-base font-bold text-foreground">{reciter}</span>
-                      <span className="mt-1 block text-xs text-muted-foreground">{recordings.length} تسجيلات مختارة</span>
+                      <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                        <span>{recordings.length} تسجيلات</span>
+                        {recordings.some((item) => item.featured) && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-gold/15 px-2 py-1 font-bold text-gold">
+                            ⭐ {recordings.filter((item) => item.featured).length} نادرة مميزة بالأول
+                          </span>
+                        )}
+                      </span>
                     </span>
                     {expanded ? <ChevronUp className="size-5 text-gold" /> : <ChevronDown className="size-5 text-gold" />}
                   </button>
@@ -663,7 +670,7 @@ function QuranArchivePage() {
                       {recordings.map((item) => (
                         <article key={item.id} className="rounded-2xl border border-border bg-card p-4 shadow-soft">
                           <div className="flex items-start gap-3">
-                            <h3 className="flex min-w-0 flex-1 items-start gap-2 font-serif text-base font-bold leading-relaxed text-foreground"><span>{item.title}</span>{item.featured && <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-gold/15 px-2 py-1 text-[10px] font-sans font-bold text-gold" title="من أشهر النوادر المختارة"><Star className="size-3 fill-current" /> نادرة مميزة</span>}</h3>
+                            <h3 className="flex min-w-0 flex-1 items-start gap-2 font-serif text-base font-bold leading-relaxed text-foreground"><span>{item.title}</span>{item.featured && <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-gold/50 bg-gold/20 px-2.5 py-1.5 text-xs font-sans font-extrabold text-gold shadow-sm" title="تسجيل مميز مختار">⭐ نادرة مميزة</span>}</h3>
                             <button
                               type="button"
                               onClick={() => toggleFavorite(item.id)}
