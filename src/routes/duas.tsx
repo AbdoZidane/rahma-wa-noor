@@ -31,11 +31,11 @@ function DuasPage() {
         <span className="mt-2 block text-sm text-gold-soft">{DUA_BENEFIT_HADITH.source}</span>
       </PageHeader>
       <section className="pattern-islamic">
-        <div className="mx-auto grid max-w-4xl gap-6 px-5 py-16">
+        <div className="mx-auto grid max-w-4xl gap-4 px-4 py-10 sm:gap-6 sm:px-5 sm:py-16">
           {DUAS.map((d) => (
             <article
               key={d.id}
-              className="rounded-2xl border border-border bg-card p-5 shadow-soft sm:p-8"
+              className="rounded-2xl border border-border bg-card p-4 shadow-soft sm:p-8"
             >
               <header className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="flex items-center gap-2 text-xl font-bold text-primary">
@@ -50,7 +50,7 @@ function DuasPage() {
               </header>
               <p
                 className={cn(
-                  "mt-5 text-xl leading-[2.2] text-foreground sm:text-2xl",
+                  "mt-4 text-lg leading-[2.1] text-foreground sm:mt-5 sm:text-2xl",
                   d.kind === "quran" ? "quran-text" : "dua-text",
                 )}
               >
