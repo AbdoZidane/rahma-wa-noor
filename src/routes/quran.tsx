@@ -163,7 +163,11 @@ function QuranPortalPage() {
               <h3 className="font-serif text-lg font-bold text-primary">ختمة القرآن الجماعية</h3>
               <p className="mt-1 text-sm text-muted-foreground">شارك بقراءة جزء واحد، وتابع اكتمال الختمة مع الجميع.</p>
             </div>
-            <Button asChild variant="outline" className="shrink-0 border-gold/50">
+            <Button
+              asChild
+              variant="gold"
+              className="shrink-0 shadow-gold transition-transform hover:-translate-y-0.5 active:translate-y-0"
+            >
               <Link to="/quran/khatma">المشاركة في الختمة <ArrowLeft className="ms-2 size-4" /></Link>
             </Button>
           </div>
