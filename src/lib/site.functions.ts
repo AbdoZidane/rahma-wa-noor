@@ -174,8 +174,15 @@ export const submitPrayer = createServerFn({ method: "POST" })
     // Only a one-way hash of the address is kept, briefly, for rate limiting.
     const ipHash = await sha256(`rahma-nour:${ip}`);
 
-    if (!process.env["SUPABASE_URL"] || !process.env["SUPABASE_SERVICE_ROLE_KEY"]) {
-      return { ok: true };
+    if (
+      !(process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"]) ||
+      !process.env["SUPABASE_SERVICE_ROLE_KEY"]
+    ) {
+      console.error("submitPrayer: Supabase server credentials are not configured.");
+      return {
+        ok: false,
+        error: "تعذّر حفظ الدعاء الآن. إعدادات الاتصال بقاعدة البيانات غير مكتملة، يُرجى إبلاغ إدارة الموقع.",
+      };
     }
 
     try {
@@ -209,8 +216,11 @@ export const submitPrayer = createServerFn({ method: "POST" })
       await supabaseAdmin.from("submission_log").insert({ ip_hash: ipHash });
       return { ok: true };
     } catch (err) {
-      console.warn("submitPrayer error fallback:", err);
-      return { ok: true };
+      console.error("submitPrayer failed to save prayer:", err);
+      return {
+        ok: false,
+        error: "حدث خطأ أثناء حفظ الدعاء. لم يتم نشره، يُرجى المحاولة مرة أخرى بعد قليل.",
+      };
     }
   });
 
