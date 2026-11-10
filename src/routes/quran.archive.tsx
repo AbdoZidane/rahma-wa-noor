@@ -174,23 +174,15 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-1965",
-    surah: "غير محددة في المصدر",
+    surah: "الواقعة والحديد",
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "تسجيل تليفزيون بغداد",
-    details: "تسجيل تلفزيوني أرشيفي",
+    details: "تسجيل من استديو تلفزيون العراق بتاريخ 27 يناير 1965",
     place: "بغداد",
     year: "1965",
     url: "https://www.nourelquran.com/play-6867.html?ref=site",
   },
-  {
-    id: "mustafa-tv-studios",
-    surah: "غير محددة في المصدر",
-    reciter: "الشيخ مصطفى إسماعيل",
-    title: "تسجيل من استوديوهات التليفزيون",
-    details: "تسجيل إذاعي من أرشيف التلاوات النادرة",
-    place: "استوديوهات التليفزيون",
-    url: "https://www.nourelquran.com/play-5989.html?ref=site",
-  },
+
 ];
 
 function QuranArchivePage() {
