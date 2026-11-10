@@ -537,20 +537,12 @@ const RECORDINGS: ArchiveRecording[] = [
 
 
   {
-    id: "naina-nahawand-special",
-    reciter: "الشيخ أحمد نعينع",
-    title: "إبداع في مقام النهاوند",
-    surah: "تلاوة مختارة",
-    details: "اختيار مميز من القناة الرسمية لتلاوات د. أحمد نعينع - مقام النهاوند",
-    url: "https://www.youtube-nocookie.com/embed/ZdHtmmwWO2s",
-  },
-  {
     id: "naina-duha-mujawwad",
     reciter: "الشيخ أحمد نعينع",
-    title: "سورة الضحى - من المصحف المجوّد",
+    title: "أوائل سورة الضحى - مقام النهاوند",
     surah: "الضحى",
-    details: "تلاوة مجوّدة كاملة - المدة 2:02 - مصدر يعرض التسجيل داخل الصفحة",
-    url: "https://www.assajda.com/ar/ahmed-nuinaa-75/ad-dhuha-6869",
+    details: "تلاوة مميزة من مكة المكرمة - أوائل الضحى والشرح والعاديات جمعًا بالقراءات العشر، برواية خلف عن حمزة",
+    url: "https://www.youtube-nocookie.com/embed/kemL5dpn4BI",
   },
   {
     id: "naina-hussein-evening",
