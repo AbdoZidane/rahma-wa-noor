@@ -177,38 +177,6 @@ const RECORDINGS: ArchiveRecording[] = [
   },
 
   {
-    id: "naina-muminun-noor",
-    reciter: "الشيخ أحمد نعينع",
-    title: "مقطع من المصحف المرتل",
-    surah: "المؤمنون إلى النور",
-    details: "تسجيل إذاعي برواية حفص",
-    url: "https://misrquran.gov.eg/recorddetails/9635b6e1-2cdb-4689-98af-6c80e0e0a15a",
-  },
-  {
-    id: "naina-ali-imran-radio",
-    reciter: "الشيخ أحمد نعينع",
-    title: "مقطع إذاعي من المصحف المرتل",
-    surah: "آل عمران",
-    details: "من الآية 21 إلى الآية 92",
-    url: "https://misrquran.gov.eg/recorddetails/c601be3e-2e58-4290-a88e-4035cb0e0937",
-  },
-  {
-    id: "naina-mumtahana-tahrim",
-    reciter: "الشيخ أحمد نعينع",
-    title: "مقطع إذاعي من المصحف المرتل",
-    surah: "الممتحنة والتحريم",
-    details: "تسجيل إذاعي برواية حفص",
-    url: "https://misrquran.gov.eg/recorddetails/bf7c677f-96c2-4c2d-be1e-783f5c43b1f5",
-  },
-  {
-    id: "naina-tur-rahman",
-    reciter: "الشيخ أحمد نعينع",
-    title: "مقطع إذاعي من المصحف المرتل",
-    surah: "الطور والرحمن",
-    details: "من سورة الطور الآية 29 إلى سورة الرحمن الآية 45",
-    url: "https://misrquran.gov.eg/recorddetails/efb95c50-d111-4063-8057-48e6e89ba4db",
-  },
-  {
     id: "mustafa-hujurat-qaf",
     reciter: "الشيخ مصطفى إسماعيل",
     title: "تلاوة قرآنية من سورتي الحجرات وق",
@@ -536,6 +504,24 @@ const RECORDINGS: ArchiveRecording[] = [
   },
 
 
+  {
+    id: "naina-kahf-sahib-nahawand",
+    reciter: "الشيخ أحمد نعينع",
+    title: "قال له صاحبه وهو يحاوره – أشهر نهاوند",
+    surah: "الكهف",
+    details: "مقطع مميز من سورة الكهف - مقام النهاوند - المدة 13:26",
+    url: "https://www.youtube.com/embed/mgzOfXrt9qU",
+  },
+  {
+    id: "naina-homs-2005-nahawand",
+    reciter: "الشيخ أحمد نعينع",
+    title: "حفلة تاريخية من مدينة حمص السورية",
+    surah: "ما تيسر من القرآن الكريم",
+    details: "تسجيل من مدينة حمص سنة 2005 - مقام النهاوند",
+    place: "حمص - سوريا",
+    year: "2005",
+    url: "https://www.youtube.com/embed/zBkbt7kIu-w",
+  },
   {
     id: "naina-duha-youtube",
     reciter: "الشيخ أحمد نعينع",
