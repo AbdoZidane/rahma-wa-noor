@@ -473,14 +473,7 @@ const RECORDINGS: ArchiveRecording[] = [
     details: "مقطع مميز من سورة الكهف - مقام النهاوند - المدة 13:26",
     url: "https://www.youtube.com/embed/mgzOfXrt9qU",
   },
-  {
-    id: "naina-kahf-sahib-nahawand",
-    reciter: "الشيخ أحمد نعينع",
-    title: "قال له صاحبه وهو يحاوره – أشهر نهاوند",
-    surah: "الكهف",
-    details: "تلاوة مميزة من سورة الكهف - مقام النهاوند - 13:26",
-    url: "https://www.youtube.com/embed/mgzOfXrt9qU",
-  },
+
   {
     id: "naina-tur-verse-tilawah",
     reciter: "الشيخ أحمد نعينع",
