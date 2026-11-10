@@ -225,7 +225,6 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "banna-rad",
-    featured: true,
     reciter: "الشيخ محمود علي البنا",
     title: "تلاوة قرآنية من سورة الرعد وقصار السور",
     surah: "الرعد وقصار السور",
@@ -310,7 +309,6 @@ const RECORDINGS: ArchiveRecording[] = [
   // مختارات الشيخ عبد الباسط عبد الصمد
   {
     id: "basit-ibrahim-haram",
-    featured: true,
     reciter: "الشيخ عبد الباسط عبد الصمد",
     title: "إبراهيم وقصار السور من المسجد الحرام",
     surah: "إبراهيم وقصار السور",
