@@ -145,9 +145,9 @@ function QuranPortalPage() {
               <div className="mt-8 border-t border-border pt-6">
                 <Button
                   asChild
-                  variant="heroOutline"
+                  variant="gold"
                   size="lg"
-                  className="w-full justify-between gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                  className="w-full justify-between gap-2 shadow-gold transition-transform hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <Link to="/quran/listen">
                     <span>الاستماع إلى التلاوات</span>
