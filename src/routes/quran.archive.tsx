@@ -537,6 +537,14 @@ const RECORDINGS: ArchiveRecording[] = [
 
 
   {
+    id: "naina-duha-mujawwad",
+    reciter: "الشيخ أحمد نعينع",
+    title: "سورة الضحى - من المصحف المجوّد",
+    surah: "الضحى",
+    details: "تلاوة مجوّدة كاملة - المدة 2:02 - مصدر يعرض التسجيل داخل الصفحة",
+    url: "https://www.assajda.com/ar/ahmed-nuinaa-75/ad-dhuha-6869",
+  },
+  {
     id: "naina-hussein-evening",
     reciter: "الشيخ أحمد نعينع",
     title: "تلاوة من أمسية مسجد الإمام الحسين",
