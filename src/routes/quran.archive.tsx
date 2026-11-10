@@ -559,6 +559,7 @@ const RECORDINGS: ArchiveRecording[] = [
 
 function QuranArchivePage() {
   const [query, setQuery] = useState("");
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [expandedReciter, setExpandedReciter] = useState<string | null>(null);
   const [active, setActive] = useState<ArchiveRecording | null>(null);
   const [favorites, setFavorites] = useState<string[]>(() => {
@@ -588,10 +589,12 @@ function QuranArchivePage() {
   const filtered = useMemo(() => {
     const term = query.trim().toLocaleLowerCase("ar");
     return RECORDINGS.filter((item) => {
-      const haystack = [item.reciter, item.title, item.surah, item.details].join(" ").toLocaleLowerCase("ar");
-      return !term || haystack.includes(term);
+      const haystack = [item.reciter, item.title, item.surah, item.details, item.place ?? ""].join(" ").toLocaleLowerCase("ar");
+      const matchesQuery = !term || haystack.includes(term);
+      const matchesFavoriteFilter = !showFavoritesOnly || favorites.includes(item.id);
+      return matchesQuery && matchesFavoriteFilter;
     });
-  }, [query]);
+  }, [query, showFavoritesOnly, favorites]);
   const grouped = useMemo(() => {
     const groups = new Map<string, ArchiveRecording[]>();
     for (const item of filtered) {
@@ -630,10 +633,19 @@ function QuranArchivePage() {
           </div>
 
           <div className="mb-5 flex flex-col gap-3 sm:flex-row">
-            <div className="relative flex-1">
+            <div className="relative min-w-0 flex-1">
               <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-              <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ابحث باسم الشيخ أو السورة..." className="pr-9" />
+              <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ابحث باسم الشيخ أو السورة..." className="h-11 pr-9" />
             </div>
+            <button
+              type="button"
+              onClick={() => setShowFavoritesOnly((current) => !current)}
+              aria-pressed={showFavoritesOnly}
+              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${showFavoritesOnly ? "border-gold bg-gold/15 text-gold" : "border-border bg-card text-muted-foreground hover:border-gold hover:text-gold"}`}
+            >
+              <Star className={`size-4 ${showFavoritesOnly ? "fill-current" : ""}`} />
+              {showFavoritesOnly ? "عرض كل التسجيلات" : `المفضّلة (${favorites.length})`}
+            </button>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -689,13 +701,13 @@ function QuranArchivePage() {
 
           {filtered.length === 0 && (
             <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-sm text-muted-foreground">
-              مفيش نتائج مطابقة. جرّب اسم قارئ أو سورة تانية.
+              {showFavoritesOnly && favorites.length === 0 ? "لسه مفيش تسجيلات في المفضّلة. اضغط على النجمة بجوار أي تسجيل لإضافته." : "مفيش نتائج مطابقة. جرّب اسم قارئ أو سورة تانية."}
             </div>
           )}
 
           {active && (
-            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-3 sm:p-6" role="dialog" aria-modal="true" aria-label="مشغل التلاوة">
-              <div className="w-full max-w-3xl overflow-hidden rounded-2xl border border-gold/40 bg-card shadow-2xl">
+            <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 p-2 sm:p-6" role="dialog" aria-modal="true" aria-label="مشغل التلاوة">
+              <div className="my-auto w-full max-w-3xl overflow-hidden rounded-2xl border border-gold/40 bg-card shadow-2xl">
                 <div className="flex items-start justify-between gap-4 border-b border-border p-4">
                   <div>
                     <p className="text-xs font-semibold text-gold">{active.reciter}</p>
