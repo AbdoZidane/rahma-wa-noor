@@ -287,6 +287,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-baghdad-naml",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "النمل من القصر الجمهوري",
     surah: "النمل",
@@ -571,6 +572,7 @@ const RECORDINGS: ArchiveRecording[] = [
 function QuranArchivePage() {
   const [query, setQuery] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showFeaturedOnly, setShowFeaturedOnly] = useState(true);
   const [expandedReciter, setExpandedReciter] = useState<string | null>(null);
   const [active, setActive] = useState<ArchiveRecording | null>(null);
   const [audioFailed, setAudioFailed] = useState(false);
@@ -608,9 +610,10 @@ function QuranArchivePage() {
       const haystack = [item.reciter, item.title, item.surah, item.details, item.place ?? ""].join(" ").toLocaleLowerCase("ar");
       const matchesQuery = !term || haystack.includes(term);
       const matchesFavoriteFilter = !showFavoritesOnly || favorites.includes(item.id);
-      return matchesQuery && matchesFavoriteFilter;
+      const matchesFeaturedFilter = !showFeaturedOnly || item.featured === true;
+      return matchesQuery && matchesFavoriteFilter && matchesFeaturedFilter;
     });
-  }, [query, showFavoritesOnly, favorites]);
+  }, [query, showFavoritesOnly, showFeaturedOnly, favorites]);
   const grouped = useMemo(() => {
     const groups = new Map<string, ArchiveRecording[]>();
     for (const item of filtered) {
@@ -660,6 +663,15 @@ function QuranArchivePage() {
               <Search className="absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ابحث باسم الشيخ أو السورة..." className="h-11 pr-9" />
             </div>
+            <button
+              type="button"
+              onClick={() => setShowFeaturedOnly((current) => !current)}
+              aria-pressed={showFeaturedOnly}
+              className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${showFeaturedOnly ? "border-gold bg-gold/15 text-gold" : "border-border bg-card text-muted-foreground hover:border-gold hover:text-gold"}`}
+            >
+              <Star className={`size-4 ${showFeaturedOnly ? "fill-current" : ""}`} />
+              {showFeaturedOnly ? "أشهر النوادر فقط" : "إظهار أشهر النوادر"}
+            </button>
             <button
               type="button"
               onClick={() => setShowFavoritesOnly((current) => !current)}
@@ -724,7 +736,7 @@ function QuranArchivePage() {
 
           {filtered.length === 0 && (
             <div className="rounded-2xl border border-dashed border-border bg-card p-10 text-center text-sm text-muted-foreground">
-              {showFavoritesOnly && favorites.length === 0 ? "لسه مفيش تسجيلات في المفضّلة. اضغط على النجمة بجوار أي تسجيل لإضافته." : "مفيش نتائج مطابقة. جرّب اسم قارئ أو سورة تانية."}
+              {showFavoritesOnly && favorites.length === 0 ? "لسه مفيش تسجيلات في المفضّلة. اضغط على النجمة بجوار أي تسجيل لإضافته." : showFeaturedOnly ? "مفيش نتائج ضمن أشهر النوادر المطابقة. جرّب البحث أو اعرض كل التسجيلات." : "مفيش نتائج مطابقة. جرّب اسم قارئ أو سورة تانية."}
             </div>
           )}
 
