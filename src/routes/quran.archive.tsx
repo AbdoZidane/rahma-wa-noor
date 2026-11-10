@@ -85,7 +85,7 @@ const RECORDINGS: ArchiveRecording[] = [
     details: "محفل سيدي جابر بالإسكندرية سنة 1958 - تلاوة كاملة",
     place: "سيدي جابر - الإسكندرية",
     year: "1958",
-    url: "https://www.youtube.com/embed/ANsIwz6Z_VQ",
+    url: "https://www.youtube.com/embed/ANsIwz6Z_VQ?start=2225",
   },
   {
     id: "minshawi-sajda-alaq",
