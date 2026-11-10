@@ -77,6 +77,16 @@ const RECORDINGS: ArchiveRecording[] = [
     url: "https://misrquran.gov.eg/episodedetails/dce4c5b9-d923-4594-902f-b68017890a10",
   },
   {
+    id: "mustafa-yusuf-sidi-gaber",
+    reciter: "الشيخ مصطفى إسماعيل",
+    title: "يوسف والحاقة من سيدي جابر بالإسكندرية",
+    surah: "يوسف والحاقة",
+    details: "محفل سيدي جابر بالإسكندرية سنة 1958 - تلاوة كاملة",
+    place: "سيدي جابر - الإسكندرية",
+    year: "1958",
+    url: "https://www.youtube.com/embed/ANsIwz6Z_VQ",
+  },
+  {
     id: "minshawi-sajda-alaq",
     surah: "السجدة والعلق",
     reciter: "الشيخ محمد صديق المنشاوي",
@@ -373,10 +383,10 @@ const RECORDINGS: ArchiveRecording[] = [
   {
     id: "shisha-ibrahim-2",
     reciter: "الشيخ أبو العينين شعيشع",
-    title: "إبراهيم والنصر",
-    surah: "إبراهيم والنصر",
-    details: "من الآية 31 إلى آخر السورة مع سورة النصر",
-    url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/sho3isha3-Ibraheem_31-End_Nasr_st.mp3",
+    title: "إبراهيم والحاقة – المسجد الحسيني",
+    surah: "إبراهيم والحاقة",
+    details: "تسجيل من المسجد الحسيني سنة 1957 - نسخة معدلة لتحسين وضوح الصوت",
+    url: "https://www.youtube.com/embed/kAYyyBE5Xw0",
   },
   {
     id: "shisha-shams-alaq-qadr",
@@ -415,56 +425,6 @@ const RECORDINGS: ArchiveRecording[] = [
 
   // مختارات الشيخ محمد رفعت
   {
-    id: "rifaat-01",
-    reciter: "الشيخ محمد رفعت",
-    title: "الفاتحة وما تيسر من البقرة والنساء",
-    surah: "الفاتحة والبقرة والنساء",
-    details: "من أرشيف التسجيلات الصوتية المحفوظة",
-    url: "https://archive.org/download/M.Refat_01/01a_M.Refat.mp3",
-  },
-  {
-    id: "rifaat-02",
-    reciter: "الشيخ محمد رفعت",
-    title: "ما تيسر من النساء والأعراف والتوبة",
-    surah: "النساء والأعراف والتوبة",
-    details: "تسجيل أرشيفي من التراث الصوتي للشيخ",
-    url: "https://archive.org/download/M.Refat_01/01b_M.Refat.mp3",
-  },
-  {
-    id: "rifaat-03",
-    reciter: "الشيخ محمد رفعت",
-    title: "البقرة من الآية 44 إلى 73",
-    surah: "البقرة",
-    details: "تسجيل أرشيفي",
-    url: "https://archive.org/download/M.Refat_01/02a_M.Refat.mp3",
-  },
-  {
-    id: "rifaat-04",
-    reciter: "الشيخ محمد رفعت",
-    title: "النساء من الآية 58 إلى 79",
-    surah: "النساء",
-    details: "تسجيل أرشيفي",
-    url: "https://archive.org/download/M.Refat_01/02b_M.Refat.mp3",
-  },
-  {
-    id: "rifaat-05",
-    reciter: "الشيخ محمد رفعت",
-    title: "آل عمران من الآية 6 إلى 20 ومن 28 إلى 32",
-    surah: "آل عمران",
-    details: "تسجيل أرشيفي",
-    url: "https://archive.org/download/M.Refat_01/03a_M.Refat.mp3",
-  },
-  {
-    id: "rifaat-06",
-    reciter: "الشيخ محمد رفعت",
-    title: "الإسراء من الآية 1 إلى 19",
-    surah: "الإسراء",
-    details: "تسجيل أرشيفي",
-    url: "https://archive.org/download/M.Refat_01/03b_M.Refat.mp3",
-  },
-
-
-  {
     id: "naina-kahf-sahib-nahawand",
     featured: true,
     reciter: "الشيخ أحمد نعينع",
@@ -491,6 +451,14 @@ const RECORDINGS: ArchiveRecording[] = [
     details: "تلاوة نادرة - نسخة صوتية مباشرة - 11:38",
     url: "https://tilawah.net/audios/mhmd-sdyk-almnshaoy-ya-kom-anma-hthh-alhya-aldnya-mtaaa-oan-alakhr-hy-dar-alkra-42123/download?original=1",
     audio: true,
+  },
+  {
+    id: "minshawi-zukhruf-hamim-kitab",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "حم والكتاب المبين – مطلع سورة الزخرف",
+    surah: "الزخرف",
+    details: "تلاوة مجودة مميزة من الآيات 1 إلى 8 - تسجيل متداول بقناة تلاوات المنشاوي",
+    url: "https://t.me/jmalyaat/1021?embed=1",
   },
   {
     id: "mustafa-ibrahim-bushra-tilawah",
