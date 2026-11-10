@@ -762,20 +762,6 @@ function QuranArchivePage() {
                         </div>
                       )}
                     </div>
-                  ) : active.id === "naina-duha-mixcloud" ? (
-                    <div className="flex min-h-[260px] flex-col items-center justify-center gap-4 rounded-xl border border-border bg-background p-6 text-center">
-                      <p className="max-w-xl text-sm leading-7 text-foreground">
-                        التسجيل مستضاف على Mixcloud، لكن خدمة التشغيل المضمّن أظهرت رسالة قيود ترخيص. افتح صفحة التسجيل الأصلية لتجربة تشغيله من المصدر.
-                      </p>
-                      <a
-                        href="https://www.mixcloud.com/elbastawy9/%D8%A7%D9%84%D8%B4%D9%82%D8%A7%D8%B1%D8%A6-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE-%D8%A3%D8%AD%D9%85%D8%AF-%D9%86%D8%B9%D9%8A%D9%86%D8%B9-%D9%8A%D9%82%D8%B1%D8%A3-%D8%A7%D9%85%D8%A7%D9%85-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE-%D9%85%D8%B5%D8%B7%D9%81%D9%89-%D8%A7%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D9%86%D8%A7%D8%AF%D8%B1-%D8%AC%D8%AF%D8%A7/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
-                      >
-                        فتح التسجيل على Mixcloud
-                      </a>
-                    </div>
                   ) : (
                     <iframe
                       key={active.id}
