@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
