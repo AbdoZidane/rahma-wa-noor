@@ -468,10 +468,10 @@ const RECORDINGS: ArchiveRecording[] = [
     id: "naina-kahf-sahib-nahawand",
     featured: true,
     reciter: "الشيخ أحمد نعينع",
-    title: "قال له صاحبه وهو يحاوره – أشهر نهاوند",
+    title: "قال له صاحبه وهو يحاوره – تلاوة كاملة",
     surah: "الكهف",
-    details: "مقطع مميز من سورة الكهف - مقام النهاوند - المدة 13:26",
-    url: "https://www.youtube.com/embed/mgzOfXrt9qU",
+    details: "من التلاوة الكاملة للشيخ أحمد نعينع - يبدأ المشغّل عند الآية المطلوبة (حوالي 45:00)",
+    url: "https://www.youtube.com/embed/uuFhPj3RbAY?start=2700",
   },
 
   {
