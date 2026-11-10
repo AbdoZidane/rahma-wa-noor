@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
+import { ArrowLeft, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -660,10 +660,11 @@ function QuranArchivePage() {
               type="button"
               onClick={() => setShowFeaturedOnly((current) => !current)}
               aria-pressed={showFeaturedOnly}
+              aria-label={showFeaturedOnly ? "عرض كل التسجيلات" : "العودة لأشهر النوادر فقط"}
+              title={showFeaturedOnly ? "عرض كل التسجيلات" : "العودة لأشهر النوادر فقط"}
               className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${showFeaturedOnly ? "border-gold bg-gold/15 text-gold" : "border-border bg-card text-muted-foreground hover:border-gold hover:text-gold"}`}
             >
-              <Star className={`size-4 ${showFeaturedOnly ? "fill-current" : ""}`} />
-              {showFeaturedOnly ? "عرض كل التسجيلات" : "أشهر النوادر فقط"}
+              {showFeaturedOnly ? <><Star className="size-4 fill-current" />عرض كل التسجيلات</> : <ArrowLeft className="size-5" aria-hidden="true" />}
             </button>
             <button
               type="button"
