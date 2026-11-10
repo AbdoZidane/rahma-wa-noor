@@ -663,7 +663,7 @@ function QuranArchivePage() {
               className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold ${showFeaturedOnly ? "border-gold bg-gold/15 text-gold" : "border-border bg-card text-muted-foreground hover:border-gold hover:text-gold"}`}
             >
               <Star className={`size-4 ${showFeaturedOnly ? "fill-current" : ""}`} />
-              {showFeaturedOnly ? "أشهر النوادر فقط" : "إظهار أشهر النوادر"}
+              {showFeaturedOnly ? "عرض كل التسجيلات" : "أشهر النوادر فقط"}
             </button>
             <button
               type="button"
