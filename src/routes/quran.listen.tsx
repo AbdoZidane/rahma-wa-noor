@@ -365,6 +365,13 @@ export function QuranListenPage() {
                 <span>قراءة {currentSurah.nameSimple} في المصحف الكريم</span>
               </Link>
             </Button>
+
+            <Button asChild variant="gold" size="sm" className="gap-1.5 shadow-gold">
+              <Link to="/quran/archive">
+                <Radio className="size-4" />
+                <span>نوادر التلاوات والمحافل</span>
+              </Link>
+            </Button>
           </div>
 
           {/* Section 1: The 10 Reciters Selection Grid */}
