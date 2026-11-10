@@ -225,14 +225,7 @@ const RECORDINGS: ArchiveRecording[] = [
     place: "المسجد الأقصى",
     url: "https://misrquran.gov.eg/episodedetails/56d3e1bb-2478-4f3e-8adb-0ae5cd3cf3d3",
   },
-  {
-    id: "mustafa-maida-1-12",
-    reciter: "الشيخ مصطفى إسماعيل",
-    title: "تلاوة نادرة من سورة المائدة",
-    surah: "المائدة",
-    details: "من الآية 1 إلى الآية 12 - من تسجيلات الإذاعة المصرية",
-    url: "https://www.youtube-nocookie.com/embed/jcfbTaHPt6U",
-  },
+  
   {
     id: "mustafa-ali-imran-balad-shams",
     reciter: "الشيخ مصطفى إسماعيل",
@@ -305,46 +298,11 @@ const RECORDINGS: ArchiveRecording[] = [
     details: "تسجيل إذاعي برواية حفص",
     url: "https://misrquran.gov.eg/recorddetails/e899f990-bef5-45f4-9be6-ce94a95aac4f",
   },
-  {
-    id: "bahtimi-ibrahim-studio",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    title: "تلاوة من سورة إبراهيم",
-    surah: "إبراهيم",
-    details: "تسجيل استديو من أرشيف أعلام التلاوة",
-    url: "https://www.youtube-nocookie.com/embed/pzOuPRV2py8",
-  },
-  {
-    id: "bahtimi-qasas",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    title: "تلاوة خارجية من سورة القصص",
-    surah: "القصص",
-    details: "من الآية 5 إلى الآية 26",
-    url: "https://www.youtube-nocookie.com/embed/64GqGBU0vr8",
-  },
-  {
-    id: "bahtimi-taha",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    title: "تلاوة استديو من سورة طه",
-    surah: "طه",
-    details: "تسجيل من أرشيف أعلام التلاوة",
-    url: "https://www.youtube-nocookie.com/embed/l7eTrWXerRk",
-  },
-  {
-    id: "bahtimi-rad",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    title: "تلاوة خارجية من سورة الرعد",
-    surah: "الرعد",
-    details: "تسجيل من أرشيف أعلام التلاوة",
-    url: "https://www.youtube-nocookie.com/embed/e1VMiUj37Is",
-  },
-  {
-    id: "bahtimi-forqan-qiyama-alaq",
-    reciter: "الشيخ كامل يوسف البهتيمي",
-    title: "تلاوة خارجية من سور متعددة",
-    surah: "الفرقان والقيامة والعلق",
-    details: "تسجيل خارجي من أرشيف أعلام التلاوة",
-    url: "https://www.youtube-nocookie.com/embed/ZYsDjXvomzg",
-  },
+  
+  
+  
+  
+  
 
   // نوادر زيارة المنشاوي للعراق وبغداد 1965
   {
@@ -410,26 +368,8 @@ const RECORDINGS: ArchiveRecording[] = [
     place: "القصر الجمهوري - بغداد",
     url: "https://www.mazameer.com/upload/sounds/mensh/Live/Iraq/Minsh_Naml_1-29--Iraq.mp3",
   },
-  {
-    id: "minshawi-baghdad-saff-qadr",
-    reciter: "الشيخ محمد صديق المنشاوي",
-    title: "الصف والقدر من القصر الجمهوري",
-    surah: "الصف والقدر",
-    details: "تلاوة مسجلة بالقصر الجمهوري في رمضان 1384 هـ / 1965",
-    place: "بغداد - القصر الجمهوري",
-    year: "1965",
-    url: "https://www.youtube-nocookie.com/embed/As82FEqAMTw",
-  },
-  {
-    id: "minshawi-baghdad-yusuf",
-    reciter: "الشيخ محمد صديق المنشاوي",
-    title: "يوسف من تلفزيون العراق",
-    surah: "يوسف",
-    details: "من الآية 1 إلى 24 - تسجيل تلفزيون العراق سنة 1965",
-    place: "بغداد - تلفزيون العراق",
-    year: "1965",
-    url: "https://www.youtube-nocookie.com/embed/MbuOMiffB6g",
-  },
+  
+  
 
   // مختارات الشيخ عبد الباسط عبد الصمد
   {
@@ -490,24 +430,8 @@ const RECORDINGS: ArchiveRecording[] = [
     year: "1964",
     url: "https://archive.org/download/AbdelBasit_InPublic_qr/%D8%A7%D9%84%D8%A3%D8%AD%D8%B2%D8%A7%D8%A8%20-%20%D8%A7%D9%84%D9%85%D8%B3%D8%AC%D8%AF%20%D8%A7%D9%84%D8%A7%D9%82%D8%B5%D9%89%201964.mp3",
   },
-  {
-    id: "basit-classic-youtube",
-    reciter: "الشيخ عبد الباسط عبد الصمد",
-    title: "من كنوز الخمسينات",
-    surah: "القيامة والطارق والأعلى والغاشية",
-    details: "تسجيل إذاعي من فترة الخمسينات",
-    year: "الخمسينات",
-    url: "https://www.youtube-nocookie.com/embed/-1rPASUmZ5g",
-  },
-  {
-    id: "basit-fater-yasin",
-    reciter: "الشيخ عبد الباسط عبد الصمد",
-    title: "فاطر ويس من نوادر الستينات",
-    surah: "فاطر ويس",
-    details: "من تسجيلات الإذاعة المصرية",
-    year: "الستينات",
-    url: "https://www.youtube-nocookie.com/embed/HTnkRHU95ys",
-  },
+  
+  
 
   // مختارات الشيخ أبي العينين شعيشع
   {
@@ -558,23 +482,8 @@ const RECORDINGS: ArchiveRecording[] = [
     details: "من تسجيلات الإذاعة السعودية",
     url: "https://www.mazameer.com/upload/sounds/sho3esh3/st/sho3isha3-Mohammad-st.mp3",
   },
-  {
-    id: "shisha-hajj",
-    reciter: "الشيخ أبو العينين شعيشع",
-    title: "الحج من تسجيلات الإذاعة المصرية",
-    surah: "الحج",
-    details: "تلاوة نادرة من تسجيلات الإذاعة المصرية في أوائل الستينات",
-    year: "أوائل الستينات",
-    url: "https://www.youtube-nocookie.com/embed/a0rBj3QXMNg",
-  },
-  {
-    id: "shisha-imran-rahman",
-    reciter: "الشيخ أبو العينين شعيشع",
-    title: "وكفلها زكريا",
-    surah: "آل عمران والرحمن",
-    details: "من أشهر التلاوات المتداولة للشيخ",
-    url: "https://www.youtube-nocookie.com/embed/tjl-zg59PVE",
-  },
+  
+  
 
   // مختارات الشيخ محمد رفعت
   {
@@ -624,6 +533,26 @@ const RECORDINGS: ArchiveRecording[] = [
     surah: "الإسراء",
     details: "تسجيل أرشيفي",
     url: "https://ia600301.us.archive.org/17/items/M.Refat_01/03b_M.Refat.mp3",
+  },
+
+
+  {
+    id: "naina-hussein-evening",
+    reciter: "الشيخ أحمد نعينع",
+    title: "تلاوة من أمسية مسجد الإمام الحسين",
+    surah: "ما تيسر من القرآن الكريم",
+    details: "أمسية إذاعية من مسجد الإمام الحسين بالقاهرة - تسجيل أرشيفي",
+    place: "مسجد الإمام الحسين - القاهرة",
+    url: "https://misrquran.gov.eg/episodedetails/88cef29a-7539-4a78-8e45-cb3286a74c4e",
+  },
+  {
+    id: "naina-hosary-evening",
+    reciter: "الشيخ أحمد نعينع",
+    title: "تلاوة من أمسية مسجد الحصري",
+    surah: "ما تيسر من القرآن الكريم",
+    details: "أمسية دينية إذاعية تضمنت تلاوة للشيخ أحمد نعينع",
+    place: "مسجد الحصري - مدينة 6 أكتوبر",
+    url: "https://misrquran.gov.eg/episodedetails/80b333d7-91e6-41a7-a8f9-fde5d515badc",
   },
 
 ];
