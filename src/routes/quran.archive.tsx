@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ArrowRight, Headphones, MapPin, CalendarDays, Play, Search, Radio } from "lucide-react";
+import { ArrowRight, Headphones, MapPin, CalendarDays, Play, Search, Radio, Sparkles, Landmark, Disc3 } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -114,6 +114,64 @@ const RECORDINGS: ArchiveRecording[] = [
     year: "1963",
     url: "https://misrquran.gov.eg/episodedetails/28543119-1cf6-4ee3-af49-ba767bb16902",
   },
+  {
+    id: "naina-furqan-hussein-1990",
+    reciter: "الشيخ أحمد نعينع",
+    title: "سورة الفرقان",
+    details: "تسجيل محفل من مسجد الإمام الحسين",
+    place: "مسجد الإمام الحسين",
+    year: "1990",
+    url: "https://www.nourelquran.com/play-5711.html?ref=site",
+  },
+  {
+    id: "minshawi-ahzab-rare",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "تلاوة نادرة من سورة الأحزاب",
+    details: "تسجيل أرشيفي من مكتبة نور القرآن",
+    url: "https://www.nourelquran.com/play-5710.html?ref=site",
+  },
+  {
+    id: "banna-noor-hussein",
+    reciter: "الشيخ محمود علي البنا",
+    title: "سورة النور",
+    details: "تلاوة مسجلة من مسجد الإمام الحسين",
+    place: "مسجد الإمام الحسين",
+    url: "https://www.nourelquran.com/play-5716.html?ref=site",
+  },
+  {
+    id: "mustafa-short-surahs-tv",
+    reciter: "الشيخ مصطفى إسماعيل",
+    title: "قصار السور",
+    details: "تسجيل من مسجد التليفزيون",
+    place: "مسجد التليفزيون",
+    url: "https://www.nourelquran.com/play-5724.html?ref=site",
+  },
+  {
+    id: "mustafa-yusuf-1965",
+    reciter: "الشيخ مصطفى إسماعيل",
+    title: "سورة يوسف",
+    details: "تسجيل أرشيفي من عام 1965",
+    place: "مسجد السلطان أبو العلا",
+    year: "1965",
+    url: "https://www.nourelquran.com/play-6866.html?ref=site",
+  },
+  {
+    id: "minshawi-baghdad-1965",
+    reciter: "الشيخ محمد صديق المنشاوي",
+    title: "تلاوة من تليفزيون بغداد",
+    details: "تسجيل تلفزيوني أرشيفي",
+    place: "بغداد",
+    year: "1965",
+    url: "https://www.nourelquran.com/play-6867.html?ref=site",
+  },
+  {
+    id: "mustafa-tv-studios",
+    reciter: "الشيخ مصطفى إسماعيل",
+    title: "تلاوة من استوديوهات التليفزيون",
+    details: "تسجيل إذاعي من أرشيف التلاوات النادرة",
+    place: "استوديوهات التليفزيون",
+    url: "https://www.nourelquran.com/play-5989.html?ref=site",
+  },
 ];
 
 function QuranArchivePage() {
@@ -147,19 +205,35 @@ function QuranArchivePage() {
               <Link to="/quran/listen"><ArrowRight className="size-4" />العودة للاستماع</Link>
             </Button>
             <span className="rounded-full bg-forest/10 px-3 py-1.5 text-xs font-semibold text-primary">
-              {filtered.length} تسجيلات موثقة
+              {filtered.length} تسجيلًا في المكتبة
             </span>
           </div>
 
-          <div className="mb-6 rounded-2xl border border-gold/30 bg-card p-4 sm:p-5">
-            <div className="flex items-start gap-3">
-              <Radio className="mt-1 size-5 shrink-0 text-gold" />
+          <div className="relative mb-6 overflow-hidden rounded-3xl border border-gold/40 bg-gradient-to-br from-forest via-primary to-forest p-5 text-primary-foreground shadow-xl sm:p-7">
+            <div className="pointer-events-none absolute -left-8 -top-10 size-44 rounded-full border border-gold/20" />
+            <div className="pointer-events-none absolute -bottom-16 right-1/3 size-52 rounded-full border border-gold/15" />
+            <div className="relative grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
               <div>
-                <h2 className="font-serif text-lg font-bold text-primary">أرشيف إذاعة القرآن الكريم المصرية</h2>
-                <p className="mt-1 text-sm leading-7 text-muted-foreground">
-                  اختر تسجيلًا لعرض مشغّل المصدر الرسمي داخل الصفحة. قد يختلف توفر التشغيل حسب إتاحة التسجيل من جهة المصدر.
+                <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-semibold text-gold-soft">
+                  <Sparkles className="size-3.5" /> مختارات من ذاكرة التلاوة المصرية
+                </span>
+                <h2 className="mt-3 font-serif text-2xl font-bold sm:text-3xl">أصوات من زمنٍ جميل</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-primary-foreground/80">
+                  محافل ومساجد واستوديوهات وتسجيلات إذاعية؛ نحتفظ مع كل تلاوة بما توفر من مكانها وتاريخها، لتسمعها وتتعرف على حكايتها.
                 </p>
               </div>
+              <div className="flex items-center gap-3 rounded-2xl border border-gold/30 bg-black/10 p-4">
+                <Disc3 className="size-10 text-gold" />
+                <div>
+                  <p className="text-2xl font-bold tabular-nums">{RECORDINGS.length}</p>
+                  <p className="text-xs text-primary-foreground/75">تسجيلًا أرشيفيًا</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative mt-5 flex flex-wrap gap-2 text-xs">
+              {["محافل قرآنية", "تسجيلات إذاعية", "استوديوهات", "تلاوات نادرة"].map((label) => (
+                <span key={label} className="rounded-full border border-gold/25 bg-black/10 px-3 py-1.5">{label}</span>
+              ))}
             </div>
           </div>
 
@@ -197,7 +271,11 @@ function QuranArchivePage() {
                     {item.year && <span className="inline-flex items-center gap-1"><CalendarDays className="size-3.5" />{item.year}</span>}
                   </div>
                 )}
-                <Button onClick={() => setActive(item)} variant="gold" className="mt-5 w-full gap-2 shadow-gold">
+                <div className="mt-4 flex flex-wrap items-center gap-2 text-[11px] text-muted-foreground">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-gold/10 px-2.5 py-1 text-gold"><Landmark className="size-3" /> تسجيل أرشيفي</span>
+                  {item.year && <span className="rounded-full bg-secondary px-2.5 py-1">{item.year}</span>}
+                </div>
+                <Button onClick={() => setActive(item)} variant="gold" className="mt-4 w-full gap-2 shadow-gold">
                   <Play className="size-4" />استمع داخل الموقع
                 </Button>
               </article>
