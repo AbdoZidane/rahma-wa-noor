@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowRight, Headphones, Play, Pause, Search, Sparkles, ChevronDown, ChevronUp, Volume2, Star } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ArrowRight, Headphones, Play, Search, Sparkles, ChevronDown, ChevronUp, Star } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -557,115 +557,6 @@ const RECORDINGS: ArchiveRecording[] = [
 
 ];
 
-function formatAudioTime(seconds: number) {
-  if (!Number.isFinite(seconds)) return "0:00";
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${String(secs).padStart(2, "0")}`;
-}
-
-function ArchiveAudioPlayer({ src, title }: { src: string; title: string }) {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.85);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    audio.volume = volume;
-    const updateTime = () => setCurrentTime(audio.currentTime || 0);
-    const updateDuration = () => setDuration(audio.duration || 0);
-    const ended = () => setPlaying(false);
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", updateDuration);
-    audio.addEventListener("durationchange", updateDuration);
-    audio.addEventListener("ended", ended);
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-      audio.removeEventListener("loadedmetadata", updateDuration);
-      audio.removeEventListener("durationchange", updateDuration);
-      audio.removeEventListener("ended", ended);
-    };
-  }, [src, volume]);
-
-  const togglePlayback = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (audio.paused) {
-      try {
-        await audio.play();
-        setPlaying(true);
-      } catch {
-        setPlaying(false);
-      }
-    } else {
-      audio.pause();
-      setPlaying(false);
-    }
-  };
-
-  return (
-    <div className="w-full rounded-2xl border border-gold/30 bg-gradient-to-br from-forest/5 to-gold/10 p-4">
-      <audio ref={audioRef} src={src} preload="metadata" />
-      <div className="mb-4 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={togglePlayback}
-          aria-label={playing ? "إيقاف مؤقت" : "تشغيل"}
-          className="flex size-12 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-soft transition-transform hover:scale-105"
-        >
-          {playing ? <Pause className="size-5" /> : <Play className="size-5" />}
-        </button>
-        <div className="min-w-0 flex-1 text-right">
-          <p className="text-sm font-bold text-foreground">مشغّل رحمة ونور</p>
-          <p className="truncate text-xs text-muted-foreground">{title}</p>
-        </div>
-        <Headphones className="size-5 shrink-0 text-gold" />
-      </div>
-      <input
-        aria-label="موضع التشغيل"
-        type="range"
-        min={0}
-        max={duration || 0}
-        step="0.1"
-        value={Math.min(currentTime, duration || 0)}
-        onChange={(event) => {
-          const next = Number(event.target.value);
-          if (audioRef.current) {
-            audioRef.current.currentTime = next;
-            setCurrentTime(next);
-          }
-        }}
-        className="h-2 w-full cursor-pointer accent-[hsl(var(--primary))]"
-      />
-      <div className="mt-1 flex flex-row-reverse justify-between text-[11px] tabular-nums text-muted-foreground" dir="ltr">
-        <span>{formatAudioTime(duration)}</span>
-        <span>{formatAudioTime(currentTime)}</span>
-      </div>
-      <div className="mt-3 flex items-center gap-2">
-        <Volume2 className="size-4 text-muted-foreground" />
-        <input
-          aria-label="مستوى الصوت"
-          type="range"
-          min={0}
-          max={1}
-          step="0.01"
-          value={volume}
-          onChange={(event) => {
-            const next = Number(event.target.value);
-            setVolume(next);
-            if (audioRef.current) audioRef.current.volume = next;
-          }}
-          className="h-1.5 w-24 cursor-pointer accent-[hsl(var(--primary))]"
-        />
-        <span className="mr-auto text-[11px] text-muted-foreground">استماع داخل الموقع</span>
-      </div>
-    </div>
-  );
-}
-
 function QuranArchivePage() {
   const [query, setQuery] = useState("");
   const [expandedReciter, setExpandedReciter] = useState<string | null>(null);
@@ -814,8 +705,15 @@ function QuranArchivePage() {
                 </div>
                 <div className="bg-secondary/30 p-2 sm:p-4">
                   {active.url.toLowerCase().includes(".mp3") ? (
-                    <div className="flex min-h-[220px] items-center justify-center rounded-xl border border-border bg-background p-4 sm:p-6">
-                      <ArchiveAudioPlayer key={active.id} src={active.url} title={active.title} />
+                    <div className="rounded-xl border border-border bg-background p-4">
+                      <audio
+                        key={active.id}
+                        controls
+                        preload="none"
+                        src={active.url}
+                        className="w-full"
+                        aria-label={`تشغيل ${active.title}`}
+                      />
                     </div>
                   ) : (
                     <iframe
