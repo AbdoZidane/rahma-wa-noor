@@ -78,6 +78,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "mustafa-yusuf-sidi-gaber",
+    featured: true,
     reciter: "الشيخ مصطفى إسماعيل",
     title: "يوسف والحاقة من سيدي جابر بالإسكندرية",
     surah: "يوسف والحاقة",
@@ -382,6 +383,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "shisha-ibrahim-2",
+    featured: true,
     reciter: "الشيخ أبو العينين شعيشع",
     title: "إبراهيم والحاقة – المسجد الحسيني",
     surah: "إبراهيم والحاقة",
@@ -454,6 +456,7 @@ const RECORDINGS: ArchiveRecording[] = [
   },
   {
     id: "minshawi-zukhruf-hamim-kitab",
+    featured: true,
     reciter: "الشيخ محمد صديق المنشاوي",
     title: "حم والكتاب المبين – مطلع سورة الزخرف",
     surah: "الزخرف",
@@ -584,6 +587,7 @@ function QuranArchivePage() {
       .map(([reciter, items]) => [
         reciter,
         [...items].sort((a, b) =>
+          Number(Boolean(b.featured)) - Number(Boolean(a.featured)) ||
           a.surah.localeCompare(b.surah, "ar") || a.title.localeCompare(b.title, "ar")
         ),
       ] as [string, ArchiveRecording[]])
