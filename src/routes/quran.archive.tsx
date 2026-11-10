@@ -545,12 +545,12 @@ const RECORDINGS: ArchiveRecording[] = [
     url: "https://www.youtube.com/embed/4HpyFzKwDDs",
   },
   {
-    id: "naina-duha-mixcloud",
+    id: "naina-fater-nahawand",
     reciter: "الشيخ أحمد نعينع",
-    title: "تلاوة نادرة أمام الشيخ مصطفى إسماعيل",
-    surah: "الضحى",
-    details: "تسجيل منشور على Mixcloud - المدة 9:56",
-    url: "https://www.mixcloud.com/widget/iframe/?feed=%2Felbastawy9%2F%D8%A7%D9%84%D8%B4%D9%82%D8%A7%D8%B1%D8%A6-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE-%D8%A3%D8%AD%D9%85%D8%AF-%D9%86%D8%B9%D9%8A%D9%86%D8%B9-%D9%8A%D9%82%D8%B1%D8%A3-%D8%A7%D9%85%D8%A7%D9%85-%D8%A7%D9%84%D8%B4%D9%8A%D8%AE-%D9%85%D8%B5%D8%B7%D9%81%D9%89-%D8%A7%D8%B3%D9%85%D8%A7%D8%B9%D9%8A%D9%84-%D8%AA%D8%B3%D8%AC%D9%8A%D9%84-%D9%86%D8%A7%D8%AF%D8%B1-%D8%AC%D8%AF%D8%A7%2F&hide_cover=1",
+    title: "تجويد وإحساس نادر من سورة فاطر – مقام النهاوند",
+    surah: "فاطر",
+    details: "تلاوة منشورة بعنوان مقام النهاوند - المصدر: قناة حلية القرآن",
+    url: "https://www.youtube.com/embed/3nsjJHLDUh0",
   },
   {
     id: "naina-hussein-evening",
