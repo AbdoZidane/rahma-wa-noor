@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Moon, RotateCcw, Sun } from "lucide-react";
+import { Moon, RotateCcw, Sun, HandHeart } from "lucide-react";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { CopyButton } from "@/components/site/CopyButton";
-import { EVENING_AZKAR, MORNING_AZKAR, type Zikr } from "@/lib/content/azkar";
+import { AFTER_PRAYER_AZKAR, EVENING_AZKAR, MORNING_AZKAR, SLEEP_AZKAR, type Zikr } from "@/lib/content/azkar";
 import { toArabicDigits } from "@/lib/content/quran";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/azkar")({
   component: AzkarPage,
 });
 
-type Period = "morning" | "evening";
+type Period = "morning" | "evening" | "after-prayer" | "sleep";
 const today = () => {
   const date = new Date();
   const year = date.getFullYear();
@@ -54,18 +54,24 @@ function AzkarPage() {
       <section className="pattern-islamic">
         <div className="mx-auto max-w-4xl px-5 py-12">
           <Tabs value={tab} onValueChange={(v) => setTab(v as Period)} dir="rtl">
-            <TabsList className="mx-auto grid h-12 w-full max-w-md grid-cols-2 rounded-full bg-secondary p-1">
+            <TabsList className="mx-auto grid h-auto w-full max-w-2xl grid-cols-2 gap-1 rounded-2xl bg-secondary p-1 sm:grid-cols-4">
               <TabsTrigger
                 value="morning"
-                className="rounded-full text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="rounded-xl px-2 py-3 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
               >
-                <Sun className="size-4" /> أذكار الصباح
+                <Sun className="ms-1 size-4" /> الصباح
               </TabsTrigger>
               <TabsTrigger
                 value="evening"
-                className="rounded-full text-base data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                className="rounded-xl px-2 py-3 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
               >
-                <Moon className="size-4" /> أذكار المساء
+                <Moon className="ms-1 size-4" /> المساء
+              </TabsTrigger>
+              <TabsTrigger value="after-prayer" className="rounded-xl px-2 py-3 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <HandHeart className="ms-1 size-4" /> بعد الصلاة
+              </TabsTrigger>
+              <TabsTrigger value="sleep" className="rounded-xl px-2 py-3 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Moon className="ms-1 size-4" /> النوم
               </TabsTrigger>
             </TabsList>
             <TabsContent value="morning">
@@ -73,6 +79,12 @@ function AzkarPage() {
             </TabsContent>
             <TabsContent value="evening">
               <AzkarList period="evening" items={EVENING_AZKAR} />
+            </TabsContent>
+            <TabsContent value="after-prayer">
+              <AzkarList period="after-prayer" items={AFTER_PRAYER_AZKAR} />
+            </TabsContent>
+            <TabsContent value="sleep">
+              <AzkarList period="sleep" items={SLEEP_AZKAR} />
             </TabsContent>
           </Tabs>
         </div>
