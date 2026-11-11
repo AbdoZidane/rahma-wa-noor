@@ -445,20 +445,6 @@
 
 /* Mobile performance and touch ergonomics */
 @media (max-width: 640px) {
-  /* Keep the warm atmosphere without continuously repainting a blurred fixed layer. */
-  body::before {
-    animation: none;
-    filter: none;
-    opacity: 0.72;
-    inset: 0;
-  }
-
-  /* Scroll-linked entrance effects can be expensive on mid-range phones. */
-  main section {
-    animation: none !important;
-    animation-timeline: auto !important;
-  }
-
   /* Avoid costly blur layers on compact screens while retaining the palette. */
   header.sticky {
     backdrop-filter: none;
