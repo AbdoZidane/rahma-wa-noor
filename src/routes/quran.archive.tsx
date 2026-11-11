@@ -645,6 +645,32 @@ function QuranArchivePage() {
             </span>
           </div>
 
+          <article className="mb-5 flex items-center gap-3 rounded-2xl border border-gold/40 bg-card/90 p-3 shadow-soft sm:max-w-xl">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
+              <Play className="size-5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold text-gold">تلاوة مختارة من تراث الكبار</p>
+              <h2 className="mt-0.5 line-clamp-2 font-serif text-sm font-bold leading-6 text-foreground">فَدَعَا رَبَّهُ أَنِّي مَغْلُوبٌ فَانتَصِرْ</h2>
+              <p className="text-xs text-muted-foreground">الشيخ محمد رفعت · تراث الشيخ محمد رفعت</p>
+            </div>
+            <Button
+              size="sm"
+              variant="gold"
+              className="shrink-0 gap-1.5 px-3"
+              onClick={() => setActive({
+                id: "rifaat-maghloob-fantasir",
+                reciter: "الشيخ محمد رفعت",
+                title: "فَدَعَا رَبَّهُ أَنِّي مَغْلُوبٌ فَانتَصِرْ",
+                surah: "القمر",
+                details: "من قناة تراث الشيخ محمد رفعت",
+                url: "https://www.youtube.com/embed/guSQ5lPOHN8",
+              })}
+            >
+              <Play className="size-3.5" />استمع
+            </Button>
+          </article>
+
           <div className="mb-6 rounded-3xl border border-gold/30 bg-gradient-to-br from-forest via-primary to-forest p-5 text-primary-foreground sm:p-7">
             <div className="flex items-center gap-2 text-xs font-semibold text-gold-soft">
               <Sparkles className="size-4" /> مختارات تستحق الاستماع
