@@ -441,3 +441,55 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* Mobile performance and touch ergonomics */
+@media (max-width: 640px) {
+  /* Keep the warm atmosphere without continuously repainting a blurred fixed layer. */
+  body::before {
+    animation: none;
+    filter: none;
+    opacity: 0.72;
+    inset: 0;
+  }
+
+  /* Scroll-linked entrance effects can be expensive on mid-range phones. */
+  main section {
+    animation: none !important;
+    animation-timeline: auto !important;
+  }
+
+  /* Avoid costly blur layers on compact screens while retaining the palette. */
+  header.sticky {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: color-mix(in oklab, var(--forest-deep) 98%, transparent);
+  }
+
+  header nav[aria-label="التنقل السريع"] {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background-color: var(--forest-deep);
+  }
+
+  button:not(:disabled),
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Keep tap targets comfortable without changing the visual layout. */
+@media (pointer: coarse) {
+  header button,
+  header [role="button"],
+  header nav a {
+    min-height: 44px;
+  }
+}
