@@ -645,8 +645,8 @@ function QuranArchivePage() {
             </span>
           </div>
 
-          <article className="mb-5 flex items-center gap-3 rounded-2xl border border-gold/40 bg-card/90 p-3 shadow-soft sm:max-w-xl">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
+          <article className="mx-auto mb-5 flex w-full max-w-sm items-center gap-2 rounded-2xl border border-gold/40 bg-card/90 p-2 shadow-soft">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
               <Play className="size-5" />
             </span>
             <div className="min-w-0 flex-1">
