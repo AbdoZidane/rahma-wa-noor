@@ -532,6 +532,38 @@ const RECORDINGS: ArchiveRecording[] = [
     url: "https://misrquran.gov.eg/episodedetails/80b333d7-91e6-41a7-a8f9-fde5d515badc",
   },
 
+
+  // مختارات الشيخ محمد أحمد شبيب
+  {
+    id: "shebib-naml-kitab-karim",
+    reciter: "الشيخ محمد أحمد شبيب",
+    title: "يا أيها الملأ إني أُلقي إلي كتاب كريم",
+    surah: "النمل",
+    details: "المقطع الذي رشحته — تلاوة خاشعة من سورة النمل",
+    url: "https://www.youtube.com/embed/zMU85m2B6Hs",
+  },
+  {
+    id: "shebib-fajr-october-1973",
+    featured: true,
+    reciter: "الشيخ محمد أحمد شبيب",
+    title: "قرآن الفجر — فجر النصر 6 أكتوبر 1973",
+    surah: "آل عمران",
+    details: "التلاوة التاريخية من فجر العاشر من رمضان 1393هـ، من مسجد الإمام الحسين",
+    place: "مسجد الإمام الحسين — القاهرة",
+    year: "1973",
+    url: "https://www.youtube.com/embed/yGdVH6NvPIg",
+  },
+  {
+    id: "shebib-yusuf-kafr-bahida-1983",
+    featured: true,
+    reciter: "الشيخ محمد أحمد شبيب",
+    title: "سورة يوسف — أمسية كفر بهيدة",
+    surah: "يوسف",
+    details: "تلاوة نادرة من تسجيلات قرية كفر بهيدة — ميت غمر",
+    place: "كفر بهيدة — ميت غمر",
+    year: "1983",
+    url: "https://www.youtube.com/embed/2EfPyGMbvP4",
+  },
 ];
 
 function QuranArchivePage() {
