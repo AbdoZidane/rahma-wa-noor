@@ -80,6 +80,14 @@ const TAHLEEL_100: Zikr = {
   source: "رواه البخاري (3293) ومسلم (2691) — «من قالها في يوم مئة مرة»",
 };
 
+
+const SALAWAT: Zikr = {
+  id: "salawat",
+  text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ",
+  count: 10,
+  source: "صيغة صحيحة في الصلاة على النبي ﷺ — قال ﷺ: «مَنْ صَلَّى عَلَيَّ وَاحِدَةً صَلَّى اللَّهُ عَلَيْهِ بِهَا عَشْرًا» رواه مسلم (408). العشر للتنظيم فقط، ويُستحب الإكثار دون اعتقاد عدد لازم.",
+};
+
 export const MORNING_AZKAR: Zikr[] = [
   AYAT_KURSI,
   MUAWWIDHAT,
@@ -102,6 +110,7 @@ export const MORNING_AZKAR: Zikr[] = [
   YA_HAYY,
   SUBHANALLAH_100,
   TAHLEEL_100,
+  SALAWAT,
 
   {
     id: "niamat-morning",
@@ -144,6 +153,7 @@ export const EVENING_AZKAR: Zikr[] = [
   AFIYAH,
   YA_HAYY,
   SUBHANALLAH_100,
+  SALAWAT,
 
   {
     id: "niamat-evening",
@@ -151,4 +161,27 @@ export const EVENING_AZKAR: Zikr[] = [
     count: 1,
     source: "رواه أبو داود (5073) — ويقال بلفظ «ما أمسى» حين يمسي",
   },
+];
+
+
+export const AFTER_PRAYER_AZKAR: Zikr[] = [
+  { id: "after-istighfar", text: "أَسْتَغْفِرُ اللَّهَ", count: 3, source: "كان رسول الله ﷺ إذا انصرف من صلاته استغفر ثلاثًا — رواه مسلم (591)" },
+  { id: "after-salam", text: "اللَّهُمَّ أَنْتَ السَّلَامُ، وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ", count: 1, source: "رواه مسلم (591)" },
+  { id: "after-kursi", text: AYAT["2:255"], count: 1, source: "آية الكرسي بعد كل صلاة مكتوبة — رواه النسائي في السنن الكبرى، وصححه عدد من أهل العلم", isQuran: true },
+  { id: "after-subhan", text: "سُبْحَانَ اللَّهِ", count: 33, source: "من التسبيح دبر الصلاة — رواه مسلم (597)" },
+  { id: "after-hamd", text: "الْحَمْدُ لِلَّهِ", count: 33, source: "من التحميد دبر الصلاة — رواه مسلم (597)" },
+  { id: "after-takbir", text: "اللَّهُ أَكْبَرُ", count: 33, source: "من التكبير دبر الصلاة — رواه مسلم (597)" },
+  { id: "after-tahlil", text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ", count: 1, source: "تُقال تمام المئة بعد التسبيح والتحميد والتكبير — رواه مسلم (597)" },
+  SALAWAT,
+];
+
+export const SLEEP_AZKAR: Zikr[] = [
+  { id: "sleep-kursi", text: AYAT["2:255"], count: 1, source: "آية الكرسي عند النوم — رواه البخاري (2311)", isQuran: true },
+  { id: "sleep-last-baqarah", text: AYAT["2:285"] + "\n\n" + AYAT["2:286"], count: 1, source: "آخر آيتين من سورة البقرة — رواه البخاري (5009) ومسلم (808)", isQuran: true },
+  { id: "sleep-muawwidhat", text: BASMALA + "\n" + surahText("112") + "\n\n" + BASMALA + "\n" + surahText("113") + "\n\n" + BASMALA + "\n" + surahText("114"), count: 3, source: "يجمع كفيه وينفث فيهما ويقرأ الإخلاص والمعوذتين ويمسح ما استطاع من جسده — رواه البخاري (5017)", isQuran: true },
+  { id: "sleep-tasbih", text: "سُبْحَانَ اللَّهِ", count: 33, source: "من ذكر النوم الذي علّمه النبي ﷺ لفاطمة وعلي رضي الله عنهما — رواه البخاري (5362) ومسلم (2727)" },
+  { id: "sleep-tahmid", text: "الْحَمْدُ لِلَّهِ", count: 33, source: "من ذكر النوم — رواه البخاري (5362) ومسلم (2727)" },
+  { id: "sleep-takbir", text: "اللَّهُ أَكْبَرُ", count: 34, source: "من ذكر النوم — رواه البخاري (5362) ومسلم (2727)" },
+  { id: "sleep-dua", text: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا", count: 1, source: "رواه البخاري (6324)" },
+  SALAWAT,
 ];
