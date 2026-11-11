@@ -20,7 +20,7 @@ export function Portrait({
       />
       <div className="relative h-full w-full overflow-hidden rounded-t-full bg-forest-deep shadow-gold">
         {src ? (
-          <img src={src} alt={`صورة ${name}`} className="portrait-photo h-full w-full object-cover" />
+          <img src={src} alt={`صورة ${name}`} className="portrait-photo h-full w-full object-cover" loading="eager" fetchPriority="high" decoding="async" />
         ) : (
           <div className="pattern-islamic-strong flex h-full w-full flex-col items-center justify-center gap-3 px-6 text-center text-forest-foreground/70">
             <StarMark className="size-12 text-gold" />
