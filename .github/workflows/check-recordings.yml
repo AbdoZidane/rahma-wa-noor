@@ -1,0 +1,30 @@
+name: Check recording links
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  check-recordings:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check recording URLs
+        run: npm run check:recordings
+      - name: Save detailed report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recordings-health-report
+          path: recordings-health.json
+          if-no-files-found: ignore
+          retention-days: 14
