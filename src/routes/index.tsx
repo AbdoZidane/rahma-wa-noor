@@ -615,6 +615,32 @@ function IndexPage() {
         </div>
       </section>
 
+      {/* 5. Rare Recitations */}
+      <section
+        id="rare-tilawat-section"
+        className="scroll-mt-20 border-b border-border bg-card py-20"
+      >
+        <div className="mx-auto max-w-5xl px-5">
+          <div className="relative overflow-hidden rounded-[2rem] border-2 border-gold/40 bg-secondary/50 p-7 text-center shadow-gold sm:p-12">
+            <span className="mx-auto inline-flex size-16 items-center justify-center rounded-2xl bg-forest text-gold shadow-soft">
+              <Headphones className="size-8" />
+            </span>
+            <span className="mt-6 block text-xs font-semibold text-gold">القسم الخامس</span>
+            <h2 className="mt-2 font-serif text-3xl font-bold text-primary sm:text-4xl">نوادر التلاوات</h2>
+            <Divider className="mx-auto mt-4 max-w-xs" />
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              مكتبة مختارة من التسجيلات القرآنية النادرة والمميزة لكبار القراء، تضم تلاوات تاريخية وأمسيات من أماكن مختلفة، مع معلومات عن كل تسجيل.
+            </p>
+            <Button asChild variant="gold" size="lg" className="mt-8 rounded-full px-8">
+              <Link to="/quran/archive">
+                <span>استكشف نوادر التلاوات</span>
+                <Headphones className="ms-2 size-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       {/* Visitor Prayers - Separate from the removed memorial section */}
       <section
         id="visitor-prayers"
