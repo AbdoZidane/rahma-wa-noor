@@ -176,17 +176,17 @@ function IndexPage() {
         />
         <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 sm:py-24 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="text-center lg:text-start">
-            <p className="mb-4 flex items-center justify-center gap-2 text-sm text-gold-soft lg:justify-start animate-fade-up">
+            <p className="hero-first-paint mb-4 flex items-center justify-center gap-2 text-sm text-gold-soft lg:justify-start animate-fade-up">
               <Moon className="size-4" /> إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ
             </p>
-            <h1 className="font-script text-5xl leading-[1.5] text-gold-gradient sm:text-7xl animate-fade-up">
+            <h1 className="hero-first-paint font-script text-5xl leading-[1.5] text-gold-gradient sm:text-7xl animate-fade-up">
               رحمك الله يا جدي
             </h1>
-            <p className="mt-4 font-serif text-3xl font-bold sm:text-4xl animate-fade-up [animation-delay:150ms]">
+            <p className="hero-first-paint mt-4 font-serif text-3xl font-bold sm:text-4xl animate-fade-up [animation-delay:150ms]">
               {DECEASED_NAME}
             </p>
             <Divider className="my-8 lg:justify-start" />
-            <p className="mx-auto max-w-xl font-serif text-xl leading-loose text-forest-foreground/85 lg:mx-0 animate-fade-up [animation-delay:300ms]">
+            <p className="hero-first-paint mx-auto max-w-xl font-serif text-xl leading-loose text-forest-foreground/85 lg:mx-0 animate-fade-up [animation-delay:300ms]">
               ستظل ذكراك الطيبة حية في قلوبنا، ونسأل الله العلي القدير أن يغفر لك ويرحمك ويجعل قبرك
               روضة من رياض الجنة.
             </p>
@@ -200,7 +200,7 @@ function IndexPage() {
               </Button>
             </div>
           </div>
-          <div className="animate-fade-up [animation-delay:200ms]">
+          <div className="hero-first-paint animate-fade-up [animation-delay:200ms]">
             <Portrait
               src="/grandfather.jpeg"
               name={DECEASED_NAME}
