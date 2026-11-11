@@ -645,7 +645,8 @@ function QuranArchivePage() {
             </span>
           </div>
 
-          <article className="mx-auto mb-5 flex w-full max-w-sm items-center gap-2 rounded-2xl border border-gold/40 bg-card/90 p-2 shadow-soft">
+          <div className="mx-auto mb-5 grid w-full max-w-2xl grid-cols-1 gap-2 sm:grid-cols-2">
+          <article className="flex min-w-0 items-center gap-2 rounded-2xl border border-gold/40 bg-card/90 p-2 shadow-soft">
             <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
               <Play className="size-5" />
             </span>
@@ -670,6 +671,33 @@ function QuranArchivePage() {
               <Play className="size-3.5" />استمع
             </Button>
           </article>
+
+          <article className="flex min-w-0 items-center gap-2 rounded-2xl border border-gold/40 bg-card/90 p-2 shadow-soft">
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-gold/15 text-gold">
+              <Play className="size-5" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] font-semibold text-gold">مختارات بمقام النهاوند</p>
+              <h2 className="mt-0.5 line-clamp-2 font-serif text-sm font-bold leading-6 text-foreground">تلاوات بمقام النهاوند 🔥 كأن الجمال بلغ منتهاه</h2>
+              <p className="text-xs text-muted-foreground">مختارات قرآنية بمقام النهاوند</p>
+            </div>
+            <Button
+              size="sm"
+              variant="gold"
+              className="shrink-0 gap-1 px-2"
+              onClick={() => setActive({
+                id: "nawand-beautiful-recitations",
+                reciter: "مختارات بمقام النهاوند",
+                title: "تلاوات بمقام النهاوند 🔥 كأن الجمال بلغ منتهاه",
+                surah: "مختارات قرآنية",
+                details: "تلاوات بمقام النهاوند",
+                url: "https://www.youtube.com/embed/z0RSRbdT2jY",
+              })}
+            >
+              <Play className="size-3.5" />استمع
+            </Button>
+          </article>
+          </div>
 
           <div className="mb-6 rounded-3xl border border-gold/30 bg-gradient-to-br from-forest via-primary to-forest p-5 text-primary-foreground sm:p-7">
             <div className="flex items-center gap-2 text-xs font-semibold text-gold-soft">
