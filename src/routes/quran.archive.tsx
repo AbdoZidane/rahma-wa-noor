@@ -536,6 +536,7 @@ const RECORDINGS: ArchiveRecording[] = [
   // مختارات الشيخ محمد أحمد شبيب
   {
     id: "shebib-naml-kitab-karim",
+    featured: true,
     reciter: "الشيخ محمد أحمد شبيب",
     title: "يا أيها الملأ إني أُلقي إلي كتاب كريم",
     surah: "النمل",
