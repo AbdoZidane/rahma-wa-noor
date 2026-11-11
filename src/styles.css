@@ -83,7 +83,7 @@
   --secondary: oklch(0.925 0.03 85);
   --secondary-foreground: oklch(0.3 0.06 158);
   --muted: oklch(0.93 0.022 85);
-  --muted-foreground: oklch(0.38 0.035 150);
+  --muted-foreground: oklch(0.32 0.035 150);
   --accent: oklch(0.9 0.05 85);
   --accent-foreground: oklch(0.3 0.06 158);
   --destructive: oklch(0.55 0.18 27);
@@ -341,7 +341,7 @@
 @media (max-width: 640px) {
   body::before {
     inset: -12%;
-    filter: blur(34px);
+    filter: blur(20px);
     animation-duration: 38s;
   }
 
@@ -477,5 +477,15 @@
   header [role="button"],
   header nav a {
     min-height: 44px;
+  }
+}
+
+
+/* Keep first-screen content immediately visible on phones; retain ambient and scroll motion. */
+@media (max-width: 640px) {
+  .hero-first-paint {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
