@@ -1,6 +1,6 @@
 
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import {
   BookOpen,
@@ -20,17 +20,14 @@ import { Portrait } from "@/components/site/Portrait";
 import { Divider, StarMark } from "@/components/site/Ornament";
 import { CopyButton } from "@/components/site/CopyButton";
 import { DailyWird } from "@/components/site/DailyWird";
-import {
-  approvedPrayersQuery,
-  DECEASED_NAME,
-  siteContentQuery,
-} from "@/lib/queries";
+import { approvedPrayersQuery, DECEASED_NAME } from "@/lib/queries";
 import { DUAS, DUA_BENEFIT_HADITH } from "@/lib/content/duas";
 import { toArabicDigits } from "@/lib/content/quran";
 import { cn, formatArabicDate } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    links: [{ rel: "preload", as: "image", href: "/grandfather.jpeg" }],
     meta: [
       { title: `رحمة ونور | ذكرى ${DECEASED_NAME}` },
       {
@@ -44,11 +41,6 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  loader: ({ context }) =>
-    Promise.all([
-      context.queryClient.ensureQueryData(siteContentQuery),
-      context.queryClient.ensureQueryData(approvedPrayersQuery),
-    ]),
   component: IndexPage,
 });
 
@@ -70,8 +62,8 @@ const MINI_TASBEEH_PRESETS = [
 ];
 
 function IndexPage() {
-  const { data: content } = useSuspenseQuery(siteContentQuery);
-  const { data: prayers } = useSuspenseQuery(approvedPrayersQuery);
+  // Render the hero immediately; load the public prayer wall in the background.
+  const { data: prayers = [] } = useQuery(approvedPrayersQuery);
   const latest = prayers.slice(0, 3);
   const [welcomeOpen, setWelcomeOpen] = useState(false);
 
