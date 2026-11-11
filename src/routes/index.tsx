@@ -57,6 +57,7 @@ const QUICK_SECTIONS = [
   { id: "duas-section", number: "٢", label: "الأدعية", icon: HandHeart },
   { id: "azkar-section", number: "٣", label: "الأذكار", icon: Sun },
   { id: "tasbeeh-section", number: "٤", label: "المسبحة الإلكترونية", icon: Sparkles },
+  { id: "rare-tilawat-section", number: "٥", label: "نوادر التلاوات", icon: Headphones },
 ] as const;
 
 const MINI_TASBEEH_PRESETS = [
