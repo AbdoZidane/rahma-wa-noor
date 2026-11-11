@@ -27,7 +27,10 @@ import { cn, formatArabicDate } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    links: [{ rel: "preload", as: "image", href: "/grandfather.jpeg" }],
+    links: [
+      { rel: "preload", as: "image", href: "/grandfather.jpeg" },
+      { rel: "canonical", href: "https://rahma-wa-noor.abaozidan.workers.dev/" },
+    ],
     meta: [
       { title: `رحمة ونور | ذكرى ${DECEASED_NAME}` },
       {
