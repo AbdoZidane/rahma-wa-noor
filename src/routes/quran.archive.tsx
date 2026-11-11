@@ -651,7 +651,7 @@ function QuranArchivePage() {
             </span>
             <div className="min-w-0 flex-1">
               <p className="text-[11px] font-semibold text-gold">تلاوة مختارة من تراث الكبار</p>
-              <h2 className="mt-0.5 line-clamp-2 font-serif text-sm font-bold leading-6 text-foreground">فَدَعَا رَبَّهُ أَنِّي مَغْلُوبٌ فَانتَصِرْ</h2>
+              <h2 className="mt-0.5 line-clamp-2 font-serif text-sm font-bold leading-6 text-foreground">فدعا ربه أنى مغلوب فانتصر</h2>
               <p className="text-xs text-muted-foreground">الشيخ محمد رفعت · تراث الشيخ محمد رفعت</p>
             </div>
             <Button
@@ -661,7 +661,7 @@ function QuranArchivePage() {
               onClick={() => setActive({
                 id: "rifaat-maghloob-fantasir",
                 reciter: "الشيخ محمد رفعت",
-                title: "فَدَعَا رَبَّهُ أَنِّي مَغْلُوبٌ فَانتَصِرْ",
+                title: "فدعا ربه أنى مغلوب فانتصر",
                 surah: "القمر",
                 details: "من قناة تراث الشيخ محمد رفعت",
                 url: "https://www.youtube.com/embed/guSQ5lPOHN8",
