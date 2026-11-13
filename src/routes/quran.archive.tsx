@@ -440,9 +440,8 @@ const RECORDINGS: ArchiveRecording[] = [
     reciter: "الشيخ أحمد نعينع",
     title: "وناديناه من جانب الطور الأيمن",
     surah: "مريم",
-    details: "تلاوة نادرة - نسخة صوتية مباشرة - 5:16",
-    url: "https://tilawah.net/audios/ahmd-ahmd-naaynaa-ondynh-mn-ganb-ltor-laymn-okrbnh-ngya-42147/download?original=1",
-    audio: true,
+    details: "تلاوة مميزة للشيخ أحمد نعينع",
+    url: "https://www.youtube.com/embed/YIPnkbaHWRo",
   },
   {
     id: "minshawi-ghafir-tilawah",
